@@ -8,3 +8,6 @@
 更新内容：
 
 # xv6
+
+struct Pos 二元组
+view 的名字叫做window, window 的view坐标为(0,0)
