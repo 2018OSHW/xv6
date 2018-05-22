@@ -39,6 +39,43 @@ typedef struct ABitmap
     uint width;
     uint height;
     AColor *data;
+};
+
+typedef struct ARect
+{
+    int x;
+    int y;
+    int w;
+    int h;
+};
+
+typedef struct APen
+{
+    AColor color;
+    int penwidth;
+};
+
+typedef struct ABrush
+{
+    AColor color;
+};
+
+typedef struct AMessage
+{
+    uint type;
+    uint param;
+    uint wndID;
+};
+
+typedef struct AMsgQueue
+{
+    AMessage
+    
+    
 }
+
+
+
+
 
 #endif
