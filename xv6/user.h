@@ -23,6 +23,9 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 
+//gui
+void paintWindow(void *, int, int, void *, int, int, int, int);
+
 // ulib.c
 int stat(char*, struct stat*);
 char* strcpy(char*, char*);

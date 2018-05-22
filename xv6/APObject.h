@@ -41,6 +41,12 @@ typedef struct ABitmap
     AColor *data;
 };
 
+typedef struct ASize
+{
+    int cx;
+    int cy;
+};
+
 typedef struct ARect
 {
     int x;
@@ -60,6 +66,21 @@ typedef struct ABrush
     AColor color;
 };
 
+typedef struct AFont
+{
+    AColor color;
+};
+
+typedef struct ADc
+{
+    ASize size;
+    APen  pen;
+    ABrush brush;
+    AFont font;
+    AColor *content;
+};
+typedef ADc * AHdc;
+
 typedef struct AMessage
 {
     uint type;
@@ -69,11 +90,83 @@ typedef struct AMessage
 
 typedef struct AMsgQueue
 {
-    AMessage
-    
-    
-}
+    AMessage data[MESSAGE_QUEUE_SIZE];
+    uint head;
+    uint tail;
+};
 
+typedef struct APoint
+{
+    int x;
+    int y;
+};
+
+typedef struct AWindow
+{
+    int id;
+    int pid;
+    int msgQueueID;
+    int parentID;
+    int childFocusId;
+    int focusState;
+    
+    APoint pos;
+    APoint clientPos;
+    
+    ADc Dc;
+    aDc wholeDc;
+    
+    AMessage msg;
+    bool (*wndProc)(struct AWindow*,AMessage);
+    
+    char title[MAX_WND_TITLE_LENGTH];
+    
+};
+typedef AWindow *AHwnd;
+
+typedef struct AWndListNode
+{
+    int prev,next;
+    int pID;
+    int parentID;
+    struct spinlock lock;
+    
+    AMessage msg;
+    int msgQueueID;
+    AMsgQueue msg;
+    
+    ARect rect;
+    ARect clientRect;
+    
+    char title[MAX_WND_TITLE_LENGTH];
+    AHwnd hwnd;
+};
+
+typedef struct AWndList
+{
+    AWndListNode data[MAX_WND_NUM];
+    int head;
+    int tail;
+    int space;
+    int desktop;
+    int entry;
+    struct spinlock lock;
+};
+
+typedef struct ATimerList
+{
+    struct
+    {
+        int wndId;
+        int id;
+        int interval;
+        int curItrvl;
+        int next;
+    } data[MAX_WND_NUM];
+    int head;
+    int space;
+    struct spinlock lock;
+};
 
 
 
