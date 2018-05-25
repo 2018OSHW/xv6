@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "APInclude.h"
+#include "spinlock.h"
 
 typedef struct Pos
 {
@@ -15,7 +16,7 @@ typedef struct APPos
     struct Pos view;        //pos x,y in the view (view is the window)
 }APPos;
 
-struct Pos get_view_pos(strucpt APPos item, struct APPos window);
+struct Pos get_view_pos(struct APPos item, struct APPos window);
 
 
 typedef struct AColor
