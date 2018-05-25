@@ -14,6 +14,8 @@
 #define COLOR_NULL_ALPHA 0x0c
 #define COLOR_NULL RGB(COLOR_NULL_ALPHA, COLOR_NULL_ALPHA, COLOR_NULL_ALPHA)
 
-
+typedef char bool;
+#define true (char)1
+#define false (char)0
 
 #endif
