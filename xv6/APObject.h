@@ -135,7 +135,7 @@ typedef struct AWndListNode
     
     AMessage msg;
     int msgQueueID;
-    AMsgQueue msg;
+    AMsgQueue msgQueue;
     
     ARect rect;
     ARect clientRect;
