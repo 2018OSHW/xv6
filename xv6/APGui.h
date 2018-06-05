@@ -5,7 +5,6 @@
 
 void APGuiInit(void);
 
-int sys_paintWindow(void);
 
 static inline bool contain(ARect rect, int x, int y)
 {

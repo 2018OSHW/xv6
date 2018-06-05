@@ -21,6 +21,7 @@ ARect screenRect;
 ATimerList timerList;
 
 int timerListReady = 0;
+
 void APGuiInit(void)
 {
     screenAddr = (AColor *)(*((uint*)P2V(0x1028)));
