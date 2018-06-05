@@ -195,6 +195,9 @@ typedef struct
     unsigned long       biClrImportant;
 } PBitmapInfoHeader;
 
-
+int APError(int)
+{
+    return;
+}
 
 #endif

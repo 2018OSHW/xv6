@@ -3,6 +3,8 @@
 
 #include "APObject.h"
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 #define WORLD_WIDTH 1600
 #define WORLD_HEIGHT 1800
@@ -14,8 +16,69 @@
 #define COLOR_NULL_ALPHA 0x0c
 #define COLOR_NULL RGB(COLOR_NULL_ALPHA, COLOR_NULL_ALPHA, COLOR_NULL_ALPHA)
 
+#define WND_EDGE_SIZE 5
+#define WND_TITLE_HEIGHT 30
+
 typedef char bool;
 #define true (char)1
 #define false (char)0
+#define SUBMIT true
+#define FINISH false
+
+
+enum MSG {
+    MSG_NULL,
+    
+    MSG_LBUTTON_UP,
+    MSG_LBUTTON_DOWN,
+    MSG_LBUTTON_DCLK,
+    MSG_RBUTTON_UP,
+    MSG_RBUTTON_DOWN,
+    MSG_RBUTTON_DCLK,
+    MSG_MBUTTON_UP,
+    MSG_MBUTTON_DOWN,
+    MSG_MBUTTON_DCLK,
+    MSG_WHEEL_UP,
+    MSG_WHEEL_DOWN,
+    MSG_MOUSE_MOVE,
+    MSG_MOUSE_IN,
+    MSG_MOUSE_OUT,
+    
+    MSG_HAS_FOCUS,
+    MSG_LOSE_FOCUS,
+    MSG_ENBLE_FOCUS,
+    
+    MSG_KEY_UP,
+    MSG_KEY_DOWN,
+    
+    MSG_TIMEOUT,
+    
+    MSG_PAINT,
+    MSG_RECTPAINT,
+    
+    MSG_CREATE,
+    MSG_DESTROY,
+    
+    MSG_NC_LBUTTON_UP,
+    MSG_NC_LBUTTON_DOWN,
+    
+    MSG_OTHER_WINDOW_ACTION,
+    MSG_WNDID_WRONG,
+    
+    MSG_STATECHAGE,
+    
+    MSG_SLIDER_POS_CHANGE,
+    
+    MSG_CTRL_REMOVE,
+    MSG_DIRECT_PAINT
+};
+
+enum WndFocusState
+{
+    WFS_HAS_FOCUS,
+    WFS_LOSE_FOCUS,
+    WFS_NO_FOCUS,
+    WFS_CHILD_FOCUS
+};
 
 #endif
