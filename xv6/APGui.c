@@ -35,8 +35,7 @@ void APGuiInit(void)
     cprintf("screen addr : %x, screen width : %d, screen height : %d, bitsPerPixel: %d \n",
             screenAddr, screenWidth,screenHeight,bitsPerPixel);
     
-    initlock(&sreenLock,"sreenLock");
-    
+    initlock(&screenLock,"sreenLock");
     
 }
 
@@ -79,7 +78,7 @@ int sys_paintWindow(void)
     int id = hwnd ->id;
     AColor *data = hdc->content;
     
-    int i,j;
+    int j;
     for (int i = 0; i < h;i++)
     {
         if (wy + i < 0)
@@ -113,17 +112,17 @@ int sys_paintWindow(void)
             if (p != -1)
                 continue;
             //假如父窗口未显示，则不显示该点
-            p = hwnd->parentId;
+            p = hwnd->parentID;
             while (p != -1)
             {
                 if (!contain(wndList.data[p].clientRect, wx + j, wy + i))
                     break;
-                p = wndList.data[p].parentId;
+                p = wndList.data[p].parentID;
             }
             if (p != -1)
                 continue;
             
-            PColor c = data[off_x + j];
+            AColor c = data[off_x + j];
             if (c.r != COLOR_NULL_ALPHA || c.g != COLOR_NULL_ALPHA || c.b != COLOR_NULL_ALPHA)
                 screenContent[screen_off_x + j] = c;
         }
@@ -139,7 +138,7 @@ int sys_paintWindow(void)
     if (w > screenWidth)
         w = screenWidth;
     //release(&videoLock);
-    ABufPaint(wx, wy, w, h);
+    APBufPaint(wx, wy, w, h);
     return 0;
 }
     
