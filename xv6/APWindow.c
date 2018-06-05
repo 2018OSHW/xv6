@@ -8,6 +8,11 @@
 #include "user.h"
 #include "APWindow.h"
 
+int APError(int index)
+{
+    return index;
+}
+
 AHwnd APCreateWindow(char * title, PHwnd parent, int x, int y, int width, int height)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
