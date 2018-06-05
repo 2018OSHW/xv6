@@ -28,7 +28,6 @@ typedef struct ItemData
 
 void desktopInitStringFigure();
 
-void APError(int);
 
 void runApp(void * param);
 #endif
