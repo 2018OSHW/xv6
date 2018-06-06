@@ -171,6 +171,7 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
+    _APDesktop\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
