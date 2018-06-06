@@ -118,6 +118,7 @@ typedef struct AWindow
     ADc Dc;
     ADc wholeDc;
     
+    bool state;     //unknown use
     AMessage msg;
     bool (*wndProc)(struct AWindow*,AMessage);
     
@@ -170,7 +171,6 @@ typedef struct ATimerList
     struct spinlock lock;
 }ATimerList;
 
-#pragma pack(2)
 typedef struct
 {
     unsigned short  bfType;
@@ -178,7 +178,7 @@ typedef struct
     unsigned short  bfReserved1;
     unsigned short  bfReserved2;
     unsigned long   bfOffBits;
-} PBitmapFileHeader;
+} ABitmapFileHeader;
 
 typedef struct
 {
@@ -193,7 +193,7 @@ typedef struct
     long                biYPelsPerMeter;
     unsigned long       biClrUsed;
     unsigned long       biClrImportant;
-} PBitmapInfoHeader;
+} ABitmapInfoHeader;
 
 int APError(int index);
 

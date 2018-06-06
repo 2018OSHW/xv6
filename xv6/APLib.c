@@ -1,0 +1,71 @@
+//
+//  APLib.c
+//  
+//
+//  Created by Poo Lei on 2018/6/6.
+//
+
+#include "APLib.h"
+
+
+void sprintf(char * dst, char * fmt, ...)
+{
+    char *s;
+    char buf[10];
+    int bi = 0;
+    int c, i, state, j;
+    uint *ap;
+    j = 0;
+    
+    state = 0;
+    ap = (uint*)(void*)&fmt + 1;
+    for(i = 0; fmt[i]; i++){
+        c = fmt[i] & 0xff;
+        if(state == 0){
+            if(c == '%'){
+                state = '%';
+            } else {
+                dst[j++] = c;
+            }
+        } else if(state == '%'){
+            if(c == 'd'){
+                buf[bi] = '\0';
+                int l = atoi(buf);
+                bi = 0;
+                sprintint(dst, &j, *ap, 10, 1, l);
+                ap++;
+            } else if(c == 'x' || c == 'p'){
+                buf[bi] = '\0';
+                int l = atoi(buf);
+                bi = 0;
+                sprintint(dst, &j, *ap, 16, 0, l);
+                ap++;
+            } else if(c == 's'){
+                s = (char*)*ap;
+                ap++;
+                if(s == 0)
+                    s = "(null)";
+                while(*s != 0){
+                    dst[j++] = *s;
+                    s++;
+                }
+            } else if(c == 'c'){
+                dst[j++] = *ap;
+                ap++;
+            } else if(c == '%'){
+                dst[j++] = c;
+            } else if(c >= '0' && c <= '9')
+            {
+                buf[bi++] = c;
+                continue;
+            }
+            else {
+                // Unknown % sequence.  Print it to draw attention.
+                dst[j++] = '%';
+                dst[j++] = c;
+            }
+            state = 0;
+        }
+    }
+    dst[j++] = '\0';
+}

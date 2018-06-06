@@ -22,4 +22,5 @@
 #define SYS_close  21
 
 #define SYS_paintWindow 22
+#define SYS_initStringFigure 23
 

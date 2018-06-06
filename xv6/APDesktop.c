@@ -35,6 +35,20 @@ void runApp(void * param)
 }
 
 
+bool wndProc(AHwnd hwnd, AMessage msg)
+{
+    static ADc timeDc;
+    switch(msg.type)
+    {
+        
+            
+            
+            
+    }
+    return APWndProc(hwnd, msg);
+
+}
+
 int main(void)
 {
     desktopInitStringFigure();
@@ -54,17 +68,17 @@ int main(void)
     
     r->clientPos.x = 0;
     r->clientPos.y = 0;
-    r->dc.size.cx = SCREEN_WIDTH;
-    r->dc.size.cy = SCREEN_HEIGHT ;
-    r->dc.content = (AColor *)malloc(sizeof(AColor) * r->dc.size.cx * r->dc.size.cy);
-    if (r->dc.content == 0)
+    r->Dc.size.cx = SCREEN_WIDTH;
+    r->Dc.size.cy = SCREEN_HEIGHT ;
+    r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
+    if (r->Dc.content == 0)
         APError(0);
-    memset(r->dc.content, 0x0, sizeof(AColor) * r->dc.size.cx * r->dc.size.cy);
+    memset(r->Dc.content, 0x0, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
     r->msg.type = MSG_NULL;
     r->state = 0;
     r->pid = getpid();
-    r->msgQueueId = -1;
+    r->msgQueueID = -1;
     
     r->parentId = -1;
 

@@ -142,7 +142,55 @@ int sys_paintWindow(void)
     return 0;
 }
     
+
+char GBK2312[GBK2312_SIZE];
+char ASCII[ASCII_SIZE];
+
+int sys_initStringFigure(void)
+{
+    char * gbk2312 = 0;
+    int n1;
+    char * ascii = 0;
+    int n2;
+    if (argstr(0, (char **)&gbk2312) < 0 || argint(1, &n1) < 0 || argstr(2, (char **)&ascii) < 0 || argint(3, &n2) < 0)
+        return -1;
+    for (int i = 0; i < n1; i += 32)
+    {
+        for (int j = 0; j < 16; ++j)
+        {
+            GBK2312[i + j] = gbk2312[i + 2 * j];
+            GBK2312[i + 16 + j] = gbk2312[i + 2 * j + 1];
+        }
+    }
+    memmove(ASCII, ascii, sizeof(char) * n2);
+    return 0;
+}
+
+int sys_sendMessage(void)
+{
+    int wndId = 0;
+    PMessage * msg = 0;
+    if (argint(0, &wndId) < 0 || argstr(1, (char**)&msg) < 0)
+        return -1;
     
-    
+    sendMessage(wndId, *msg);
+    return 0;
+}
+
+void sendMessage(int wndId, AMessage msg)
+{
+    if (wndId == -1 || wndList.data[wndId].hwnd == 0)
+        return;
+    switch (msg.type)
+    {
+
+    }
+    int msgQueueID = wndList.data[wndId].msgQueueID;
+    AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
+    msg.wndId = wndId;
+    pvcMsgQueueEnQueue(queue, msg);
+    wakeup((void *)wndList.data[wndId].pid);
+}
+
 
 

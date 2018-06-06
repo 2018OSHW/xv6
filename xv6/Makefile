@@ -173,6 +173,9 @@ UPROGS=\
 	_zombie\
     _APDesktop\
 
+APFILES=\
+    ASCII\
+
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
 

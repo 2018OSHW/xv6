@@ -25,6 +25,8 @@ int uptime(void);
 
 //gui
 void paintWindow(void *, int, int, void *, int, int, int, int);
+void initStringFigure(void *, int, void *, int);
+
 
 // ulib.c
 int stat(char*, struct stat*);
