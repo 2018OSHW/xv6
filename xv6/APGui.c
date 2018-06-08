@@ -323,7 +323,44 @@ void APWndListDestroy(AWndList * list)
     release(&list->lock);
 }
 
+
+
 //------------------------------------------------------------------------------------
 //Msg
+void APMsgQueueInit(AMsgQueue * queue)
+{
+    queue->head = queue->tail = 0;
+}
+
+void APMsgQueueEnQueue(AMsgQueue * queue, PMessage msg)
+{
+    if ((queue->tail + 1) % MESSAGE_QUEUE_SIZE == queue->head)
+    {
+        cprintf("Error! Message Queue is full\n");
+        return;
+    }
+    
+    switch (msg.type)
+    {
+        default:
+            break;
+    }
+    queue->data[queue->tail] = msg;
+    queue->tail = (queue->tail + 1) % MESSAGE_QUEUE_SIZE;
+}
+
+//弹出消息队列顶端
+AMessage APMsgQueueDeQueue(AMsgQueue * queue)
+{
+    if (queue->head == queue->tail)
+    {
+        AMessage msg;
+        msg.type = MSG_NULL;
+        return msg;
+    }
+    int p = queue->head;
+    queue->head = (queue->head + 1) % MESSAGE_QUEUE_SIZE;
+    return queue->data[p];
+}
 
 

@@ -34,6 +34,7 @@ typedef char bool;
 #define DEFAULT_BACKGROUND_COLOR 0xbfff
 #define DEFAULT_WINDOW_COLOR 0x0a
 
+
 enum MSG {
     MSG_NULL,
     
