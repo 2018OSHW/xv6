@@ -150,7 +150,7 @@ typedef struct AWndList
     AWndListNode data[MAX_WND_NUM];
     int head;
     int tail;
-    int space;
+    int space;      
     int desktop;
     int entry;
     struct spinlock lock;

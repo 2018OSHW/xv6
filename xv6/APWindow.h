@@ -13,7 +13,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg);
 
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage));
 
-void pvcSendMessage(AHwnd hwnd, AMessage msg);
+void APSendMessage(AHwnd hwnd, AMessage msg);
 
 
 #endif /* APWindow_h */

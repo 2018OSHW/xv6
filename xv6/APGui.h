@@ -15,4 +15,17 @@ static inline bool contain(ARect rect, int x, int y)
     return false;
 }
 
+//Window
+void APWndListAddToHead(AWndList * list, AHwnd hwnd);
+void APWndListAddToHead(AWndList * list, AHwnd hwnd);
+void APWndListMoveToHead(AWndList * list, int wndId);
+void APWndListRemove(AWndList * list, int wndId);
+void APWndListDestroy(AWndList * list);
+
+
+//Msg
+void APMsgQueueInit(AMsgQueue * queue);
+void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg);
+AMessage APMsgQueueDeQueue(AMsgQueue * queue);
+
 #endif

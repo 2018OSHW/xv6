@@ -14,13 +14,13 @@ int APError(int index)
 }
 
 
-void pvcSendMessage(AHwnd hwnd, AMessage msg)
+void APSendMessage(AHwnd hwnd, AMessage msg)
 {
       sendMessage(hwnd->id, &msg);
 }
 
 
-AHwnd APCreateWindow(char * title, PHwnd parent, int x, int y, int width, int height)
+AHwnd APCreateWindow(char * title, AHwnd parent, int x, int y, int width, int height)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
     if (r == 0)

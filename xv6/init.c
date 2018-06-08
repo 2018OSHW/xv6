@@ -28,7 +28,6 @@ main(void)
       exit();
     }
     if(pid == 0){
-    
      // exec("sh", argv);
       exec("APDesktop", argv);
       printf(1, "init: exec sh failed\n");

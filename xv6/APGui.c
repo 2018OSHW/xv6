@@ -172,8 +172,16 @@ int sys_sendMessage(void)
     PMessage * msg = 0;
     if (argint(0, &wndId) < 0 || argstr(1, (char**)&msg) < 0)
         return -1;
-    
     sendMessage(wndId, *msg);
+    return 0;
+}
+
+int sys_registWindow(void)
+{
+    AHwnd hwnd = 0;
+    if (argstr(0, (char **)&hwnd) < 0)
+        return -1;
+    APWndListAddToHead(&wndList, hwnd);
     return 0;
 }
 
@@ -192,5 +200,130 @@ void sendMessage(int wndId, AMessage msg)
     wakeup((void *)wndList.data[wndId].pid);
 }
 
+//------------------------------------------------------------------------------------
+//WndList
+void APWndListInit(AWndList * list)
+{
+    for (int i = 0; i < MAX_WND_NUM; ++i)
+    {
+        list->data[i].hwnd = 0;
+        list->data[i].prev = -1;
+        list->data[i].next = i + 1;
+        APMsgQueueInit(&list->data[i].msgQueue);
+        initlock(&list->data[i].lock, "msglock");
+    }
+    list->data[i - 1].next = -1;
+    initlock(&list->lock, "wndListLock");
+    list->head = list->tail = list->desktop = -1;
+    list->hasMouse = list->catchMouse = -1;
+    list->space = 0;
+}
+
+void APWndListAddToHead(AWndList * list, AHwnd hwnd)
+{
+    acquire(&list->lock);
+    int p = list->space;
+    if (p == -1)
+    {
+        cprintf("too much window\n");
+        return;
+    }
+    list->space = list->data[list->space].next;
+    list->data[p].hwnd = hwnd;
+    hwnd->id = p;
+    list->data[p].pid = hwnd->pid;
+    if (hwnd->msgQueueID >= 0)
+        list->data[p].msgQueueID = hwnd->msgQueueID;
+    else
+        list->data[p].msgQueueID = hwnd->msgQueueID = p;
+    
+    list->data[p].rect.x = hwnd->pos.x;
+    list->data[p].rect.y = hwnd->pos.y;
+    list->data[p].rect.w = hwnd->wholeDc.size.cx;
+    list->data[p].rect.h = hwnd->wholeDc.size.cy;
+    
+    list->data[p].clientRect.x = hwnd->clientPos.x + hwnd->pos.x;
+    list->data[p].clientRect.y = hwnd->clientPos.y + hwnd->pos.y;
+    list->data[p].clientRect.w = hwnd->Dc.size.cx;
+    list->data[p].clientRect.h = hwnd->Dc.size.cy;
+    if (hwnd->parentID < 0)
+        hwnd->parentID = list->desktop;
+    list->data[p].parentID = hwnd->parentID;
+    
+    for (int i = 0; hwnd->title[i]; ++i)
+        list->data[p].title[i] = hwnd->title[i];
+    list->data[p].title[i] = '\0';
+    
+    //desktop ---- id = -1
+    list->data[p].next = list->head;
+    list->data[p].prev = -1;
+    if (list->head == -1)
+        list->tail = p;
+    else
+        list->data[list->head].prev = p;
+    
+    list->head = p;
+    release(&list->lock);
+}
+
+void APWndListMoveToHead(AWndList * list, int wndId)
+{
+    if (wndId < 0)
+        return;
+    acquire(&list->lock);
+    if (wndId != list->head)
+    {
+        list->data[list->data[wndId].prev].next = list->data[wndId].next;
+        if (list->data[wndId].next == -1)
+            list->tail = list->data[wndId].prev;
+        else
+            list->data[list->data[wndId].next].prev = list->data[wndId].prev;
+
+        list->data[list->head].prev = wndId;
+        list->data[wndId].prev = -1;
+        list->data[wndId].next = list->head;
+        list->head = wndId;
+    }
+    release(&list->lock);
+}
+
+void APWndListRemove(AWndList * list, int wndId)
+{
+    if (wndId < 0)
+        return;
+    acquire(&list->lock);
+    if (wndId == list->head)
+    {
+        if (list->data[wndId].next == -1)
+            list->head = list->tail = -1;
+        else
+        {
+            list->head = list->data[list->head].next;
+            list->data[list->head].prev = -1;
+        }
+    }
+    else if (wndId == list->tail)
+    {
+        list->tail = list->data[list->tail].prev;
+        list->data[list->tail].next = -1;
+    }
+    list->data[wndId].prev = -1;
+    list->data[wndId].next = list->space;
+    list->data[wndId].hwnd = 0;
+    list->space = wndId;
+
+    pvcMsgQueueInit(&list->data[wndId].msgQueue);
+    
+    release(&list->lock);
+}
+
+void APWndListDestroy(AWndList * list)
+{
+    acquire(&list->lock);
+    release(&list->lock);
+}
+
+//------------------------------------------------------------------------------------
+//Msg
 
 
