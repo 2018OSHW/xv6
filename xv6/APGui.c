@@ -185,6 +185,29 @@ int sys_registWindow(void)
     return 0;
 }
 
+int sys_getMessage(void)
+{
+    AHwnd hwnd = 0;
+    if (argstr(0, (char **)&hwnd) < 0)
+        return -1;
+    int wndId = hwnd->id;
+    int msgQueueId = hwnd->msgQueueID;
+    int pid = hwnd->pid;
+    
+    acquire(&wndList.data[msgQueueId].lock);
+    AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
+    
+    if (queue->head == queue->tail)
+        sleep((void *)pid,&wndList.data[msgQueueId].lock);
+    
+    if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
+        wndList.data[wndId].hwnd->msg = APMsgQueueDeQueue(queue);
+    
+    release(&wndList.data[msgQueueId].lock);
+    return 0;
+}
+
+
 void sendMessage(int wndId, AMessage msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
@@ -327,6 +350,15 @@ void APWndListDestroy(AWndList * list)
 
 //------------------------------------------------------------------------------------
 //Msg
+
+void APPreJudge(AHwnd hwnd, AMessage * msg)
+{
+    if (msg->wndId != hwnd->id)
+        return false;
+    return true;
+    
+}
+
 void APMsgQueueInit(AMsgQueue * queue)
 {
     queue->head = queue->tail = 0;

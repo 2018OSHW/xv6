@@ -75,22 +75,12 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 {
     hwnd->wndProc = wndProc;
-    AMessage msg;
-    msg.type = MSG_CREATE;
-    APSendMessage(hwnd, msg);
-    msg.type = MSG_HAS_FOCUS;
-    msg.param = MSG_CREATE;
-    APSendMessage(hwnd, msg);
     while (1)
     {
         getMessage(hwnd);
-        if (pvcWndPreTranslateMessage(hwnd, &hwnd->msg))
-            if (pvcDispatchMsgToCtrlLst(&hwnd->ctrlLst, hwnd->msg))
-                if (pvcWndTranslateMessage(hwnd, &hwnd->msg))
-                    if (wndProc(hwnd, hwnd->msg))
-                    {
-                        break;
-                    }
+        if (APPreJudge(hwnd,msg))
+            if (wndProc(hwnd, hwnd->msg))
+                break;
         hwnd->msg.type = MSG_NULL;
     }
 }

@@ -25,3 +25,4 @@
 #define SYS_initStringFigure 23
 #define SYS_sendMessage 24
 #define SYS_registWindow 25
+#define SYS_getMessage 26

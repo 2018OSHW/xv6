@@ -27,6 +27,7 @@ int uptime(void);
 void paintWindow(void *, int, int, void *, int, int, int, int);
 void initStringFigure(void *, int, void *, int);
 void sendMessage(int, void *);
+void getMessage(void *);
 void registWindow(void *);
 
 // ulib.c
