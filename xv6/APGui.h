@@ -24,7 +24,6 @@ void APWndListDestroy(AWndList * list);
 
 
 //Msg
-void APPreJudge(AHwnd hwnd, AMessage * msg);
 void APMsgQueueInit(AMsgQueue * queue);
 void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg);
 AMessage APMsgQueueDeQueue(AMsgQueue * queue);

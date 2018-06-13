@@ -9,8 +9,6 @@
 #include "APWindow.h"
 
 
-
-
 void APSendMessage(AHwnd hwnd, AMessage msg)
 {
       sendMessage(hwnd->id, &msg);
@@ -40,7 +38,7 @@ AHwnd APCreateWindow(char * title, AHwnd parent, int x, int y, int width, int he
     r->Dc.size.cx = width - WND_EDGE_SIZE * 2;
     r->Dc.size.cy = height - WND_TITLE_HEIGHT - WND_EDGE_SIZE;
     r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
-    if (r->dc.content == 0)
+    if (r->Dc.content == 0)
         APError(0);
     memset(r->Dc.content, 0x0, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
@@ -50,21 +48,26 @@ AHwnd APCreateWindow(char * title, AHwnd parent, int x, int y, int width, int he
     r->msgQueueID = -1;
     
     if (parent)
-        r->parentId = parent->id;
+        r->parentID = parent->id;
     else
-        r->parentId = -1;
-    r->childFocusId = -1;
+        r->parentID = -1;
     return r;
 }
 
 bool APWndProc(AHwnd hwnd, AMessage msg)
 {
-    AMessage m;
     switch (msg.type)
     {
             
     }
     return FINISH;
+}
+
+void APPreJudge(AHwnd hwnd, AMessage * msg)
+{
+    if (msg->wndId != hwnd->id)
+        return false;
+    return true;
 }
 
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))

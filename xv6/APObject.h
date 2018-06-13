@@ -109,7 +109,6 @@ typedef struct AWindow
     int pid;
     int msgQueueID;
     int parentID;
-    int childFocusId;
     int focusState;
     
     APoint pos;

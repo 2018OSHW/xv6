@@ -11,11 +11,14 @@
 #include "APObject.h"
 
 
+void APPreJudge(AHwnd hwnd, AMessage * msg);
+
 bool APWndProc(AHwnd hwnd, AMessage msg);
 
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage));
 
 void APSendMessage(AHwnd hwnd, AMessage msg);
+
 
 
 #endif /* APWindow_h */

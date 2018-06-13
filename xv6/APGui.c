@@ -353,13 +353,6 @@ void APWndListDestroy(AWndList * list)
 //------------------------------------------------------------------------------------
 //Msg
 
-void APPreJudge(AHwnd hwnd, AMessage * msg)
-{
-    if (msg->wndId != hwnd->id)
-        return false;
-    return true;
-    
-}
 
 void APMsgQueueInit(AMsgQueue * queue)
 {
