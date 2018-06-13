@@ -25,8 +25,8 @@
 typedef char bool;
 #define true (char)1
 #define false (char)0
-#define SUBMIT true
-#define FINISH false
+#define True true
+#define False false
 
 #define DEFAULT_BACKGROUND_COLOR 0xbfff
 #define DEFAULT_WINDOW_COLOR 0x0a

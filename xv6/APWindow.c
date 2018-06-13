@@ -60,14 +60,14 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
     {
             
     }
-    return FINISH;
+    return False;
 }
 
 void APPreJudge(AHwnd hwnd, AMessage * msg)
 {
-    if (msg->wndId != hwnd->id)
-        return false;
-    return true;
+    if (msg->wndID != hwnd->id)
+        return False;
+    return True;
 }
 
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
@@ -76,7 +76,7 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
     while (1)
     {
         getMessage(hwnd);
-        if (APPreJudge(hwnd,msg))
+        if (APPreJudge(hwnd,&hwnd->msg))
             if (wndProc(hwnd, hwnd->msg))
                 break;
         hwnd->msg.type = MSG_NULL;
