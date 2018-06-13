@@ -8,6 +8,17 @@
 # with %cs=0 %ip=7c00.
 
 .code16                       # Assemble for 16-bit mode
+
+//graphics mode
+movw $0x4f01, %ax
+movw $0x4115, %cx
+movw $0x1000, %di
+int  $0x10
+
+movw $0x4f02, %ax
+movw $0x4115, %bx
+int $0x10
+
 .globl start
 start:
   cli                         # BIOS enabled interrupts; disable

@@ -79,7 +79,7 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 {
     hwnd->wndProc = wndProc;
     //--------add window to list
-    registWindow(hwnd)
+    registWindow(hwnd);
     //--------draw window
     AMessage msg;
     msg.type = MSG_INIT;

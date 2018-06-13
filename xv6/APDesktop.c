@@ -43,7 +43,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     {
         case MSG_INIT:
             msg.type = MSG_PAINT;
-            APsendMessage(hwnd,msg);
+            APSendMessage(hwnd,msg);
             return False;
         case MSG_PAINT:
             break;

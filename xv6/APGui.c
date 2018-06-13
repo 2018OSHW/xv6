@@ -77,7 +77,7 @@ int sys_paintWindow(void)
     wx += hwnd->pos.x;
     wy += hwnd->pos.y;
     
-    int id = hwnd ->id;
+    //int id = hwnd ->id;
     AColor *data = hdc->content;
     
     int j;
