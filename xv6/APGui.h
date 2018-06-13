@@ -5,7 +5,7 @@
 
 void APGuiInit(void);
 
-void sendMessage(int wndId, AMessage *msg);
+void sendMessage(int wndId, struct AMessage *msg);
 
 static inline bool contain(ARect rect, int x, int y)
 {

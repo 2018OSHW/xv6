@@ -218,8 +218,8 @@ void sendMessage(int wndId, AMessage *msg)
     }
     int msgQueueID = wndList.data[wndId].msgQueueID;
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
-    msg.wndId = wndId;
-    pvcMsgQueueEnQueue(queue, msg);
+    msg->wndId = wndId;
+    APMsgQueueEnQueue(queue, *msg);
     wakeup((void *)wndList.data[wndId].pid);
 }
 
@@ -364,7 +364,7 @@ void APMsgQueueInit(AMsgQueue * queue)
     queue->head = queue->tail = 0;
 }
 
-void APMsgQueueEnQueue(AMsgQueue * queue, PMessage msg)
+void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg)
 {
     if ((queue->tail + 1) % MESSAGE_QUEUE_SIZE == queue->head)
     {
