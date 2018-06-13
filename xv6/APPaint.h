@@ -7,11 +7,11 @@
 
 #ifndef APPaint_h
 #define APPaint_h
+
 #include "APObject.h"
-#include "APInclude.h"
 
 
-ABitmap APLoadBitmap(char * filename);
+ABitmap APLoadBitmap (char * filename);
 
 AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
 

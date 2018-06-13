@@ -37,7 +37,6 @@ void runApp(void * param)
 
 bool wndProc(AHwnd hwnd, AMessage msg)
 {
-    static ADc timeDc;
     switch(msg.type)
     {
         
