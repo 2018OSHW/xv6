@@ -8,6 +8,7 @@
 #ifndef APPaint_h
 #define APPaint_h
 #include "APObject.h"
+#include "APInclude.h"
 
 
 ABitmap APLoadBitmap(char * filename);

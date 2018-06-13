@@ -80,7 +80,7 @@ int main(void)
     r->pid = getpid();
     r->msgQueueID = -1;
     
-    r->parentId = -1;
+    r->parentID = -1;
 
     AHwnd hwnd = r;
     APWndExec(hwnd, wndProc);
