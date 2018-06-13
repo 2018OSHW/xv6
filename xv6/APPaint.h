@@ -13,7 +13,7 @@
 
 struct ABitmap APLoadBitmap (char * filename);
 
-struct AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
+struct AHdc APCreateCompatibleDCFromBitmap(struct ABitmap bmp);
 
 
 #endif /* APPaint_h */

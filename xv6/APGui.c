@@ -169,10 +169,10 @@ int sys_initStringFigure(void)
 int sys_sendMessage(void)
 {
     int wndId = 0;
-    PMessage * msg = 0;
+    AMessage * msg = 0;
     if (argint(0, &wndId) < 0 || argstr(1, (char**)&msg) < 0)
         return -1;
-    sendMessage(wndId, *msg);
+    sendMessage(wndId, msg);
     return 0;
 }
 
@@ -208,11 +208,11 @@ int sys_getMessage(void)
 }
 
 
-void sendMessage(int wndId, AMessage msg)
+void sendMessage(int wndId, AMessage *msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
-    switch (msg.type)
+    switch (msg->type)
     {
 
     }
