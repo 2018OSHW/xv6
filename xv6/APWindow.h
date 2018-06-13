@@ -11,7 +11,7 @@
 #include "APObject.h"
 
 
-void APPreJudge(AHwnd hwnd, AMessage * msg);
+bool APPreJudge(AHwnd hwnd, AMessage * msg);
 
 bool APWndProc(AHwnd hwnd, AMessage msg);
 

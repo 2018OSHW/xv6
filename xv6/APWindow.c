@@ -63,7 +63,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
     return False;
 }
 
-void APPreJudge(AHwnd hwnd, AMessage * msg)
+bool APPreJudge(AHwnd hwnd, AMessage * msg)
 {
     if (msg->wndID != hwnd->id)
         return False;
