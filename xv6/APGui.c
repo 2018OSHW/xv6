@@ -274,7 +274,8 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
         hwnd->parentID = list->desktop;
     list->data[p].parentID = hwnd->parentID;
     
-    for (int i = 0; hwnd->title[i]; ++i)
+    int i = 0;
+    for (i = 0; hwnd->title[i]; ++i)
         list->data[p].title[i] = hwnd->title[i];
     list->data[p].title[i] = '\0';
     
