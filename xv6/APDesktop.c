@@ -36,17 +36,23 @@ void runApp(void * param)
 }
 
 
+
 bool wndProc(AHwnd hwnd, AMessage msg)
 {
     switch(msg.type)
     {
-        
+        case MSG_INIT:
+            msg.type = MSG_PAINT;
+            APsendMessage(hwnd,msg);
+            return False;
+        case MSG_PAINT:
+            break;
+        default: break;
             
             
             
     }
     return APWndProc(hwnd, msg);
-
 }
 
 int main(void)
@@ -63,7 +69,7 @@ int main(void)
     r->wholeDc.size.cy = SCREEN_HEIGHT;
     r->wholeDc.content = (AColor *)malloc(sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
     if (r->wholeDc.content == 0)
-        printf("whole dc error");
+        printf(1,"whole dc error");
     memset(r->wholeDc.content, 0x0c, sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
     
     r->clientPos.x = 0;
@@ -72,7 +78,7 @@ int main(void)
     r->Dc.size.cy = SCREEN_HEIGHT ;
     r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     if (r->Dc.content == 0)
-        printf("dc error");;
+        printf(1,"dc error");
     memset(r->Dc.content, 0x0c, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
     r->msg.type = MSG_NULL;
@@ -83,7 +89,7 @@ int main(void)
     r->parentID = -1;
 
     AHwnd hwnd = r;
-    printf("desktop initialized!")
+    printf(1,"desktop initialized!");
     APWndExec(hwnd, wndProc);
     exit();
 }

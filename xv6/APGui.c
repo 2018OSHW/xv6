@@ -54,6 +54,7 @@ void APBufPaint(int x1,int y1,int x2,int y2)
     release(&screenLock);
 }
 
+//paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h)
 int sys_paintWindow(void)
 {
     AHwnd hwnd = 0;
@@ -72,6 +73,7 @@ int sys_paintWindow(void)
         return 0;
     
     //wx,wy相对于window的位置，hwnd->pos是window的左上角在屏幕的坐标
+    
     wx += hwnd->pos.x;
     wy += hwnd->pos.y;
     
@@ -99,34 +101,13 @@ int sys_paintWindow(void)
             }
             else if (wx + j >= screenWidth)
                 break;
-            int p = wndList.data[id].prev;
-            
-            //前面有程序，被遮挡，不需要画
-            while (p != -1)
-            {
-                //　改点在前面程序的数据区中
-                if (contain(wndList.data[p].rect, wx + j, wy + i))
-                    break;
-                p = wndList.data[p].prev;
-            }
-            if (p != -1)
-                continue;
-            //假如父窗口未显示，则不显示该点
-            p = hwnd->parentID;
-            while (p != -1)
-            {
-                if (!contain(wndList.data[p].clientRect, wx + j, wy + i))
-                    break;
-                p = wndList.data[p].parentID;
-            }
-            if (p != -1)
-                continue;
             
             AColor c = data[off_x + j];
             if (c.r != COLOR_NULL_ALPHA || c.g != COLOR_NULL_ALPHA || c.b != COLOR_NULL_ALPHA)
-                screenContent[screen_off_x + j] = c;
+                screenBuf[screen_off_x + j] = c;
         }
     }
+    /*
     w += wx;
     h += wy;
     if (wx < 0)
@@ -137,8 +118,9 @@ int sys_paintWindow(void)
         h = screenHeight;
     if (w > screenWidth)
         w = screenWidth;
+     */
     //release(&videoLock);
-    APBufPaint(wx, wy, w, h);
+    APBufPaint(0, 0, screenWidth, screenHeight);
     return 0;
 }
     

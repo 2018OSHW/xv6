@@ -33,6 +33,7 @@ typedef struct ItemData
 
 void desktopInitStringFigure();
 
-
 void runApp(void * param);
+
+
 #endif

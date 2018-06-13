@@ -35,6 +35,8 @@ typedef char bool;
 
 enum MSG {
     MSG_NULL,
+    MSG_INIT,
+    MSG_PAINT,
     
 };
 

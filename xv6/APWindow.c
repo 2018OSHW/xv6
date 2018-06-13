@@ -58,6 +58,11 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
 {
     switch (msg.type)
     {
+        case MSG_PAINT:
+            paintWindow(hwnd, 0, 0, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy);
+            break;
+        default: break;
+            
             
     }
     return False;
@@ -73,6 +78,14 @@ bool APPreJudge(AHwnd hwnd, AMessage * msg)
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 {
     hwnd->wndProc = wndProc;
+    //--------add window to list
+    registWindow(hwnd)
+    //--------draw window
+    AMessage msg;
+    msg.type = MSG_INIT;
+    msg.wndID = hwnd->id;
+    APSendMessage(hwnd,msg);
+    //--------process window
     while (1)
     {
         getMessage(hwnd);
