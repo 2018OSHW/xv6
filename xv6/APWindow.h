@@ -10,6 +10,7 @@
 #include "APInclude.h"
 #include "APObject.h"
 
+
 bool APWndProc(AHwnd hwnd, AMessage msg);
 
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage));

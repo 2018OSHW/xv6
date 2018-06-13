@@ -8,10 +8,7 @@
 #include "user.h"
 #include "APWindow.h"
 
-int APError(int index)
-{
-    return index;
-}
+
 
 
 void APSendMessage(AHwnd hwnd, AMessage msg)

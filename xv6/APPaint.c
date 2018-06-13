@@ -59,3 +59,8 @@ AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
     //printf(1, "%d %d\n", hdc->size.cx, hdc->size.cy);
     return hdc;
 }
+
+int APError(int index)
+{
+    return index;
+}

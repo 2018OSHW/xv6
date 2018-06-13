@@ -13,7 +13,7 @@
 #include "APLib.h"
 #include "APWindow.h"
 
-/*
+/*s
 typedef struct Item
 {
 	int wndId;
