@@ -336,7 +336,7 @@ void APWndListRemove(AWndList * list, int wndId)
     list->data[wndId].hwnd = 0;
     list->space = wndId;
 
-    pvcMsgQueueInit(&list->data[wndId].msgQueue);
+    APMsgQueueInit(&list->data[wndId].msgQueue);
     
     release(&list->lock);
 }
