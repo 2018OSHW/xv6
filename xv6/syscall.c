@@ -134,7 +134,7 @@ static int (*syscalls[])(void) = {
 [SYS_initStringFigure]  sys_initStringFigure,
 [SYS_sendMessage]  sys_sendMessage,
 [SYS_registWindow] sys_registWindow,
-[sys_getMessage] sys_getMessage,
+[SYS_getMessages] sys_getMessage,
     
 };
 

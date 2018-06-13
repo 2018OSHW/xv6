@@ -3,6 +3,7 @@
 
 #include "APObject.h"
 #include "APInclude.h"
+#include "spinlock.h"
 
 void APGuiInit(void);
 

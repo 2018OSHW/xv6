@@ -1,7 +1,5 @@
 #include "APGui.h"
 #include "types.h"
-#include "user.h"
-#include "stat.h"
 #include "x86.h"
 #include "memlayout.h"
 #include "defs.h"
@@ -218,9 +216,10 @@ void sendMessage(int wndId, AMessage *msg)
     {
 
     }
-    int msgQueueID = wndList.data[wndId].msgQueueID;
+
+    int msgQueueId = wndList.data[wndId].msgQueueID;
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
-    msg->wndId = wndId;
+    msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
     wakeup((void *)wndList.data[wndId].pid);
 }
@@ -229,7 +228,8 @@ void sendMessage(int wndId, AMessage *msg)
 //WndList
 void APWndListInit(AWndList * list)
 {
-    for (int i = 0; i < MAX_WND_NUM; ++i)
+    int i = 0;
+    for (i = 0; i < MAX_WND_NUM; ++i)
     {
         list->data[i].hwnd = 0;
         list->data[i].prev = -1;
@@ -240,7 +240,6 @@ void APWndListInit(AWndList * list)
     list->data[i - 1].next = -1;
     initlock(&list->lock, "wndListLock");
     list->head = list->tail = list->desktop = -1;
-    list->hasMouse = list->catchMouse = -1;
     list->space = 0;
 }
 

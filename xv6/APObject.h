@@ -129,7 +129,7 @@ typedef AWindow *AHwnd;
 typedef struct AWndListNode
 {
     int prev,next;
-    int pID;
+    int pid;
     int parentID;
     struct spinlock lock;
     

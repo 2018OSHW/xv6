@@ -10,10 +10,6 @@
 
 #include "types.h"
 #include "user.h"
-#include "stat.h"
-#include "x86.h"
-#include "memlayout.h"
-#include "defs.h"
 
 
 #define MAX(a, b) ((a) < (b) ? (b) : (a))
