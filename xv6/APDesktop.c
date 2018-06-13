@@ -63,7 +63,7 @@ int main(void)
     r->wholeDc.size.cy = SCREEN_HEIGHT;
     r->wholeDc.content = (AColor *)malloc(sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
     if (r->wholeDc.content == 0)
-        APError(0);
+        printf("whole dc error");
     memset(r->wholeDc.content, 0x0c, sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
     
     r->clientPos.x = 0;
@@ -72,8 +72,8 @@ int main(void)
     r->Dc.size.cy = SCREEN_HEIGHT ;
     r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     if (r->Dc.content == 0)
-        APError(0);
-    memset(r->Dc.content, 0x0, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
+        printf("dc error");;
+    memset(r->Dc.content, 0x0c, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
     r->msg.type = MSG_NULL;
     r->state = 0;
@@ -83,6 +83,7 @@ int main(void)
     r->parentID = -1;
 
     AHwnd hwnd = r;
+    printf("desktop initialized!")
     APWndExec(hwnd, wndProc);
     exit();
 }

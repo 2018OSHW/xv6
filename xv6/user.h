@@ -1,5 +1,6 @@
-struct stat;
 
+struct stat;
+struct AMessage;
 // system calls
 int fork(void);
 int exit(void) __attribute__((noreturn));
@@ -26,7 +27,7 @@ int uptime(void);
 //gui
 void paintWindow(void *, int, int, void *, int, int, int, int);
 void initStringFigure(void *, int, void *, int);
-void sendMessage(int, void *);
+void sendMessage(int, struct AMessage);
 void getMessage(void *);
 void registWindow(void *);
 
