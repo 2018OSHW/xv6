@@ -1,6 +1,7 @@
 #include "APDesktop.h"
 
 
+
 void desktopInitStringFigure()
 {
     printf(1, "init ASCII\n");

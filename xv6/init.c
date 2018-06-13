@@ -30,7 +30,7 @@ main(void)
     if(pid == 0){
      // exec("sh", argv);
       exec("APDesktop", argv);
-      printf(1, "init: exec sh failed\n");
+      printf(1, "init: exec desktop failed\n");
       exit();
     }
     while((wpid=wait()) >= 0 && wpid != pid)

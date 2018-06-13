@@ -3,7 +3,7 @@
 #include "x86.h"
 #include "memlayout.h"
 #include "defs.h"
-#include "APObject.h"
+
 
 ushort screenWidth = 0;
 ushort screenHeight = 0;

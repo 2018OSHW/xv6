@@ -56,8 +56,6 @@ AHwnd APCreateWindow(char * title, AHwnd parent, int x, int y, int width, int he
         r->parentId = parent->id;
     else
         r->parentId = -1;
-    
-    //r->focusState = WFS_LOSE_FOCUS;
     r->childFocusId = -1;
     return r;
 }

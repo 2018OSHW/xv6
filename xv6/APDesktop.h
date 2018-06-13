@@ -8,7 +8,11 @@
 #include "fs.h"
 #include "APGui.h"
 #include "APInclude.h"
+#include "APObject.h"
+#include "APPaint.h"
+#include "APLib.h"
 #include "APWindow.h"
+
 /*
 typedef struct Item
 {

@@ -2,6 +2,7 @@
 #define APGUI_H_
 
 #include "APObject.h"
+#include "APInclude.h"
 
 void APGuiInit(void);
 

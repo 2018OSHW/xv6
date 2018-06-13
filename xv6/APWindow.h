@@ -8,6 +8,7 @@
 #ifndef APWindow_h
 #define APWindow_h
 #include "APInclude.h"
+#include "APObject.h"
 
 bool APWndProc(AHwnd hwnd, AMessage msg);
 

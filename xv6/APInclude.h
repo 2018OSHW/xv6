@@ -1,9 +1,6 @@
 #ifndef APINCLUDE_H
 #define APINCLUDE_H
 
-#include "APObject.h"
-#include "APLib.h"
-#include "APPaint.h"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 

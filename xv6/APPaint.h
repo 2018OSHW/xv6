@@ -9,6 +9,7 @@
 #define APPaint_h
 
 #include "APObject.h"
+#include "APInclude.h"
 
 
 struct ABitmap APLoadBitmap (char * filename);
