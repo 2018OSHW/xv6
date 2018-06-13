@@ -6,6 +6,10 @@
 //
 
 #include "APPaint.h"
+#include "user.h"
+#include "fcntl.h"
+#include "types.h"
+#include "stat.h"
 
 
 ABitmap APLoadBitmap(char * filename)
@@ -51,7 +55,7 @@ ABitmap APLoadBitmap(char * filename)
 AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
 {
     AHdc hdc = (AHdc)malloc(sizeof(ADc));
-    hdc->pen.size = 0;
+    hdc->pen.penwidth = 0;
     hdc->pen.color = hdc->brush.color = hdc->font.color = COLOR_NULL;
     hdc->size.cx = bmp.width;
     hdc->size.cy = bmp.height;

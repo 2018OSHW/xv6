@@ -12,9 +12,9 @@
 #include "APInclude.h"
 
 
-struct ABitmap APLoadBitmap (char * filename);
+ABitmap APLoadBitmap (char * filename);
 
-struct AHdc APCreateCompatibleDCFromBitmap(struct ABitmap bmp);
+AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
 
 
 #endif /* APPaint_h */
