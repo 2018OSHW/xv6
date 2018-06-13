@@ -11,9 +11,9 @@
 #include "APObject.h"
 
 
-ABitmap APLoadBitmap (char * filename);
+struct ABitmap APLoadBitmap (char * filename);
 
-AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
+struct AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
 
 
 #endif /* APPaint_h */
