@@ -268,7 +268,7 @@ void sendMessage(int wndId, AMessage *msg)
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
-    wakeup((void *)wndList.data[wndId].hwnd.pid);
+    wakeup((void *)wndList.data[wndId].hwnd->pid);
 }
 
 //------------------------------------------------------------------------------------
@@ -438,7 +438,7 @@ void TimerCount()
             timerList.data[p].count = 0;
             AMessage msg;
             msg.type = MSG_TIMEOUT;
-            sendMessage(timerList.data[p].wndId,msg);
+            sendMessage(timerList.data[p].wndId,&msg);
         }
         p = timerList.data[p].next;
     }
