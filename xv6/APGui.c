@@ -246,11 +246,14 @@ int sys_getMessage(void)
     
     if (queue->head == queue->tail)
     {
-        printf(1,"sleeping");
+        cprintf("sleeping\n");
         sleep((void *)pid,&wndList.data[msgQueueId].lock);
     }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
+    {
+        printf("poping msg!\n");
         wndList.data[wndId].hwnd->msg = APMsgQueueDeQueue(queue);
+    }
     
     release(&wndList.data[msgQueueId].lock);
     return 0;

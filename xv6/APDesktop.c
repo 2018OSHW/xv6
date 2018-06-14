@@ -67,6 +67,7 @@ int desktop_layout[GRID_H_NUMBER][GRID_W_NUMBER]=
 
 bool wndProc(AHwnd hwnd, AMessage msg)
 {
+    cprintf("desktop processing!\n");
     switch(msg.type)
     {
 	case MSG_DRAWMAINWINDOW:
