@@ -234,13 +234,15 @@ int sys_registWindow(void)
 
 int sys_getMessage(void)
 {
-    cprintf("in function --- getMessage\n");
+
     AHwnd hwnd = 0;
     if (argstr(0, (char **)&hwnd) < 0)
         return -1;
     int wndId = hwnd->id;
     int msgQueueId = hwnd->id;
     int pid = hwnd->pid;
+    
+    cprintf("in function --- getMessage:WndId: %d\n",wndId);
     
     acquire(&wndList.data[msgQueueId].lock);
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
