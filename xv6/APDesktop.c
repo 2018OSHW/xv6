@@ -75,7 +75,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         
         case MSG_INIT:
             //init
-            int off;
+            int off = 0;
             for (int j = 0; j < GRID_H_NUMBER; j++)
             {
                 off = j * GRID_W_NUMBER;
@@ -100,7 +100,7 @@ int main(void)
 {
     desktopInitStringFigure();
     
-    AHwnd r = APCreateWindow("desktop",True,3,True,1);
+    AHwnd r = APCreateWindow("desktop",True,3);
     
     /*
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
@@ -135,7 +135,7 @@ int main(void)
     r->parentID = -1;
 */
     AHwnd hwnd = r;
-    cprintf("desktop initialized!\n");
+    printf(1,"desktop initialized!\n");
     APWndExec(hwnd, wndProc);
     exit();
 }

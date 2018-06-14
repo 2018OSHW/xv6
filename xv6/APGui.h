@@ -30,6 +30,6 @@ void APTimerListInit(ATimerList * list);
 //interval是所等的毫秒数
 void APTimerListAddToHead(ATimerList * list, int wndId, int id, int interval);
 void APTimerListRemoveWnd(ATimerList * list, int wndId);
-void APTimerListRemoveID(PTimerList * list, int wndId, int id);
+void APTimerListRemoveID(ATimerList * list, int wndId, int id);
 
 #endif
