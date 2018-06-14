@@ -234,7 +234,7 @@ int sys_registWindow(void)
 
 int sys_getMessage(void)
 {
-    cprintf("in function --- getMessage");
+    cprintf("in function --- getMessage\n");
     AHwnd hwnd = 0;
     if (argstr(0, (char **)&hwnd) < 0)
         return -1;
@@ -270,8 +270,8 @@ void sendMessage(int wndId, AMessage *msg)
 
     }
 
-    int msgQueueId = wndList.data[wndId].msgQueueID;
-    AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
+
+    AMsgQueue * queue = &wndList.data[wndId].msgQueue;
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
     wakeup((void *)wndList.data[wndId].hwnd->pid);

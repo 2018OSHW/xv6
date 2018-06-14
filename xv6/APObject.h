@@ -94,6 +94,7 @@ typedef struct AWindow
     //index in the Wndlist and Program id
     int id;
     int pid;
+
     
     //whether display character
     bool is_character;

@@ -35,7 +35,6 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
     
     r->msg.type = MSG_NULL;
     r->pid = getpid();
-    r->msgQueueID = -1;
     
     //Window Title init
     r->TitleDc.size.cx = SCREEN_WIDTH;
