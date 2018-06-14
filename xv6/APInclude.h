@@ -47,8 +47,16 @@ typedef char bool;
 #define False false
 
 
+#define MAX_X 6
+#define MAX_Y 4
+//界面中横向个数和纵向个数
+
+
+
 enum MSG {
     MSG_NULL,
+	MSG_DRAWMAINWINDOW,
+    
     MSG_INIT,
     MSG_PAINT,
     MSG_TIMEOUT,

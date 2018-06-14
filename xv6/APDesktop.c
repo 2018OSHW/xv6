@@ -69,6 +69,10 @@ bool wndProc(AHwnd hwnd, AMessage msg)
 {
     switch(msg.type)
     {
+	case MSG_DRAWMAINWINDOW:
+
+		break;
+        
         case MSG_INIT:
             //init
             int off;

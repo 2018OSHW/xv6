@@ -186,6 +186,9 @@ typedef struct
     unsigned long       biClrUsed;
     unsigned long       biClrImportant;
 } ABitmapInfoHeader;
+//bitmapµÄ´¢´æ¸ñÊ½
+
+int APError(int index);
 
 
 #endif
