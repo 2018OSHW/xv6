@@ -9,6 +9,7 @@
 #define APWindow_h
 #include "APInclude.h"
 #include "APObject.h"
+#include "APPaint.h"
 
 //start a program
 AHwnd APCreateWindow(char * title,bool is_map,int page);

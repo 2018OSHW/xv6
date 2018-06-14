@@ -52,7 +52,7 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
         //Grid_Mode activate
         r->Grid = (int*)malloc(sizeof(int) * GRID_W_NUMBER * GRID_H_NUMBER * page);
         r->total_page = page;
-        r->curr_page = 0;
+        r->cur_page = 0;
     }
     else
     {
