@@ -24,7 +24,7 @@
 void
 timerinit(void)
 {
-  // Interrupt 100 times/sec.
+  // Interrupt --- 100 ticks/sec.
   outb(TIMER_MODE, TIMER_SEL0 | TIMER_RATEGEN | TIMER_16BIT);
   outb(IO_TIMER1, TIMER_DIV(100) % 256);
   outb(IO_TIMER1, TIMER_DIV(100) / 256);

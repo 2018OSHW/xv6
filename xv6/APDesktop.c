@@ -36,16 +36,53 @@ void runApp(void * param)
 }
 
 
+//16x11
+int desktop_layout[GRID_H_NUMBER][GRID_W_NUMBER]=
+{
+    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+    GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
+    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
+    GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
+    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+        GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
+    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
+        GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
+    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+        GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
+    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
+        GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
+    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+        GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
+    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
+        GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
+    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+        GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
+    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
+        GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
+    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+        GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL}
+};
+
+
 
 bool wndProc(AHwnd hwnd, AMessage msg)
 {
     switch(msg.type)
     {
         case MSG_INIT:
+            //init
+            int off;
+            for (int j = 0; j < GRID_H_NUMBER; j++)
+            {
+                off = j * GRID_W_NUMBER;
+                for (int i = 0; i< GRID_W_NUMBER; i++)
+                    hwnd->Grid[off + i] = desktop_layout[i][j];
+            }
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);
             return False;
         case MSG_PAINT:
+            APGridPaint(hwnd);
             break;
         default: break;
             
@@ -58,11 +95,16 @@ bool wndProc(AHwnd hwnd, AMessage msg)
 int main(void)
 {
     desktopInitStringFigure();
+    
+    AHwnd r = APCreateWindow("desktop",True,3,True,1);
+    
+    /*
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
     if (r == 0)
-        APError(0);
+        cprintf("desktop creation failed!\n");
     strcpy(r->title, "desktop");
     
+    //create window
     r->pos.x = 0;
     r->pos.y = 0;
     r->wholeDc.size.cx = SCREEN_WIDTH;
@@ -87,9 +129,9 @@ int main(void)
     r->msgQueueID = -1;
     
     r->parentID = -1;
-
+*/
     AHwnd hwnd = r;
-    printf(1,"desktop initialized!");
+    cprintf("desktop initialized!\n");
     APWndExec(hwnd, wndProc);
     exit();
 }

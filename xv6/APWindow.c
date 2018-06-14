@@ -15,42 +15,53 @@ void APSendMessage(AHwnd hwnd, AMessage msg)
 }
 
 
-AHwnd APCreateWindow(char * title, AHwnd parent, int x, int y, int width, int height)
+AHwnd APCreateWindow(char * title,bool is_map,int page)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
     if (r == 0)
-        APError(0);
+        cprintf("%s - window creation failed!\n",title);
     
+    //title init
     strcpy(r->title, title);
     
-    r->pos.x = x;
-    r->pos.y = y;
-    
-    r->wholeDc.size.cx = width;
-    r->wholeDc.size.cy = height;
-    r->wholeDc.content = (AColor *)malloc(sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
-    if (r->wholeDc.content == 0)
-        APError(0);
-    memset(r->wholeDc.content, DEFAULT_WINDOW_COLOR, sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
-    
-    r->clientPos.x = WND_EDGE_SIZE;
-    r->clientPos.y = WND_TITLE_HEIGHT;
-    r->Dc.size.cx = width - WND_EDGE_SIZE * 2;
-    r->Dc.size.cy = height - WND_TITLE_HEIGHT - WND_EDGE_SIZE;
+    //DC innit
+    r->Dc.size.cx = SCREEN_WIDTH;
+    r->Dc.size.cy = SCREEN_HEIGHT - WND_TITLE_HEIGHT;
     r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     if (r->Dc.content == 0)
-        APError(0);
-    memset(r->Dc.content, 0x0, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
+        cprintf("$s window - Dc creation failed!",title);
+    memset(r->Dc.content, DEFAULT_BACKGROUND_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
     r->msg.type = MSG_NULL;
-    r->state = 0;
     r->pid = getpid();
     r->msgQueueID = -1;
     
-    if (parent)
-        r->parentID = parent->id;
+    //Window Title init
+    r->TitleDc.size.cx = SCREEN_WIDTH;
+    r->TitleDc.size.cy = WND_TITLE_HEIGHT;
+    r->TitleDc.content = (AColor *)malloc(sizeof(AColor) * r->TitleDc.size.cx * r->TitleDc.size.cy);
+    if (r->TitleDc.content == 0)
+        cprintf("%s window - Title DC creation failed!\n",title);
+    memset(r->Dc.content, DEFAULT_TITLE_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
+    
+    //if is Grid Mode
+    if (is_map)
+    {
+        //Grid_Mode activate
+        r->Grid = (int*)malloc(sizeof(int) * GRID_W_NUMBER * GRID_H_NUMBER * page)
+        r->total_page = page;
+        r->current_page = 0;
+    }
     else
-        r->parentID = -1;
+    {
+        //non Grid_Mode activate
+        r->wholeDc.size.cx = SCREEN_WIDTH;
+        r->wholeDc.size.cy = MAX_DC_HEIGHT;
+        r->wholeDc.content = (AColor *)malloc(sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
+        if (r->wholeDc.content == 0)
+            cprintf("%s window - whole DC creation failed!\n",title);
+        memset(r->wholeDc.content, DEFAULT_WINDOW_COLOR, sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
+    }
     return r;
 }
 
@@ -59,7 +70,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
     switch (msg.type)
     {
         case MSG_PAINT:
-            paintWindow(hwnd, 0, 0, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy);
+            paintWindow(hwnd, 0, 0, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_map);
             break;
         default: break;
             
@@ -93,5 +104,69 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
             if (wndProc(hwnd, hwnd->msg))
                 break;
         hwnd->msg.type = MSG_NULL;
+    }
+}
+
+//---------------------------------------------------
+//Grid_mode paint
+void APGridPaint(AHWnd wnd)
+{
+    if (!wnd->is_map)
+    {
+        cprintf("error! paint non-Grid Mode program! \n");
+        return;
+    }
+    if (wnd->total_page <= 0 || wnd->cur_page >= wnd->total_page)
+    {
+        cprintf("Grid mode page error!");
+        return;
+    }
+    
+    int index = wnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER,start = index;
+    
+    for (int j = 0; j < GRID_H_NUMBER; j++)
+    {
+        for (int i = 0; i < GRID_W_NUMBER;i++)
+        {
+            index = start + GRID_W_NUMBER * j + i;
+            APen pen;
+            ABrush brush;
+            switch (wnd->Grid[index])
+            {
+                case GRID_WALL:
+                    pen.color = RGB(0xd2,0x69,0x1e);
+                    pen.size = 2;
+                    brush.color = RGB(0xd2,0x69,0x1e);
+                    APSetPen(&wnd->Dc,pen);
+                    APSetBrush(&wnd->Dc,brush);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    break;
+                case GRID_ROAD:
+                    pen.color = RGB(0x69,0x69,0x69);
+                    pen.size = 2;
+                    brush.color = RGB(0x69,0x69,0x69);
+                    APSetPen(&wnd->Dc,pen);
+                    APSetBrush(&wnd->Dc,brush);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    break;
+                case GRID_GRASS:
+                    pen.color = RGB(0x00,0x80,0x00);
+                    pen.size = 2;
+                    brush.color = RGB(0x00,0x80,0x00);
+                    APSetPen(&wnd->Dc,pen);
+                    APSetBrush(&wnd->Dc,brush);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    break;
+                case GRID_RIVER:
+                    pen.color = RGB(0x00,0xbf,0xff);
+                    pen.size = 2;
+                    brush.color = RGB(0x00,0xbf,0xff);
+                    APSetPen(&wnd->Dc,pen);
+                    APSetBrush(&wnd->Dc,brush);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    break;
+                default: break;
+            }
+        }
     }
 }

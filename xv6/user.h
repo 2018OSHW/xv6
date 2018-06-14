@@ -25,7 +25,7 @@ int sleep(int);
 int uptime(void);
 
 //gui
-void paintWindow(void *, int, int, void *, int, int, int, int);
+void paintWindow(void *, int, int, void *, int, int, int, int,int);
 void initStringFigure(void *, int, void *, int);
 void sendMessage(int, struct AMessage*);
 void getMessage(void *);

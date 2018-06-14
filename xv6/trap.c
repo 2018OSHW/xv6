@@ -32,6 +32,8 @@ idtinit(void)
   lidt(idt, sizeof(idt));
 }
 
+extern void TimerCount();
+
 //PAGEBREAK: 41
 void
 trap(struct trapframe *tf)
@@ -54,6 +56,7 @@ trap(struct trapframe *tf)
       wakeup(&ticks);
       release(&tickslock);
     }
+    TimerCount();
     lapiceoi();
     break;
   case T_IRQ0 + IRQ_IDE:

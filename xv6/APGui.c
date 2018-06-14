@@ -14,6 +14,48 @@ static AColor *screenContent = 0;
 struct spinlock screenLock;
 
 
+AColor character_img[GRID_WIDTH][GRID_WIDTH] =
+{
+    {{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff}},
+    {{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff}},
+    {{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00}},
+    {{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff}},
+    {{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff}}
+};
+//index of character in the grid
+int character_pre_x = 1, character_pre_y = 1;
+int character_x = 1,character_y = 1;
+
+//character_move
+void APDrawCharacter(int is_grid)
+{
+    acquire(&screenlock);
+    if (is_grid)
+    {
+        int off = character_pre_y * GRID_WIDTH * screenWidth + character_pre_x * GRID_WIDTH;
+        int size = sizeof(AColor) * GRID_WIDTH;
+        for (int j = 0; j < GRID_WIDTH; j++)
+        {
+            memmove(screenBuf + off, screenContent + off,size);
+            memmove(screenAddr + off,screenContent + off,size);
+            off += screenWidth;
+        }
+        size = sizeof(AColor);
+        off = character_y * GRID_WIDTH * screenWidth + character_x * GRID_WIDTH;
+        for (int j = 0; j < GRID_WIDTH; j++)
+        {
+            for (int i = 0; i < GRID_WIDTH; i++)
+            {
+                memmove(screenBuf + off + i, character_img[i][j], size);
+                memmove(screenAddr + off + i,character_img[i][j], size);
+            }
+            off += screenWidth;
+        }
+    }
+    release(&screenlock);
+}
+
+
 AWndList wndList;
 
 ARect screenRect;
@@ -21,6 +63,7 @@ ARect screenRect;
 ATimerList timerList;
 
 int timerListReady = 0;
+
 
 void APGuiInit(void)
 {
@@ -40,7 +83,7 @@ void APGuiInit(void)
 }
 
 //将左上角坐标为(x1,y1),右下角坐标为(x2,y2)的矩形区域从Buf绘制到屏幕上
-void APBufPaint(int x1,int y1,int x2,int y2)
+void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
 {
     acquire(&screenLock);
     x2 -= x1;
@@ -48,22 +91,49 @@ void APBufPaint(int x1,int y1,int x2,int y2)
     int off = x1 + y1 * screenWidth;
     for (int y = y1 ; y < y2; y++)
     {
-        memmove(screenAddr + off , screenBuf + off, x2);
+        memmove(screenBuf + off , screenContent + off, x2);
+        memmove(screenAddr + off, screenContent + off, x2);
         off += screenWidth;
     }
+    if (is_grid)
+    {
+        if (x1 <= character_x * GRID_WIDTH + GRID_WIDTH && x2 >= character_x * GRID_WIDTH
+            && y1 <= character_y * GRID_WIDTH + GRID_WIDTH && y2 >= character_y * GRID_WIDTH)
+        {
+            for (int j = 0; j < GRID_WIDTH ; j++)
+            {
+                off = (character_y * GRID_WIDTH + j) * screenWidth + character_x * GRID_WIDTH;
+                if (character_y * GRID_WIDTH + j < y1)
+                    continue;
+                if (character_y * GRID_WIDTH + j > y2)
+                    break;
+                for (int i = 0; i < GRID_WIDTH; i++)
+                {
+                    if (character_x * GRID_WIDTH + i < x1)
+                        continue;
+                    if (character_x * GRID_WIDTH + i > x2)
+                        break;
+                    memmove(screenBuf + off + i, character_img[i][j],sizeof(AColor));
+                    memmove(screenAddr + off + i, character_img[i][j],sizeof(AColor));
+                }
+                off += screenWidth;
+            }
+        }
+    }
+    
     release(&screenLock);
 }
 
-//paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h)
+//paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h,is_grid)
 int sys_paintWindow(void)
 {
     AHwnd hwnd = 0;
     AHdc hdc = 0;
-    int wx,wy,sx,sy,w,h;
+    int wx,wy,sx,sy,w,h,is_grid;
     //从控制台获取数据，并检验值是否合法
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &wx) < 0 || argint(2, &wy) < 0
         || argstr(3, (char **)&hdc) < 0 || argint(4, &sx) < 0
-        || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0)
+        || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0 || argint(8, &is_grid) < 0)
         return -1;
     
     if (sx < 0 || sy < 0 || h <= 0 || w <= 0 || sx + w > hdc->size.cx || sy + h > hdc->size.cy)
@@ -72,10 +142,7 @@ int sys_paintWindow(void)
     if (wx < 0 || wy < 0 || wx + w > hwnd->wholeDc.size.cx || wy + h > hwnd->wholeDc.size.cy)
         return 0;
     
-    //wx,wy相对于window的位置，hwnd->pos是window的左上角在屏幕的坐标
-    
-    wx += hwnd->pos.x;
-    wy += hwnd->pos.y;
+    //wx,wy是window重绘左上角坐标
     
     //int id = hwnd ->id;
     AColor *data = hdc->content;
@@ -104,10 +171,9 @@ int sys_paintWindow(void)
             
             AColor c = data[off_x + j];
             if (c.r != COLOR_NULL_ALPHA || c.g != COLOR_NULL_ALPHA || c.b != COLOR_NULL_ALPHA)
-                screenBuf[screen_off_x + j] = c;
+                screenContent[screen_off_x + j] = c;
         }
     }
-    /*
     w += wx;
     h += wy;
     if (wx < 0)
@@ -118,11 +184,11 @@ int sys_paintWindow(void)
         h = screenHeight;
     if (w > screenWidth)
         w = screenWidth;
-     */
     //release(&videoLock);
-    APBufPaint(0, 0, screenWidth, screenHeight);
+    APBufPaint(wx, wy, w, h,is_grid);
     return 0;
 }
+
     
 
 char GBK2312[GBK2312_SIZE];
@@ -208,6 +274,8 @@ void sendMessage(int wndId, AMessage *msg)
 
 //------------------------------------------------------------------------------------
 //WndList
+
+//space--insert_position
 void APWndListInit(AWndList * list)
 {
     int i = 0;
@@ -221,7 +289,8 @@ void APWndListInit(AWndList * list)
     }
     list->data[i - 1].next = -1;
     initlock(&list->lock, "wndListLock");
-    list->head = list->tail = list->desktop = -1;
+    list->head = list->tail  = -1;
+    list->desktop = 0;
     list->space = 0;
 }
 
@@ -236,32 +305,11 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
     }
     list->space = list->data[list->space].next;
     list->data[p].hwnd = hwnd;
+    
     hwnd->id = p;
-    list->data[p].pid = hwnd->pid;
-    if (hwnd->msgQueueID >= 0)
-        list->data[p].msgQueueID = hwnd->msgQueueID;
-    else
-        list->data[p].msgQueueID = hwnd->msgQueueID = p;
+    list->data[p].msgQueueID = p;
     
-    list->data[p].rect.x = hwnd->pos.x;
-    list->data[p].rect.y = hwnd->pos.y;
-    list->data[p].rect.w = hwnd->wholeDc.size.cx;
-    list->data[p].rect.h = hwnd->wholeDc.size.cy;
-    
-    list->data[p].clientRect.x = hwnd->clientPos.x + hwnd->pos.x;
-    list->data[p].clientRect.y = hwnd->clientPos.y + hwnd->pos.y;
-    list->data[p].clientRect.w = hwnd->Dc.size.cx;
-    list->data[p].clientRect.h = hwnd->Dc.size.cy;
-    if (hwnd->parentID < 0)
-        hwnd->parentID = list->desktop;
-    list->data[p].parentID = hwnd->parentID;
-    
-    int i = 0;
-    for (i = 0; hwnd->title[i]; ++i)
-        list->data[p].title[i] = hwnd->title[i];
-    list->data[p].title[i] = '\0';
-    
-    //desktop ---- id = -1
+    //desktop ---- id = 0
     list->data[p].next = list->head;
     list->data[p].prev = -1;
     if (list->head == -1)
@@ -335,9 +383,12 @@ void APWndListDestroy(AWndList * list)
 //------------------------------------------------------------------------------------
 //Msg
 
+//Msg Queue
+//head = start, tail = end next
 
 void APMsgQueueInit(AMsgQueue * queue)
 {
+    // as an array
     queue->head = queue->tail = 0;
 }
 
@@ -371,5 +422,144 @@ AMessage APMsgQueueDeQueue(AMsgQueue * queue)
     queue->head = (queue->head + 1) % MESSAGE_QUEUE_SIZE;
     return queue->data[p];
 }
+
+//-----------------------------------------------------------------------------
+//Timer
+void TimerCount()
+{
+    if (!timerListReady)
+        return;
+    acquire(&timerList.lock);
+    int p = timerList.head;
+    while(p != -1)
+    {
+        timerList.data[p].count ++;
+        if (timerList.data[p].count >= timerList.data[p].interval)
+        {
+            timerList.data[p].count = 0;
+            AMessage msg;
+            msg.type = MSG_TIMEOUT;
+            sendMessage(timerList.data[p].wndId,msg)
+        }
+        p = timerList.data[p].next;
+    }
+    release(&timerList.lock)
+}
+
+
+void APTimerListInit(ATimerList * list)
+{
+    int i;
+    for (i = 0; i < MAX_TIMER_NUM; i++)
+        list->data[i].next = i + 1;
+    list->head = -1;
+    list->space = 0;
+    list->data[i].next = -1;
+    initlock(&list->lock, "timerLock");
+    timerListReady = 1;
+}
+
+void APTimerListAddToHead(ATimerList * list, int wndId, int id, int interval)
+{
+    acquire(&list->lock);
+    int p = list->space;
+    if (p == -1)
+    {
+        cprintf("Error! Too much Timer!\n");
+        return;
+    }
+    list->space = list->data[p].next;
+    list->data[p].next = list->head;
+    list->head = p;
+    list->data[p].wndId = wndId;
+    list->data[p].id = id;
+    list->data[p].interval = interval;
+    list->data[p].count = 0;
+    release(&list->lock);
+    
+}
+
+void APTimerListRemoveWnd(ATimerList * list, int wndId)
+{
+    acquire(&list->lock);
+    int p = list->head;
+    int q = p;
+    while (p != -1)
+    {
+        if (list->data[p].wndId == wndId)
+        {
+            if (p == list->head)
+            {
+                list->head = list->data[p].next;
+                list->data[p].next = list->space;
+                list->space = p;
+                p = list->head;
+                q = p;
+            }
+            else
+            {
+                list->data[q].next = list->data[p].next;
+                list->data[p].next = list->space;
+                list->space = p;
+                p = list->data[q].next;
+            }
+        }
+        else
+        {
+            q = p;
+            p = list->data[p].next;
+        }
+    }
+    release(&list->lock);
+}
+
+void APTimerListRemoveID(ATimerList * list, int wndId, int id)
+{
+    acquire(&list->lock);
+    int p = list->head;
+    int q = p;
+    while (p != -1)
+    {
+        if (list->data[p].wndId == wndId && list->data[p].id == id)
+        {
+            if (p == list->head)
+            {
+                list->head = list->data[p].next;
+                list->data[p].next = list->space;
+                list->space = p;
+                p = list->head;
+                q = p;
+            }
+            else
+            {
+                list->data[q].next = list->data[p].next;
+                list->data[p].next = list->space;
+                list->space = p;
+                p = list->data[q].next;
+            }
+        }
+        else
+        {
+            q = p;
+            p = list->data[p].next;
+        }
+    }
+    release(&list->lock);
+}
+
+void setuptimer(AHwnd hwnd,int id, int interval)
+{
+    APTimerListAddToHead(&timerList,hwnd->id,id,interval/10);
+}
+void deletetimer(AHwnd hwnd, int id)
+{
+    APTimerListRemoveID(&timerList,hwnd->id,id);
+}
+
+
+
+
+
+
 
 
