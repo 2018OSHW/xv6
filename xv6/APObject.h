@@ -5,20 +5,6 @@
 #include "APInclude.h"
 #include "spinlock.h"
 
-typedef struct Pos
-{
-    uint x,y;               //pos x,y
-}Pos;
-
-typedef struct APPos
-{
-    struct Pos scene;       //pos x,y in the scene
-    struct Pos view;        //pos x,y in the view (view is the window)
-}APPos;
-
-struct Pos get_view_pos(struct APPos item, struct APPos window);
-
-
 typedef struct AColor
 {
     uchar r;
@@ -105,43 +91,49 @@ typedef struct APoint
 
 typedef struct AWindow
 {
+    //index in the Wndlist and Program id
     int id;
     int pid;
     int msgQueueID;
-    int parentID;
-    int childFocusId;
-    int focusState;
     
-    APoint pos;
-    APoint clientPos;
+    //whether display character
+    bool is_character;
     
-    ADc Dc;
+    // if activate Grid-Mode
+    bool is_map;
+    //Grid mode
+    int *GRID;
+    int total_page;
+    int cur_page;
+    //Non-Grid mode
     ADc wholeDc;
     
-    bool state;     //unknown use
+    //Universal structure
+    ADc Dc;
+    ADc TitleDc;
+    
+    //current message wait to be processed
     AMessage msg;
     bool (*wndProc)(struct AWindow*,AMessage);
-    
+    //titlt
     char title[MAX_WND_TITLE_LENGTH];
-    
 }AWindow;
 typedef AWindow *AHwnd;
 
 typedef struct AWndListNode
 {
     int prev,next;
-    int pID;
-    int parentID;
-    struct spinlock lock;
     
+    //message queue lock
+    spinlock lock;
+    // current message
     AMessage msg;
-    int msgQueueID;
+    //message queue
     AMsgQueue msgQueue;
+    // master window id
+    int msgQueueID;
     
-    ARect rect;
-    ARect clientRect;
-    
-    char title[MAX_WND_TITLE_LENGTH];
+    //window
     AHwnd hwnd;
 }AWndListNode;
 
@@ -150,7 +142,7 @@ typedef struct AWndList
     AWndListNode data[MAX_WND_NUM];
     int head;
     int tail;
-    int space;
+    int space;      
     int desktop;
     int entry;
     struct spinlock lock;
@@ -163,9 +155,9 @@ typedef struct ATimerList
         int wndId;
         int id;
         int interval;
-        int curItrvl;
+        int count;
         int next;
-    } data[MAX_WND_NUM];
+    } data[MAX_TIMER_NUM];
     int head;
     int space;
     struct spinlock lock;
@@ -194,9 +186,9 @@ typedef struct
     unsigned long       biClrUsed;
     unsigned long       biClrImportant;
 } ABitmapInfoHeader;
-
 //bitmapµÄ´¢´æ¸ñÊ½
 
 int APError(int index);
+
 
 #endif

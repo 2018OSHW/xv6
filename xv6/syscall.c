@@ -102,6 +102,10 @@ extern int sys_uptime(void);
 
 extern int sys_paintWindow(void);
 extern int sys_initStringFigure(void);
+extern int sys_sendMessage(void);
+extern int sys_getMessage(void);
+extern int sys_registWindow(void);
+
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -128,6 +132,9 @@ static int (*syscalls[])(void) = {
     
 [SYS_paintWindow]   sys_paintWindow,
 [SYS_initStringFigure]  sys_initStringFigure,
+[SYS_sendMessage]  sys_sendMessage,
+[SYS_registWindow] sys_registWindow,
+[SYS_getMessage] sys_getMessage,
     
 };
 

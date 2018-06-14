@@ -8,6 +8,10 @@
 #ifndef APLib_h
 #define APLib_h
 
+#include "types.h"
+#include "user.h"
+
+
 #define MAX(a, b) ((a) < (b) ? (b) : (a))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define ABS(a) ((a) < 0 ? -(a) : (a))

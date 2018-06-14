@@ -7,12 +7,34 @@
 
 #ifndef APPaint_h
 #define APPaint_h
+
 #include "APObject.h"
+#include "APInclude.h"
 
+#define X_BIGGER -1
+#define X_SMALLER -2
+#define Y_BIGGER -3
+#define Y_SMALLER -4
 
-ABitmap APLoadBitmap(char * filename);
+ABitmap APLoadBitmap (char * filename);
 
 AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
+
+
+//set function
+APen APSetPen(AHdc hdc, APen pen);
+
+ABrush APSetBrush(AHdc hdc, ABrush brush);
+
+//drawing function
+
+void APDrawPixel(AHdc hdc, int x, int y, AColor color);
+
+void APDrawPoint(AHdc hdc, int x, int y);
+
+void APDrawLine(AHdc hdc, int x1, int y1, int x2, int y2);
+
+void APDrawRect(AHdc hdc, int x, int y, int w, int h);
 
 
 #endif /* APPaint_h */

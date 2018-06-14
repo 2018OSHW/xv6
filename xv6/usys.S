@@ -32,3 +32,6 @@ SYSCALL(uptime)
 
 SYSCALL(paintWindow)
 SYSCALL(initStringFigure)
+SYSCALL(sendMessage)
+SYSCALL(getMessage)
+SYSCALL(registWindow)
