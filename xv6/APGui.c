@@ -245,8 +245,10 @@ int sys_getMessage(void)
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
     
     if (queue->head == queue->tail)
+    {
+        printf(1,"sleeping");
         sleep((void *)pid,&wndList.data[msgQueueId].lock);
-    
+    }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
         wndList.data[wndId].hwnd->msg = APMsgQueueDeQueue(queue);
     

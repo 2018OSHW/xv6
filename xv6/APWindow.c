@@ -69,6 +69,7 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
 
 bool APWndProc(AHwnd hwnd, AMessage msg)
 {
+    printf(1,"start window processing!");
     switch (msg.type)
     {
         case MSG_PAINT:
@@ -99,6 +100,7 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
     msg.wndID = hwnd->id;
     APSendMessage(hwnd,msg);
     //--------process window
+    printf(1,"start getting message!\n");
     while (1)
     {
         getMessage(hwnd);
