@@ -102,7 +102,7 @@ typedef struct AWindow
     // if activate Grid-Mode
     bool is_map;
     //Grid mode
-    int *GRID;
+    int *Grid;
     int total_page;
     int cur_page;
     //Non-Grid mode

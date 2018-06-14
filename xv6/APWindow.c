@@ -20,7 +20,7 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
     if (r == 0)
-        cprintf("%s - window creation failed!\n",title);
+        printf(1,"%s - window creation failed!\n",title);
     
     //title init
     strcpy(r->title, title);
@@ -30,8 +30,8 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
     r->Dc.size.cy = SCREEN_HEIGHT - WND_TITLE_HEIGHT;
     r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     if (r->Dc.content == 0)
-        cprintf("$s window - Dc creation failed!",title);
-    memset(r->Dc.content, DEFAULT_BACKGROUND_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
+        printf(1,"$s window - Dc creation failed!\n",title);
+    memset(r->Dc.content, DEFAULT_WINDOW_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
     r->msg.type = MSG_NULL;
     r->pid = getpid();
@@ -42,9 +42,10 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
     r->TitleDc.size.cy = WND_TITLE_HEIGHT;
     r->TitleDc.content = (AColor *)malloc(sizeof(AColor) * r->TitleDc.size.cx * r->TitleDc.size.cy);
     if (r->TitleDc.content == 0)
-        cprintf("%s window - Title DC creation failed!\n",title);
+        printf(1,"%s window - Title DC creation failed!\n",title);
     memset(r->Dc.content, DEFAULT_TITLE_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
+    r->is_map = is_map;
     //if is Grid Mode
     if (is_map)
     {
@@ -60,7 +61,7 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
         r->wholeDc.size.cy = MAX_DC_HEIGHT;
         r->wholeDc.content = (AColor *)malloc(sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
         if (r->wholeDc.content == 0)
-            cprintf("%s window - whole DC creation failed!\n",title);
+            printf(1,"%s window - whole DC creation failed!\n",title);
         memset(r->wholeDc.content, DEFAULT_WINDOW_COLOR, sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
     }
     return r;
@@ -114,12 +115,12 @@ void APGridPaint(AHwnd wnd)
 {
     if (!wnd->is_map)
     {
-        cprintf("error! paint non-Grid Mode program! \n");
+        printf(1,"error! paint non-Grid Mode program! \n");
         return;
     }
     if (wnd->total_page <= 0 || wnd->cur_page >= wnd->total_page)
     {
-        cprintf("Grid mode page error!");
+        printf(1,"Grid mode page error!");
         return;
     }
     
