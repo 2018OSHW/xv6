@@ -125,7 +125,7 @@ typedef struct AWndListNode
     int prev,next;
     
     //message queue lock
-    spinlock lock;
+    struct spinlock lock;
     // current message
     AMessage msg;
     //message queue

@@ -176,7 +176,7 @@ void APDrawLine(AHdc hdc,int x1, int y1,int x2,int y2)
     int s = 0,e = 0;
     if (abs_int(x1 - x2) > abs_int(y1 - y2))
     {
-        double angle = double(y1 - y2) / double(x1 - x2);
+        double angle = (double)(y1 - y2) / (double)(x1 - x2);
         if (x2 > x1)
         {
             s = x1;
@@ -196,7 +196,7 @@ void APDrawLine(AHdc hdc,int x1, int y1,int x2,int y2)
         }
         return;
     }
-    double angle = double(x1 - x2)/double(y1 - y2);
+    double angle = (double)(x1 - x2)/(double)(y1 - y2);
     if (y1 > y2)
     {
         s = y2;
