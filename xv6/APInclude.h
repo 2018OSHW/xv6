@@ -34,8 +34,15 @@ typedef char bool;
 #define DEFAULT_BACKGROUND_COLOR 0xbfff
 #define DEFAULT_WINDOW_COLOR 0x0a
 
+#define MAX_X 6
+#define MAX_Y 4
+//界面中横向个数和纵向个数
+
+
+
 enum MSG {
     MSG_NULL,
+	MSG_DRAWMAINWINDOW,
     
 };
 

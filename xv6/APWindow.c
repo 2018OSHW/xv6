@@ -20,7 +20,7 @@ void pvcSendMessage(AHwnd hwnd, AMessage msg)
 }
 
 
-AHwnd APCreateWindow(char * title, PHwnd parent, int x, int y, int width, int height)
+AHwnd APCreateWindow(char * title, AHwnd parent, int x, int y, int width, int height)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
     if (r == 0)
