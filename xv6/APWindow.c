@@ -49,9 +49,9 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
     if (is_map)
     {
         //Grid_Mode activate
-        r->Grid = (int*)malloc(sizeof(int) * GRID_W_NUMBER * GRID_H_NUMBER * page)
+        r->Grid = (int*)malloc(sizeof(int) * GRID_W_NUMBER * GRID_H_NUMBER * page);
         r->total_page = page;
-        r->current_page = 0;
+        r->curr_page = 0;
     }
     else
     {
@@ -110,7 +110,7 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 
 //---------------------------------------------------
 //Grid_mode paint
-void APGridPaint(AHWnd wnd)
+void APGridPaint(AHwnd wnd)
 {
     if (!wnd->is_map)
     {
