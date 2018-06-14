@@ -94,7 +94,6 @@ typedef struct AWindow
     //index in the Wndlist and Program id
     int id;
     int pid;
-    int msgQueueID;
     
     //whether display character
     bool is_character;
@@ -126,11 +125,10 @@ typedef struct AWndListNode
     
     //message queue lock
     struct spinlock lock;
-    // current message
-    AMessage msg;
     //message queue
     AMsgQueue msgQueue;
-    // master window id
+    
+    // window index
     int msgQueueID;
     
     //window

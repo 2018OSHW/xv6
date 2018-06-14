@@ -234,11 +234,12 @@ int sys_registWindow(void)
 
 int sys_getMessage(void)
 {
+    cprintf("in function --- getMessage");
     AHwnd hwnd = 0;
     if (argstr(0, (char **)&hwnd) < 0)
         return -1;
     int wndId = hwnd->id;
-    int msgQueueId = hwnd->msgQueueID;
+    int msgQueueId = hwnd->id;
     int pid = hwnd->pid;
     
     acquire(&wndList.data[msgQueueId].lock);
@@ -251,7 +252,7 @@ int sys_getMessage(void)
     }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
     {
-        printf("poping msg!\n");
+        cprintf("poping msg!\n");
         wndList.data[wndId].hwnd->msg = APMsgQueueDeQueue(queue);
     }
     
