@@ -442,7 +442,7 @@ void TimerCount()
         }
         p = timerList.data[p].next;
     }
-    release(&timerList.lock)
+    release(&timerList.lock);
 }
 
 
