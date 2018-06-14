@@ -29,7 +29,7 @@ int character_x = 1,character_y = 1;
 //character_move
 void APDrawCharacter(int is_grid)
 {
-    acquire(&screenlock);
+    acquire(&screenLock);
     if (is_grid)
     {
         int off = character_pre_y * GRID_WIDTH * screenWidth + character_pre_x * GRID_WIDTH;
@@ -40,19 +40,18 @@ void APDrawCharacter(int is_grid)
             memmove(screenAddr + off,screenContent + off,size);
             off += screenWidth;
         }
-        size = sizeof(AColor);
         off = character_y * GRID_WIDTH * screenWidth + character_x * GRID_WIDTH;
         for (int j = 0; j < GRID_WIDTH; j++)
         {
             for (int i = 0; i < GRID_WIDTH; i++)
             {
-                memmove(screenBuf + off + i, character_img[i][j], size);
-                memmove(screenAddr + off + i,character_img[i][j], size);
+                screenBuf[off + i] = character_img[i][j];
+                screenAddr[off + i] = character_img[i][j];
             }
             off += screenWidth;
         }
     }
-    release(&screenlock);
+    release(&screenLock);
 }
 
 
@@ -113,8 +112,8 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         continue;
                     if (character_x * GRID_WIDTH + i > x2)
                         break;
-                    memmove(screenBuf + off + i, character_img[i][j],sizeof(AColor));
-                    memmove(screenAddr + off + i, character_img[i][j],sizeof(AColor));
+                    screenBuf [off + i] = character_img[i][j];
+                    screenAddr[off + i] = character_img[i][j];
                 }
                 off += screenWidth;
             }
@@ -269,7 +268,7 @@ void sendMessage(int wndId, AMessage *msg)
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
-    wakeup((void *)wndList.data[wndId].pid);
+    wakeup((void *)wndList.data[wndId].hwnd.pid);
 }
 
 //------------------------------------------------------------------------------------
@@ -439,7 +438,7 @@ void TimerCount()
             timerList.data[p].count = 0;
             AMessage msg;
             msg.type = MSG_TIMEOUT;
-            sendMessage(timerList.data[p].wndId,msg)
+            sendMessage(timerList.data[p].wndId,msg);
         }
         p = timerList.data[p].next;
     }

@@ -71,14 +71,12 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     {
 	case MSG_DRAWMAINWINDOW:
 
-		break;
-        
+            return False;
         case MSG_INIT:
             //init
-            int off = 0;
             for (int j = 0; j < GRID_H_NUMBER; j++)
             {
-                off = j * GRID_W_NUMBER;
+                int off = j * GRID_W_NUMBER;
                 for (int i = 0; i< GRID_W_NUMBER; i++)
                     hwnd->Grid[off + i] = desktop_layout[i][j];
             }
