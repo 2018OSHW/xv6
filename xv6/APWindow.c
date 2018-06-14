@@ -68,10 +68,11 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
 
 bool APWndProc(AHwnd hwnd, AMessage msg)
 {
-    printf(1,"start window processing!");
+    printf(1,"start window processing!\n");
     switch (msg.type)
     {
         case MSG_PAINT:
+            printf(1,"paint!\n");
             paintWindow(hwnd, 0, 0, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_map);
             break;
         default: break;

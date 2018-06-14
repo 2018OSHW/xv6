@@ -247,6 +247,7 @@ int sys_getMessage(void)
     acquire(&wndList.data[msgQueueId].lock);
     AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
     
+    cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
     if (queue->head == queue->tail)
     {
         cprintf("sleeping\n");
