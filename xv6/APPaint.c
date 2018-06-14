@@ -85,7 +85,7 @@ ABitmap APLoadBitmap(char * filename)
 AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
 {
     AHdc hdc = (AHdc)malloc(sizeof(ADc));
-    hdc->pen.penwidth = 0;
+    hdc->pen.size = 0;
     hdc->pen.color = hdc->brush.color = hdc->font.color = COLOR_NULL;
     hdc->size.cx = bmp.width;
     hdc->size.cy = bmp.height;
@@ -236,8 +236,8 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
     
     if (x < 0) x = 0;
     if (y < 0) y = 0;
-    if (x_r >= hdc.size.cx) x_r = hdc.size.cx - 1;
-    if (y_r >= hdc.size.cy) y_r = hdc.size.cy - 1;
+    if (x_r >= hdc->size.cx) x_r = hdc->size.cx - 1;
+    if (y_r >= hdc->size.cy) y_r = hdc->size.cy - 1;
     
     int index = 0;
     for (int i = x; i <= x_r; i++)

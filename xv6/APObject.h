@@ -45,7 +45,7 @@ typedef struct ARect
 typedef struct APen
 {
     AColor color;
-    int penwidth;
+    int size;
 }APen;
 
 typedef struct ABrush

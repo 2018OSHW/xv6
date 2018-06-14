@@ -15,7 +15,7 @@ OBJS = \
 	picirq.o\
 	pipe.o\
 	proc.o\
-	spinlock.o\m
+	spinlock.o\
 	string.o\
 	swtch.o\
 	syscall.o\
