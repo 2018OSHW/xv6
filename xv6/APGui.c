@@ -265,6 +265,7 @@ void sendMessage(int wndId, AMessage *msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
+    cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
 
@@ -410,8 +411,10 @@ void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg)
         default:
             break;
     }
+    cprintf("MsgQueue-En-Queue:tail %d \n",queue->tail);
     queue->data[queue->tail] = msg;
     queue->tail = (queue->tail + 1) % MESSAGE_QUEUE_SIZE;
+    cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
 }
 
 //弹出消息队列顶端
