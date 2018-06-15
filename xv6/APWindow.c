@@ -74,7 +74,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
         case MSG_PAINT:
             printf(1,"paint!\n");
             paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
-            prinitf(1,"paint finished!\n");
+            printf(1,"paint finished!\n");
             break;
         default: break;
             

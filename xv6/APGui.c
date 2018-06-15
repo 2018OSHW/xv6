@@ -128,7 +128,7 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
 //paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h,is_grid)
 int sys_paintWindow(void)
 {
-    cprintf("in paintWindow function!");
+    cprintf("in paintWindow function:---- 1  \n");
     AHwnd hwnd = 0;
     AHdc hdc = 0;
     int wx,wy,sx,sy,w,h,is_grid;
@@ -148,7 +148,7 @@ int sys_paintWindow(void)
     //wx,wy是window重绘左上角坐标
     
     //int id = hwnd ->id;
-    cprintf("in paintWindow function!");
+    cprintf("in paintWindow function:-----2  \n");
     AColor *data = hdc->content;
     
     int j;
