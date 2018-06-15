@@ -94,6 +94,7 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
         memmove(screenAddr + off, screenContent + off, x2);
         off += screenWidth;
     }
+    
     if (is_grid)
     {
         if (x1 <= character_x * GRID_WIDTH + GRID_WIDTH && x2 >= character_x * GRID_WIDTH
@@ -119,7 +120,8 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
             }
         }
     }
-    
+    cprintf("arbitrary set window color!\n");
+    memset(screenAddr, DEFAULT_WINDOW_COLOR, sizeof(AColor) * screenWidth * screenHeight);
     release(&screenLock);
 }
 

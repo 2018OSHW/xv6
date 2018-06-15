@@ -73,7 +73,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
     {
         case MSG_PAINT:
             printf(1,"paint!\n");
-            paintWindow(hwnd, 0, 0, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_map);
+            paintWindow(hwnd, 0, WINDOW_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_map);
             break;
         default: break;
             
