@@ -39,8 +39,12 @@ void APDrawCharacter(int is_grid)
         {
             for (int i = 0; i < GRID_WIDTH; i++)
             {
-                screenBuf[off + i] = character_img[i][j];
-                screenAddr[off + i] = character_img[i][j];
+                AColor c = character_img[i][j];
+                if (c.r != COLOR_TRANSPARENT || c.g != COLOR_TRANSPARENT || c.b != COLOR_TRANSPARENT)
+                {
+                    screenBuf[off + i] = c;
+                    screenAddr[off + i] = c;
+                }
             }
             off += screenWidth;
         }
