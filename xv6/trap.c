@@ -57,7 +57,7 @@ trap(struct trapframe *tf)
       wakeup(&ticks);
       release(&tickslock);
     }
-	DealHandleMessage(ticks);
+	//DealHandleMessage(ticks);
     TimerCount();
     lapiceoi();
     break;
