@@ -57,8 +57,6 @@ void APDrawCharacter(int is_grid)
 
 AWndList wndList;
 
-ARect screenRect;
-
 ATimerList timerList;
 
 int timerListReady = 0;

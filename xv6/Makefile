@@ -176,6 +176,7 @@ UPROGS=\
 APFILES=\
     ASCII\
     grid_wall.bmp\
+    grid_wall1.bmp\
     Snake.bmp\
 
 fs.img: mkfs README $(APFILES) $(UPROGS)
