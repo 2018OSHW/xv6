@@ -173,12 +173,12 @@ UPROGS=\
 	_zombie\
     _APDesktop\
 
-APFILES=\
+FILES=\
     ASCII\
     grid_wall.bmp\
 
-fs.img: mkfs README $(UPROGS)
-	./mkfs fs.img README $(UPROGS)
+fs.img: mkfs README (FILES)$(UPROGS)
+	./mkfs fs.img README (FILES)$(UPROGS)
 
 -include *.d
 

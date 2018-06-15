@@ -13,7 +13,7 @@
 
 //Icon on the desktop
 ABitmap grid_wall;
-AHdc g_wall = &grid_wall_Dc;
+AHdc g_wall;
 
 //start a program
 AHwnd APCreateWindow(char * title,int is_map,int page);
