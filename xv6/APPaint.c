@@ -257,7 +257,7 @@ void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor t
     if (w < 0 || h < 0) return;
     int wx_r = wx + w, wy_r = wy + h;
     int x_r = x + w, y_r = y + h;
-    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r >= src.size.cx || y_r >= src.size.cy)
+    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r >= src->size.cx || y_r >= src->size.cy)
         return;
     
     if (wx_r > dst->size.cx) wx_r = dst->size.cx - 1;
@@ -270,9 +270,9 @@ void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor t
         off2 = src->size.cx * (j + y) + x;
         for (int i = 0; i < wx_r - wx; i++)
         {
-            AColor c = src.content[off2 + i];
-            if (c != trans)
-                dst.content[off1 + i] = c;
+            AColor c = src->content[off2 + i];
+            if (c.r != trans.r || c.g != trans.g || c.b != trans.b)
+                dst->content[off1 + i] = c;
         }
     }
 }
