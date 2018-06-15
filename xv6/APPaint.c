@@ -38,7 +38,7 @@ static inline int APGetIndex(AHdc hdc,int x,int y)
         return Y_SMALLER;
     else if (y>=hdc->size.cy)
         return Y_BIGGER;
-    return y * hdc->size.cy + x;
+    return y * hdc->size.cx + x;
 }
 
 //-------------------------------bitmap--------------------------------------
@@ -85,7 +85,7 @@ ABitmap APLoadBitmap(char * filename)
 AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
 {
     AHdc hdc = (AHdc)malloc(sizeof(ADc));
-    hdc->pen.penwidth = 0;
+    hdc->pen.size = 0;
     hdc->pen.color = hdc->brush.color = hdc->font.color = COLOR_NULL;
     hdc->size.cx = bmp.width;
     hdc->size.cy = bmp.height;
@@ -176,7 +176,7 @@ void APDrawLine(AHdc hdc,int x1, int y1,int x2,int y2)
     int s = 0,e = 0;
     if (abs_int(x1 - x2) > abs_int(y1 - y2))
     {
-        double angle = double(y1 - y2) / double(x1 - x2);
+        double angle = (double)(y1 - y2) / (double)(x1 - x2);
         if (x2 > x1)
         {
             s = x1;
@@ -196,7 +196,7 @@ void APDrawLine(AHdc hdc,int x1, int y1,int x2,int y2)
         }
         return;
     }
-    double angle = double(x1 - x2)/double(y1 - y2);
+    double angle = (double)(x1 - x2)/(double)(y1 - y2);
     if (y1 > y2)
     {
         s = y2;
@@ -236,16 +236,43 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
     
     if (x < 0) x = 0;
     if (y < 0) y = 0;
-    if (x_r >= hdc.size.cx) x_r = hdc.size.cx - 1;
-    if (y_r >= hdc.size.cy) y_r = hdc.size.cy - 1;
+    if (x_r >= hdc->size.cx) x_r = hdc->size.cx - 1;
+    if (y_r >= hdc->size.cy) y_r = hdc->size.cy - 1;
     
     int index = 0;
+    //cprintf("%d,%d,%d",hdc->brush.color.r,hdc->brush.color.g,hdc->pbrush.color.b);
     for (int i = x; i <= x_r; i++)
     {
-        for (int j = y; j <= y; j++)
+        for (int j = y; j <= y_r; j++)
         {
             index = APGetIndex(hdc,i,j);
             hdc->content[index] = hdc->brush.color;
+        }
+    }
+}
+
+//--------------------------Dc operation-----------------------------------
+void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor trans)
+{
+    if (w < 0 || h < 0) return;
+    int wx_r = wx + w, wy_r = wy + h;
+    int x_r = x + w, y_r = y + h;
+    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r >= src->size.cx || y_r >= src->size.cy)
+        return;
+    
+    if (wx_r > dst->size.cx) wx_r = dst->size.cx - 1;
+    if (wy_r > dst->size.cy) wy_r = dst->size.cy - 1;
+    
+    int off1 = 0,off2 = 0;
+    for (int j = 0; j < wy_r - wy; j++)
+    {
+        off1 = dst->size.cx * (j + wy) + wx;
+        off2 = src->size.cx * (j + y) + x;
+        for (int i = 0; i < wx_r - wx; i++)
+        {
+            AColor c = src->content[off2 + i];
+            if (c.r != trans.r || c.g != trans.g || c.b != trans.b)
+                dst->content[off1 + i] = c;
         }
     }
 }

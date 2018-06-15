@@ -13,26 +13,9 @@
 #include "APLib.h"
 #include "APWindow.h"
 
-/*s
-typedef struct Item
-{
-	int wndId;
-	char title[MAX_ITEM_TITLE]
-
-
-};
-
-
-typedef struct ItemData
-{
-	
-
-
-};*/
 
 
 void desktopInitStringFigure();
-
 void runApp(void * param);
 
 

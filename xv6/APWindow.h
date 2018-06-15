@@ -9,12 +9,17 @@
 #define APWindow_h
 #include "APInclude.h"
 #include "APObject.h"
+#include "APPaint.h"
+
+//Icon on the desktop
+ABitmap grid_wall;
+AHdc g_wall;
 
 //start a program
-AHwnd APCreateWindow(char * title,bool is_map,int page);
+AHwnd APCreateWindow(char * title,int is_map,int page);
 
 //Grid_Mode Translate
-void APGridPaint(AHWnd wnd);
+void APGridPaint(AHwnd wnd);
 bool APPreJudge(AHwnd hwnd, AMessage * msg);
 bool APWndProc(AHwnd hwnd, AMessage msg);
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage));

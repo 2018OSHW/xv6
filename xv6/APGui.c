@@ -14,14 +14,8 @@ static AColor *screenContent = 0;
 struct spinlock screenLock;
 
 
-AColor character_img[GRID_WIDTH][GRID_WIDTH] =
-{
-    {{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff}},
-    {{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff}},
-    {{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00}},
-    {{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff}},
-    {{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff}}
-};
+AColor character_img[GRID_WIDTH][GRID_WIDTH];
+
 //index of character in the grid
 int character_pre_x = 1, character_pre_y = 1;
 int character_x = 1,character_y = 1;
@@ -29,10 +23,10 @@ int character_x = 1,character_y = 1;
 //character_move
 void APDrawCharacter(int is_grid)
 {
-    acquire(&screenlock);
+    acquire(&screenLock);
     if (is_grid)
     {
-        int off = character_pre_y * GRID_WIDTH * screenWidth + character_pre_x * GRID_WIDTH;
+        int off = (character_pre_y * GRID_WIDTH + WND_TITLE_HEIGHT)* screenWidth + character_pre_x * GRID_WIDTH;
         int size = sizeof(AColor) * GRID_WIDTH;
         for (int j = 0; j < GRID_WIDTH; j++)
         {
@@ -40,19 +34,22 @@ void APDrawCharacter(int is_grid)
             memmove(screenAddr + off,screenContent + off,size);
             off += screenWidth;
         }
-        size = sizeof(AColor);
         off = character_y * GRID_WIDTH * screenWidth + character_x * GRID_WIDTH;
         for (int j = 0; j < GRID_WIDTH; j++)
         {
             for (int i = 0; i < GRID_WIDTH; i++)
             {
-                memmove(screenBuf + off + i, character_img[i][j], size);
-                memmove(screenAddr + off + i,character_img[i][j], size);
+                AColor c = character_img[i][j];
+                if (c.r != COLOR_TRANSPARENT || c.g != COLOR_TRANSPARENT || c.b != COLOR_TRANSPARENT)
+                {
+                    screenBuf[off + i] = c;
+                    screenAddr[off + i] = c;
+                }
             }
             off += screenWidth;
         }
     }
-    release(&screenlock);
+    release(&screenLock);
 }
 
 
@@ -64,6 +61,20 @@ ATimerList timerList;
 
 int timerListReady = 0;
 
+void APCharacterInit(void)
+{
+    for (int j = 0; j < 10; j++)
+        for (int i = 0; i < 50; i++)
+            character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
+    
+    for (int j = 40; j < 50; j++)
+        for (int i = 0; i < 50; i++)
+            character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
+    
+    for (int j = 10; j < 40; j++)
+        for (int i = 0; i < 50; i++)
+            character_img[i][j] = RGB(0x00,0xff,0x00);
+}
 
 void APGuiInit(void)
 {
@@ -79,6 +90,7 @@ void APGuiInit(void)
             screenAddr, screenWidth,screenHeight,bitsPerPixel);
     
     initlock(&screenLock,"sreenLock");
+    APCharacterInit();
     
 }
 
@@ -95,14 +107,15 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
         memmove(screenAddr + off, screenContent + off, x2);
         off += screenWidth;
     }
+    
     if (is_grid)
     {
         if (x1 <= character_x * GRID_WIDTH + GRID_WIDTH && x2 >= character_x * GRID_WIDTH
-            && y1 <= character_y * GRID_WIDTH + GRID_WIDTH && y2 >= character_y * GRID_WIDTH)
+            && y1 <= character_y * GRID_WIDTH + GRID_WIDTH + WND_TITLE_HEIGHT && y2 >= character_y * GRID_WIDTH + WND_TITLE_HEIGHT)
         {
             for (int j = 0; j < GRID_WIDTH ; j++)
             {
-                off = (character_y * GRID_WIDTH + j) * screenWidth + character_x * GRID_WIDTH;
+                off = (character_y * GRID_WIDTH + WND_TITLE_HEIGHT + j) * screenWidth + character_x * GRID_WIDTH;
                 if (character_y * GRID_WIDTH + j < y1)
                     continue;
                 if (character_y * GRID_WIDTH + j > y2)
@@ -113,38 +126,45 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         continue;
                     if (character_x * GRID_WIDTH + i > x2)
                         break;
-                    memmove(screenBuf + off + i, character_img[i][j],sizeof(AColor));
-                    memmove(screenAddr + off + i, character_img[i][j],sizeof(AColor));
+                    AColor c = character_img[i][j];
+                    if (c.r != COLOR_TRANSPARENT || c.g!=COLOR_TRANSPARENT || c.b !=COLOR_TRANSPARENT)
+                    {
+                        screenBuf [off + i] = c;
+                        screenAddr[off + i] = c;
+                    }
                 }
-                off += screenWidth;
             }
         }
     }
-    
+    //cprintf("arbitrary set window color!\n");
+    //memset(screenAddr, DEFAULT_WINDOW_COLOR, sizeof(AColor) * screenWidth * screenHeight);
     release(&screenLock);
 }
 
 //paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h,is_grid)
 int sys_paintWindow(void)
 {
+    //cprintf("in paintWindow function:---- 1  \n");
     AHwnd hwnd = 0;
     AHdc hdc = 0;
     int wx,wy,sx,sy,w,h,is_grid;
     //从控制台获取数据，并检验值是否合法
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &wx) < 0 || argint(2, &wy) < 0
         || argstr(3, (char **)&hdc) < 0 || argint(4, &sx) < 0
-        || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0 || argint(8, &is_grid) < 0)
+        || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0
+        || argint(8, &is_grid) < 0)
         return -1;
     
     if (sx < 0 || sy < 0 || h <= 0 || w <= 0 || sx + w > hdc->size.cx || sy + h > hdc->size.cy)
         return 0;
     
-    if (wx < 0 || wy < 0 || wx + w > hwnd->wholeDc.size.cx || wy + h > hwnd->wholeDc.size.cy)
+    if (wx < 0 || wy < 0 || wx + w > screenWidth || wy + h > screenHeight)
         return 0;
     
     //wx,wy是window重绘左上角坐标
     
     //int id = hwnd ->id;
+    //cprintf("in paintWindow function:-----2  \n");
     AColor *data = hdc->content;
     
     int j;
@@ -170,7 +190,7 @@ int sys_paintWindow(void)
                 break;
             
             AColor c = data[off_x + j];
-            if (c.r != COLOR_NULL_ALPHA || c.g != COLOR_NULL_ALPHA || c.b != COLOR_NULL_ALPHA)
+            if (c.r != COLOR_TRANSPARENT || c.g != COLOR_TRANSPARENT || c.b != COLOR_TRANSPARENT )
                 screenContent[screen_off_x + j] = c;
         }
     }
@@ -235,23 +255,31 @@ int sys_registWindow(void)
 
 int sys_getMessage(void)
 {
+
     AHwnd hwnd = 0;
     if (argstr(0, (char **)&hwnd) < 0)
         return -1;
     int wndId = hwnd->id;
-    int msgQueueId = hwnd->msgQueueID;
     int pid = hwnd->pid;
     
-    acquire(&wndList.data[msgQueueId].lock);
-    AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
+    //cprintf("in function --- getMessage:WndId: %d\n",wndId);
     
+    acquire(&wndList.data[wndId].lock);
+    AMsgQueue * queue = &wndList.data[wndId].msgQueue;
+    
+    //cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
     if (queue->head == queue->tail)
-        sleep((void *)pid,&wndList.data[msgQueueId].lock);
-    
+    {
+       // cprintf("sleeping\n");
+        sleep((void *)pid,&wndList.data[wndId].lock);
+    }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
+    {
+      //  cprintf("poping msg!\n");
         wndList.data[wndId].hwnd->msg = APMsgQueueDeQueue(queue);
+    }
     
-    release(&wndList.data[msgQueueId].lock);
+    release(&wndList.data[wndId].lock);
     return 0;
 }
 
@@ -260,16 +288,17 @@ void sendMessage(int wndId, AMessage *msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
+    //cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
 
     }
 
-    int msgQueueId = wndList.data[wndId].msgQueueID;
-    AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
+
+    AMsgQueue * queue = &wndList.data[wndId].msgQueue;
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
-    wakeup((void *)wndList.data[wndId].pid);
+    wakeup((void *)wndList.data[wndId].hwnd->pid);
 }
 
 //------------------------------------------------------------------------------------
@@ -307,7 +336,6 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
     list->data[p].hwnd = hwnd;
     
     hwnd->id = p;
-    list->data[p].msgQueueID = p;
     
     //desktop ---- id = 0
     list->data[p].next = list->head;
@@ -405,8 +433,10 @@ void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg)
         default:
             break;
     }
+    //cprintf("MsgQueue-En-Queue:tail %d \n",queue->tail);
     queue->data[queue->tail] = msg;
     queue->tail = (queue->tail + 1) % MESSAGE_QUEUE_SIZE;
+    //cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
 }
 
 //弹出消息队列顶端
@@ -439,11 +469,11 @@ void TimerCount()
             timerList.data[p].count = 0;
             AMessage msg;
             msg.type = MSG_TIMEOUT;
-            sendMessage(timerList.data[p].wndId,msg)
+            sendMessage(timerList.data[p].wndId,&msg);
         }
         p = timerList.data[p].next;
     }
-    release(&timerList.lock)
+    release(&timerList.lock);
 }
 
 

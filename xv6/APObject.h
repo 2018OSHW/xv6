@@ -7,9 +7,9 @@
 
 typedef struct AColor
 {
-    uchar r;
-    uchar g;
     uchar b;
+    uchar g;
+    uchar r;
 }AColor;
 
 static inline AColor RGB(uchar r, uchar g, uchar b)
@@ -45,7 +45,7 @@ typedef struct ARect
 typedef struct APen
 {
     AColor color;
-    int penwidth;
+    int size;
 }APen;
 
 typedef struct ABrush
@@ -94,15 +94,11 @@ typedef struct AWindow
     //index in the Wndlist and Program id
     int id;
     int pid;
-    int msgQueueID;
-    
-    //whether display character
-    bool is_character;
     
     // if activate Grid-Mode
-    bool is_map;
+    int is_grid;
     //Grid mode
-    int *GRID;
+    int *Grid;
     int total_page;
     int cur_page;
     //Non-Grid mode
@@ -125,13 +121,9 @@ typedef struct AWndListNode
     int prev,next;
     
     //message queue lock
-    spinlock lock;
-    // current message
-    AMessage msg;
+    struct spinlock lock;
     //message queue
     AMsgQueue msgQueue;
-    // master window id
-    int msgQueueID;
     
     //window
     AHwnd hwnd;

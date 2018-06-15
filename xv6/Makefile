@@ -15,7 +15,7 @@ OBJS = \
 	picirq.o\
 	pipe.o\
 	proc.o\
-	spinlock.o\m
+	spinlock.o\
 	string.o\
 	swtch.o\
 	syscall.o\
@@ -175,9 +175,10 @@ UPROGS=\
 
 APFILES=\
     ASCII\
+    grid_wall.bmp\
 
-fs.img: mkfs README $(UPROGS)
-	./mkfs fs.img README $(UPROGS)
+fs.img: mkfs README $(APFILES) $(UPROGS)
+	./mkfs fs.img README $(APFILES) $(UPROGS)
 
 -include *.d
 
