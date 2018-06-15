@@ -233,17 +233,32 @@ ialloc(ushort type)
 void
 balloc(int used)
 {
-  uchar buf[512];
-  int i;
-
-  printf("balloc: first %d blocks have been allocated\n", used);
-  assert(used < 512*8);
-  bzero(buf, 512);
-  for(i = 0; i < used; i++){
-    buf[i/8] = buf[i/8] | (0x1 << (i%8));
-  }
-  printf("balloc: write bitmap block at sector %zu\n", ninodes/IPB + 3);
-  wsect(ninodes / IPB + 3, buf);
+    uchar buf[512];
+    int i;
+    int j = 0;
+    int temp;
+    
+    printf("balloc: first %d blocks have been allocated\n", used);
+    //assert(used < 512*8);
+    while(used > 0)
+    {
+        bzero(buf, 512);
+        if (used > 4096)
+        {
+            temp = 4096;
+        }
+        else
+        {
+            temp = used;
+        }
+        for(i = 0; i < temp; i++){
+            buf[i/8] = buf[i/8] | (0x1 << (i%8));
+        }
+        used -= 4096;
+        printf("balloc: write bitmap block at sector %zu\n", ninodes/IPB + 3 + j);
+        wsect(ninodes / IPB + 3 + j, buf);
+        j++;
+    }
 }
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
