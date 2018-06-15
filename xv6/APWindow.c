@@ -150,7 +150,7 @@ void APGridPaint(AHwnd wnd)
                 case GRID_ROAD:
                     //printf(1,"Grid_Road");
                     pen.color = RGB(0x69,0x69,0x69);
-                    pen.size = 2;
+                    pen.size = 1;
                     brush.color = RGB(0x69,0x69,0x69);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
@@ -159,7 +159,7 @@ void APGridPaint(AHwnd wnd)
                 case GRID_GRASS:
                     //printf(1,"Grid_Grass");
                     pen.color = RGB(0x00,0x80,0x00);
-                    pen.size = 2;
+                    pen.size = 1;
                     brush.color = RGB(0x00,0x80,0x00);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
@@ -168,7 +168,7 @@ void APGridPaint(AHwnd wnd)
                 case GRID_RIVER:
                     //printf(1,"Grid_River");
                     pen.color = RGB(0x00,0xbf,0xff);
-                    pen.size = 2;
+                    pen.size = 1;
                     brush.color = RGB(0x00,0xbf,0xff);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);

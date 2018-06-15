@@ -240,6 +240,7 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
     if (y_r >= hdc->size.cy) y_r = hdc->size.cy - 1;
     
     int index = 0;
+     cprintf("%d,%d,%d",brush.color.r,brush.color.g,brush.color.b);
     for (int i = x; i <= x_r; i++)
     {
         for (int j = y; j <= y; j++)
