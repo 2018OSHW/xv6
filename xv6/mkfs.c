@@ -266,48 +266,69 @@ balloc(int used)
 void
 iappend(uint inum, void *xp, int n)
 {
-  char *p = (char*)xp;
-  uint fbn, off, n1;
-  struct dinode din;
-  char buf[512];
-  uint indirect[NINDIRECT];
-  uint x;
-
-  rinode(inum, &din);
-
-  off = xint(din.size);
-  while(n > 0){
-    fbn = off / 512;
-    assert(fbn < MAXFILE);
-    if(fbn < NDIRECT){
-      if(xint(din.addrs[fbn]) == 0){
-        din.addrs[fbn] = xint(freeblock++);
-        usedblocks++;
-      }
-      x = xint(din.addrs[fbn]);
-    } else {
-      if(xint(din.addrs[NDIRECT]) == 0){
-        // printf("allocate indirect block\n");
-        din.addrs[NDIRECT] = xint(freeblock++);
-        usedblocks++;
-      }
-      // printf("read indirect block\n");
-      rsect(xint(din.addrs[NDIRECT]), (char*)indirect);
-      if(indirect[fbn - NDIRECT] == 0){
-        indirect[fbn - NDIRECT] = xint(freeblock++);
-        usedblocks++;
-        wsect(xint(din.addrs[NDIRECT]), (char*)indirect);
-      }
-      x = xint(indirect[fbn-NDIRECT]);
+    char *p = (char*)xp;
+    uint fbn, off, n1;
+    struct dinode din;
+    char buf[512];
+    uint indirect[NINDIRECT];
+    uint addr;
+    uint x;
+    
+    rinode(inum, &din);
+    
+    off = xint(din.size);
+    while(n > 0){
+        fbn = off / 512;
+        assert(fbn < MAXFILE);
+        if(fbn < NDIRECT){
+            if(xint(din.addrs[fbn]) == 0){
+                din.addrs[fbn] = xint(freeblock++);
+                usedblocks++;
+            }
+            x = xint(din.addrs[fbn]);
+        } else {
+            if(fbn < NDIRECT + NINDIRECT){
+                if(xint(din.addrs[NDIRECT]) == 0){
+                    // printf("allocate indirect block\n");
+                    din.addrs[NDIRECT] = xint(freeblock++);
+                    usedblocks++;
+                }
+                // printf("read indirect block\n");
+                rsect(xint(din.addrs[NDIRECT]), (char*)indirect);
+                if(indirect[fbn - NDIRECT] == 0){
+                    indirect[fbn - NDIRECT] = xint(freeblock++);
+                    usedblocks++;
+                    wsect(xint(din.addrs[NDIRECT]), (char*)indirect);
+                }
+                x = xint(indirect[fbn-NDIRECT]);
+            } else {
+                if(xint(din.addrs[NDIRECT + 1]) == 0){
+                    din.addrs[NDIRECT + 1] = xint(freeblock++);
+                    usedblocks++;
+                }
+                rsect(xint(din.addrs[NDIRECT + 1]), (char*)indirect);
+                if((addr = indirect[(fbn - NDIRECT - NINDIRECT) / NINDIRECT]) == 0){
+                    indirect[(fbn - NDIRECT - NINDIRECT) / NINDIRECT] = addr = xint(freeblock++);
+                    usedblocks++;
+                    wsect(xint(din.addrs[NDIRECT + 1]), (char*)indirect);
+                }
+                rsect(xint(addr), (char*)indirect);
+                if(indirect[(fbn - NDIRECT - NINDIRECT) % NINDIRECT] == 0){
+                    indirect[(fbn - NDIRECT - NINDIRECT) % NINDIRECT] = xint(freeblock++);
+                    usedblocks++;
+                    wsect(xint(addr), (char*)indirect);
+                }
+                x = xint(indirect[(fbn - NDIRECT - NINDIRECT) % NINDIRECT]);
+            }
+        }
+        n1 = min(n, (fbn + 1) * 512 - off);
+        rsect(x, buf);
+        bcopy(p, buf + off - (fbn * 512), n1);
+        wsect(x, buf);
+        n -= n1;
+        off += n1;
+        p += n1;
     }
-    n1 = min(n, (fbn + 1) * 512 - off);
-    rsect(x, buf);
-    bcopy(p, buf + off - (fbn * 512), n1);
-    wsect(x, buf);
-    n -= n1;
-    off += n1;
-    p += n1;
-  }
-  din.size = xint(off);
-  winode(inum, &din);
+    din.size = xint(off);
+    winode(inum, &din);
 }
