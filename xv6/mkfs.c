@@ -11,7 +11,7 @@
 #include "stat.h"
 #include "param.h"
 
-#define static_assert(a, b) do { switch (0) case 0: case (a): ; } while (0)
+#define static_assert1(a, b) do { switch (0) case 0: case (a): ; } while (0)
 
 int nblocks = (20446-LOGSIZE);
 int nlog = LOGSIZE;
@@ -38,196 +38,198 @@ void iappend(uint inum, void *p, int n);
 ushort
 xshort(ushort x)
 {
-  ushort y;
-  uchar *a = (uchar*)&y;
-  a[0] = x;
-  a[1] = x >> 8;
-  return y;
+    ushort y;
+    uchar *a = (uchar*)&y;
+    a[0] = x;
+    a[1] = x >> 8;
+    return y;
 }
 
 uint
 xint(uint x)
 {
-  uint y;
-  uchar *a = (uchar*)&y;
-  a[0] = x;
-  a[1] = x >> 8;
-  a[2] = x >> 16;
-  a[3] = x >> 24;
-  return y;
+    uint y;
+    uchar *a = (uchar*)&y;
+    a[0] = x;
+    a[1] = x >> 8;
+    a[2] = x >> 16;
+    a[3] = x >> 24;
+    return y;
 }
 
 int
 main(int argc, char *argv[])
 {
-  int i, cc, fd;
-  uint rootino, inum, off;
-  struct dirent de;
-  char buf[512];
-  struct dinode din;
-
-
-  static_assert(sizeof(int) == 4, "Integers must be 4 bytes!");
-
-  if(argc < 2){
-    fprintf(stderr, "Usage: mkfs fs.img files...\n");
-    exit(1);
-  }
-
-  assert((512 % sizeof(struct dinode)) == 0);
-  assert((512 % sizeof(struct dirent)) == 0);
-
-  fsfd = open(argv[1], O_RDWR|O_CREAT|O_TRUNC, 0666);
-  if(fsfd < 0){
-    perror(argv[1]);
-    exit(1);
-  }
-
-  sb.size = xint(size);
-  sb.nblocks = xint(nblocks); // so whole disk is size sectors
-  sb.ninodes = xint(ninodes);
-  sb.nlog = xint(nlog);
-
-  bitblocks = size/(512*8) + 1;
-  usedblocks = ninodes / IPB + 3 + bitblocks;
-  freeblock = usedblocks;
-
-  printf("used %d (bit %d ninode %zu) free %u log %u total %d\n", usedblocks,
-         bitblocks, ninodes/IPB + 1, freeblock, nlog, nblocks+usedblocks+nlog);
-
-  assert(nblocks + usedblocks + nlog == size);
-
-  for(i = 0; i < nblocks + usedblocks + nlog; i++)
-    wsect(i, zeroes);
-
-  memset(buf, 0, sizeof(buf));
-  memmove(buf, &sb, sizeof(sb));
-  wsect(1, buf);
-
-  rootino = ialloc(T_DIR);
-  assert(rootino == ROOTINO);
-
-  bzero(&de, sizeof(de));
-  de.inum = xshort(rootino);
-  strcpy(de.name, ".");
-  iappend(rootino, &de, sizeof(de));
-
-  bzero(&de, sizeof(de));
-  de.inum = xshort(rootino);
-  strcpy(de.name, "..");
-  iappend(rootino, &de, sizeof(de));
-
-  for(i = 2; i < argc; i++){
-    assert(index(argv[i], '/') == 0);
-
-    if((fd = open(argv[i], 0)) < 0){
-      perror(argv[i]);
-      exit(1);
+    int i, cc, fd;
+    uint rootino, inum, off;
+    struct dirent de;
+    char buf[512];
+    struct dinode din;
+    
+    
+    static_assert1(sizeof(int) == 4, "Integers must be 4 bytes!");
+    
+    if(argc < 2){
+        fprintf(stderr, "Usage: mkfs fs.img files...\n");
+        exit(1);
     }
     
-    // Skip leading _ in name when writing to file system.
-    // The binaries are named _rm, _cat, etc. to keep the
-    // build operating system from trying to execute them
-    // in place of system binaries like rm and cat.
-    if(argv[i][0] == '_')
-      ++argv[i];
-
-    inum = ialloc(T_FILE);
-
+    assert((512 % sizeof(struct dinode)) == 0);
+    assert((512 % sizeof(struct dirent)) == 0);
+    
+    fsfd = open(argv[1], O_RDWR|O_CREAT|O_TRUNC, 0666);
+    if(fsfd < 0){
+        perror(argv[1]);
+        exit(1);
+    }
+    
+    sb.size = xint(size);
+    sb.nblocks = xint(nblocks); // so whole disk is size sectors
+    sb.ninodes = xint(ninodes);
+    sb.nlog = xint(nlog);
+    
+    bitblocks = size/(512*8) + 1;
+    usedblocks = ninodes / IPB + 3 + bitblocks;
+    freeblock = usedblocks;
+    
+    printf("used %d (bit %d ninode %zu) free %u log %u total %d\n", usedblocks,
+           bitblocks, ninodes/IPB + 1, freeblock, nlog, nblocks + usedblocks + nlog);
+    
+    assert(nblocks + usedblocks + nlog == size);
+    
+    for(i = 0; i < nblocks + usedblocks + nlog; i++)
+        wsect(i, zeroes);
+    
+    memset(buf, 0, sizeof(buf));
+    memmove(buf, &sb, sizeof(sb));
+    wsect(1, buf);
+    
+    rootino = ialloc(T_DIR);
+    assert(rootino == ROOTINO);
+    
     bzero(&de, sizeof(de));
-    de.inum = xshort(inum);
-    strncpy(de.name, argv[i], DIRSIZ);
+    de.inum = xshort(rootino);
+    strcpy(de.name, ".");
     iappend(rootino, &de, sizeof(de));
-
-    while((cc = read(fd, buf, sizeof(buf))) > 0)
-      iappend(inum, buf, cc);
-
-    close(fd);
-  }
-
-  // fix size of root inode dir
-  rinode(rootino, &din);
-  off = xint(din.size);
-  off = ((off/BSIZE) + 1) * BSIZE;
-  din.size = xint(off);
-  winode(rootino, &din);
-
-  balloc(usedblocks);
-
-  exit(0);
+    
+    bzero(&de, sizeof(de));
+    de.inum = xshort(rootino);
+    strcpy(de.name, "..");
+    iappend(rootino, &de, sizeof(de));
+    
+    for(i = 2; i < argc; i++){
+        assert(index(argv[i], '/') == 0);
+        
+        //printf("%s\n", argv[i]);
+        if((fd = open(argv[i], 0)) < 0){
+            perror(argv[i]);
+            exit(1);
+        }
+        
+        // Skip leading _ in name when writing to file system.
+        // The binaries are named _rm, _cat, etc. to keep the
+        // build operating system from trying to execute them
+        // in place of system binaries like rm and cat.
+        if(argv[i][0] == '_')
+            ++argv[i];
+        
+        inum = ialloc(T_FILE);
+        
+        bzero(&de, sizeof(de));
+        de.inum = xshort(inum);
+        strncpy(de.name, argv[i], DIRSIZ);
+        iappend(rootino, &de, sizeof(de));
+        
+        while((cc = read(fd, buf, sizeof(buf))) > 0)
+            iappend(inum, buf, cc);
+        
+        //printf("!!\n");
+        close(fd);
+    }
+    // fix size of root inode dir
+    rinode(rootino, &din);
+    off = xint(din.size);
+    off = ((off/BSIZE) + 1) * BSIZE;
+    din.size = xint(off);
+    winode(rootino, &din);
+    
+    balloc(usedblocks);
+    
+    //printf("This is end\n");
+    exit(0);
 }
 
 void
 wsect(uint sec, void *buf)
 {
-  if(lseek(fsfd, sec * 512L, 0) != sec * 512L){
-    perror("lseek");
-    exit(1);
-  }
-  if(write(fsfd, buf, 512) != 512){
-    perror("write");
-    exit(1);
-  }
+    if(lseek(fsfd, sec * 512L, 0) != sec * 512L){
+        perror("lseek");
+        exit(1);
+    }
+    if(write(fsfd, buf, 512) != 512){
+        perror("write");
+        exit(1);
+    }
 }
 
 uint
 i2b(uint inum)
 {
-  return (inum / IPB) + 2;
+    return (inum / IPB) + 2;
 }
 
 void
 winode(uint inum, struct dinode *ip)
 {
-  char buf[512];
-  uint bn;
-  struct dinode *dip;
-
-  bn = i2b(inum);
-  rsect(bn, buf);
-  dip = ((struct dinode*)buf) + (inum % IPB);
-  *dip = *ip;
-  wsect(bn, buf);
+    char buf[512];
+    uint bn;
+    struct dinode *dip;
+    
+    bn = i2b(inum);
+    rsect(bn, buf);
+    dip = ((struct dinode*)buf) + (inum % IPB);
+    *dip = *ip;
+    wsect(bn, buf);
 }
 
 void
 rinode(uint inum, struct dinode *ip)
 {
-  char buf[512];
-  uint bn;
-  struct dinode *dip;
-
-  bn = i2b(inum);
-  rsect(bn, buf);
-  dip = ((struct dinode*)buf) + (inum % IPB);
-  *ip = *dip;
+    char buf[512];
+    uint bn;
+    struct dinode *dip;
+    
+    bn = i2b(inum);
+    rsect(bn, buf);
+    dip = ((struct dinode*)buf) + (inum % IPB);
+    *ip = *dip;
 }
 
 void
 rsect(uint sec, void *buf)
 {
-  if(lseek(fsfd, sec * 512L, 0) != sec * 512L){
-    perror("lseek");
-    exit(1);
-  }
-  if(read(fsfd, buf, 512) != 512){
-    perror("read");
-    exit(1);
-  }
+    if(lseek(fsfd, sec * 512L, 0) != sec * 512L){
+        perror("lseek");
+        exit(1);
+    }
+    if(read(fsfd, buf, 512) != 512){
+        perror("read");
+        exit(1);
+    }
 }
 
 uint
 ialloc(ushort type)
 {
-  uint inum = freeinode++;
-  struct dinode din;
-
-  bzero(&din, sizeof(din));
-  din.type = xshort(type);
-  din.nlink = xshort(1);
-  din.size = xint(0);
-  winode(inum, &din);
-  return inum;
+    uint inum = freeinode++;
+    struct dinode din;
+    
+    bzero(&din, sizeof(din));
+    din.type = xshort(type);
+    din.nlink = xshort(1);
+    din.size = xint(0);
+    winode(inum, &din);
+    return inum;
 }
 
 void
