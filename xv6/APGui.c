@@ -26,7 +26,7 @@ void APDrawCharacter(int is_grid)
     acquire(&screenLock);
     if (is_grid)
     {
-        int off = character_pre_y * GRID_WIDTH * screenWidth + character_pre_x * GRID_WIDTH;
+        int off = (character_pre_y * GRID_WIDTH + WND_TITLE_HEIGHT)* screenWidth + character_pre_x * GRID_WIDTH;
         int size = sizeof(AColor) * GRID_WIDTH;
         for (int j = 0; j < GRID_WIDTH; j++)
         {
@@ -111,11 +111,11 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
     if (is_grid)
     {
         if (x1 <= character_x * GRID_WIDTH + GRID_WIDTH && x2 >= character_x * GRID_WIDTH
-            && y1 <= character_y * GRID_WIDTH + GRID_WIDTH && y2 >= character_y * GRID_WIDTH)
+            && y1 <= character_y * GRID_WIDTH + GRID_WIDTH + WND_TITLE_HEIGHT && y2 >= character_y * GRID_WIDTH + WND_TITLE_HEIGHT)
         {
             for (int j = 0; j < GRID_WIDTH ; j++)
             {
-                off = (character_y * GRID_WIDTH + j) * screenWidth + character_x * GRID_WIDTH;
+                off = (character_y * GRID_WIDTH + WND_TITLE_HEIGHT + j) * screenWidth + character_x * GRID_WIDTH;
                 if (character_y * GRID_WIDTH + j < y1)
                     continue;
                 if (character_y * GRID_WIDTH + j > y2)
