@@ -134,7 +134,8 @@ int sys_paintWindow(void)
     //从控制台获取数据，并检验值是否合法
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &wx) < 0 || argint(2, &wy) < 0
         || argstr(3, (char **)&hdc) < 0 || argint(4, &sx) < 0
-        || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0 || argint(8, &is_grid) < 0)
+        || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0
+        || argint(8, &is_grid) < 0)
         return -1;
     
     if (sx < 0 || sy < 0 || h <= 0 || w <= 0 || sx + w > hdc->size.cx || sy + h > hdc->size.cy)

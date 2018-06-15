@@ -12,7 +12,7 @@
 #include "APPaint.h"
 
 //start a program
-AHwnd APCreateWindow(char * title,bool is_map,int page);
+AHwnd APCreateWindow(char * title,int is_map,int page);
 
 //Grid_Mode Translate
 void APGridPaint(AHwnd wnd);

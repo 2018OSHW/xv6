@@ -16,7 +16,7 @@ void APSendMessage(AHwnd hwnd, AMessage msg)
 
 
 
-AHwnd APCreateWindow(char * title,bool is_map,int page)
+AHwnd APCreateWindow(char * title,int is_map,int page)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
     if (r == 0)
@@ -44,7 +44,7 @@ AHwnd APCreateWindow(char * title,bool is_map,int page)
         printf(1,"%s window - Title DC creation failed!\n",title);
     memset(r->Dc.content, DEFAULT_TITLE_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
     
-    r->is_map = is_map;
+    r->is_grid = is_map;
     //if is Grid Mode
     if (is_map)
     {
@@ -73,7 +73,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
     {
         case MSG_PAINT:
             printf(1,"paint!\n");
-            paintWindow(hwnd, 0, WINDOW_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_map);
+            paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
             break;
         default: break;
             
@@ -115,7 +115,7 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 //Grid_mode paint
 void APGridPaint(AHwnd wnd)
 {
-    if (!wnd->is_map)
+    if (!wnd->is_grid)
     {
         printf(1,"error! paint non-Grid Mode program! \n");
         return;

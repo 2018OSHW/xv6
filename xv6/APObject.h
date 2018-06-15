@@ -94,13 +94,9 @@ typedef struct AWindow
     //index in the Wndlist and Program id
     int id;
     int pid;
-
-    
-    //whether display character
-    bool is_character;
     
     // if activate Grid-Mode
-    bool is_map;
+    int is_grid;
     //Grid mode
     int *Grid;
     int total_page;
