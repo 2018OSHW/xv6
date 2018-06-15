@@ -13,20 +13,9 @@ static AColor *screenBuf = 0;
 static AColor *screenContent = 0;
 struct spinlock screenLock;
 
-struct ADc character_shape;
-AHdc character = &character_shape;
 
-extern struct ADc chara;
+AColor character_img[GRID_WIDTH][GRID_WIDTH];
 
-
-AColor character_img[GRID_WIDTH][GRID_WIDTH] =
-{
-    {{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff}},
-    {{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff}},
-    {{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00}},
-    {{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff}},
-    {{0xff,0xff,0xff},{0xff,0xff,0xff},{0xff,0x00,0x00},{0xff,0xff,0xff},{0xff,0xff,0xff}}
-};
 //index of character in the grid
 int character_pre_x = 1, character_pre_y = 1;
 int character_x = 1,character_y = 1;
@@ -70,11 +59,17 @@ int timerListReady = 0;
 
 void APCharacterInit(void)
 {
-    chara.size.cx = GRID_WIDTH;
-    /*character_shape.size.cy = GRID_WIDTH;
-    character_shape.content = (AColor*)malloc(sizeof(AColor)*character_shape.size.cx*character_shape.size.cy);
-    if (character_shape.content == 0)
-        cprintf("character_shape init failed!\n");*/
+    for (int j = 0; j < 10; i++)
+        for (int i = 0; i < 50; i++)
+            character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
+    
+    for (int j = 40; j < 50; i++)
+        for (int i = 0; i < 50; i++)
+            character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
+    
+    for (int j = 10; i < 40; j++)
+        for (int i = 0; i < 50; i++)
+            character_img[i][j] = RGB(0xdc,0x14,0x3c);
 }
 
 void APGuiInit(void)

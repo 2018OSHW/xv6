@@ -8,8 +8,6 @@
 #include "user.h"
 #include "APWindow.h"
 
-struct ADc chara;
-
 void APSendMessage(AHwnd hwnd, AMessage msg)
 {
       sendMessage(hwnd->id, &msg);
