@@ -13,6 +13,9 @@ static AColor *screenBuf = 0;
 static AColor *screenContent = 0;
 struct spinlock screenLock;
 
+struct ADc character_shape;
+AHdc character = &character_shape;
+
 
 AColor character_img[GRID_WIDTH][GRID_WIDTH] =
 {
@@ -63,6 +66,14 @@ ATimerList timerList;
 
 int timerListReady = 0;
 
+void APCharacterInit(void)
+{
+    character_shape.size.cx = GRID_WIDTH;
+    character_shape.size.cy = GRID_WIDTH;
+    character_shape.content = (AColor*)malloc(sizeof(AColor)*character_shape.size.cx*character_shape.size.cy);
+    if (character_shape.content == 0)
+        cprintf("character_shape init failed!\n");
+}
 
 void APGuiInit(void)
 {
@@ -78,6 +89,7 @@ void APGuiInit(void)
             screenAddr, screenWidth,screenHeight,bitsPerPixel);
     
     initlock(&screenLock,"sreenLock");
+    APCharacterInit();
     
 }
 
@@ -174,7 +186,7 @@ int sys_paintWindow(void)
                 break;
             
             AColor c = data[off_x + j];
-            if (c.r != COLOR_NULL_ALPHA || c.g != COLOR_NULL_ALPHA || c.b != COLOR_NULL_ALPHA)
+            if (c != COLOR_NULL)
                 screenContent[screen_off_x + j] = c;
         }
     }

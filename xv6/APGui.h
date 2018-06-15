@@ -5,6 +5,7 @@
 #include "APInclude.h"
 
 void APGuiInit(void);
+void APCharacterInit(void);
 void sendMessage(int wndId, struct AMessage *msg);
 void APDrawCharacter(int is_grid);
 
