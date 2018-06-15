@@ -142,7 +142,7 @@ int sys_paintWindow(void)
     if (sx < 0 || sy < 0 || h <= 0 || w <= 0 || sx + w > hdc->size.cx || sy + h > hdc->size.cy)
         return 0;
     
-    if (wx < 0 || wy < 0 || wx + w > hwnd->wholeDc.size.cx || wy + h > hwnd->wholeDc.size.cy)
+    if (wx < 0 || wy < 0 || wx + w > hwnd->screenWidth || wy + h > screenHeight)
         return 0;
     
     //wx,wy是window重绘左上角坐标
