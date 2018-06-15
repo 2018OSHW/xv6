@@ -8,6 +8,8 @@
 #include "user.h"
 #include "APWindow.h"
 
+int iconReady = 0;
+
 void APSendMessage(AHwnd hwnd, AMessage msg)
 {
       sendMessage(hwnd->id, &msg);
@@ -115,6 +117,15 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 //Grid_mode paint
 void APGridPaint(AHwnd wnd)
 {
+    if (!iconReady)
+    {
+        iconReady = 1;
+        //load icon bitmap
+        grid_wall = APLoadBitmap ("grid_wall.bmp");
+        g_wall = APCreateCompatibleDCFromBitmap(grid_wall);
+        
+    }
+    
     if (!wnd->is_grid)
     {
         printf(1,"error! paint non-Grid Mode program! \n");
@@ -139,12 +150,13 @@ void APGridPaint(AHwnd wnd)
             {
                 case GRID_WALL:
                     //printf(1,"Grid_Wall");
-                    pen.color = RGB(0xd2,0x69,0x1e);
+                    /*pen.color = RGB(0xd2,0x69,0x1e);
                     pen.size = 1;
                     brush.color = RGB(0xd2,0x69,0x1e);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);*/
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_wall,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
                 case GRID_ROAD:
                     //printf(1,"Grid_Road");

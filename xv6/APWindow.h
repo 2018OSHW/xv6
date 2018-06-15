@@ -11,6 +11,10 @@
 #include "APObject.h"
 #include "APPaint.h"
 
+//Icon on the desktop
+ABitmap grid_wall;
+AHdc g_wall = &grid_wall_Dc;
+
 //start a program
 AHwnd APCreateWindow(char * title,int is_map,int page);
 
