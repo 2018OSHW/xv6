@@ -120,8 +120,8 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
             }
         }
     }
-    cprintf("arbitrary set window color!\n");
-    memset(screenAddr, DEFAULT_WINDOW_COLOR, sizeof(AColor) * screenWidth * screenHeight);
+    //cprintf("arbitrary set window color!\n");
+    //memset(screenAddr, DEFAULT_WINDOW_COLOR, sizeof(AColor) * screenWidth * screenHeight);
     release(&screenLock);
 }
 
@@ -142,7 +142,7 @@ int sys_paintWindow(void)
     if (sx < 0 || sy < 0 || h <= 0 || w <= 0 || sx + w > hdc->size.cx || sy + h > hdc->size.cy)
         return 0;
     
-    if (wx < 0 || wy < 0 || wx + w > hwnd->screenWidth || wy + h > screenHeight)
+    if (wx < 0 || wy < 0 || wx + w > screenWidth || wy + h > screenHeight)
         return 0;
     
     //wx,wy是window重绘左上角坐标
