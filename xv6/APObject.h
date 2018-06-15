@@ -7,9 +7,9 @@
 
 typedef struct AColor
 {
-    uchar r;
-    uchar g;
     uchar b;
+    uchar g;
+    uchar r;
 }AColor;
 
 static inline AColor RGB(uchar r, uchar g, uchar b)

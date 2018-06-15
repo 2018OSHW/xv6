@@ -73,7 +73,7 @@ void APCharacterInit(void)
     
     for (int j = 10; j < 40; j++)
         for (int i = 0; i < 50; i++)
-            character_img[i][j] = RGB(0xdc,0x14,0x3c);
+            character_img[i][j] = RGB(0x00,0xff,0x00);
 }
 
 void APGuiInit(void)
