@@ -125,9 +125,6 @@ typedef struct AWndListNode
     //message queue
     AMsgQueue msgQueue;
     
-    // window index
-    int msgQueueID;
-    
     //window
     AHwnd hwnd;
 }AWndListNode;

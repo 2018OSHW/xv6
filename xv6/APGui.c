@@ -128,7 +128,7 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
 //paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h,is_grid)
 int sys_paintWindow(void)
 {
-    cprintf("in paintWindow function:---- 1  \n");
+    //cprintf("in paintWindow function:---- 1  \n");
     AHwnd hwnd = 0;
     AHdc hdc = 0;
     int wx,wy,sx,sy,w,h,is_grid;
@@ -148,7 +148,7 @@ int sys_paintWindow(void)
     //wx,wy是window重绘左上角坐标
     
     //int id = hwnd ->id;
-    cprintf("in paintWindow function:-----2  \n");
+    //cprintf("in paintWindow function:-----2  \n");
     AColor *data = hdc->content;
     
     int j;
@@ -244,27 +244,26 @@ int sys_getMessage(void)
     if (argstr(0, (char **)&hwnd) < 0)
         return -1;
     int wndId = hwnd->id;
-    int msgQueueId = hwnd->id;
     int pid = hwnd->pid;
     
-    cprintf("in function --- getMessage:WndId: %d\n",wndId);
+    //cprintf("in function --- getMessage:WndId: %d\n",wndId);
     
-    acquire(&wndList.data[msgQueueId].lock);
-    AMsgQueue * queue = &wndList.data[msgQueueId].msgQueue;
+    acquire(&wndList.data[wndId].lock);
+    AMsgQueue * queue = &wndList.data[wndId].msgQueue;
     
-    cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
+    //cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
     if (queue->head == queue->tail)
     {
-        cprintf("sleeping\n");
-        sleep((void *)pid,&wndList.data[msgQueueId].lock);
+       // cprintf("sleeping\n");
+        sleep((void *)pid,&wndList.data[wndId].lock);
     }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
     {
-        cprintf("poping msg!\n");
+      //  cprintf("poping msg!\n");
         wndList.data[wndId].hwnd->msg = APMsgQueueDeQueue(queue);
     }
     
-    release(&wndList.data[msgQueueId].lock);
+    release(&wndList.data[wndId].lock);
     return 0;
 }
 
@@ -273,7 +272,7 @@ void sendMessage(int wndId, AMessage *msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
-    cprintf("send message: WndID:%d \n",wndId);
+    //cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
 
@@ -321,7 +320,6 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
     list->data[p].hwnd = hwnd;
     
     hwnd->id = p;
-    list->data[p].msgQueueID = p;
     
     //desktop ---- id = 0
     list->data[p].next = list->head;
@@ -419,10 +417,10 @@ void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg)
         default:
             break;
     }
-    cprintf("MsgQueue-En-Queue:tail %d \n",queue->tail);
+    //cprintf("MsgQueue-En-Queue:tail %d \n",queue->tail);
     queue->data[queue->tail] = msg;
     queue->tail = (queue->tail + 1) % MESSAGE_QUEUE_SIZE;
-    cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
+    //cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
 }
 
 //弹出消息队列顶端

@@ -68,13 +68,13 @@ AHwnd APCreateWindow(char * title,int is_map,int page)
 
 bool APWndProc(AHwnd hwnd, AMessage msg)
 {
-    printf(1,"start window processing!\n");
+    //printf(1,"start window processing!\n");
     switch (msg.type)
     {
         case MSG_PAINT:
-            printf(1,"paint!\n");
+            //printf(1,"paint!\n");
             paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
-            printf(1,"paint finished!\n");
+            //printf(1,"paint finished!\n");
             break;
         default: break;
             
@@ -101,7 +101,7 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
     msg.wndID = hwnd->id;
     APSendMessage(hwnd,msg);
     //--------process window
-    printf(1,"start getting message!\n");
+    //printf(1,"start getting message!\n");
     while (1)
     {
         getMessage(hwnd);
@@ -139,6 +139,7 @@ void APGridPaint(AHwnd wnd)
             switch (wnd->Grid[index])
             {
                 case GRID_WALL:
+                    printf(1,"Grid_Wall");
                     pen.color = RGB(0xd2,0x69,0x1e);
                     pen.size = 2;
                     brush.color = RGB(0xd2,0x69,0x1e);
@@ -147,6 +148,7 @@ void APGridPaint(AHwnd wnd)
                     APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
                     break;
                 case GRID_ROAD:
+                    printf(1,"Grid_Road");
                     pen.color = RGB(0x69,0x69,0x69);
                     pen.size = 2;
                     brush.color = RGB(0x69,0x69,0x69);
@@ -155,6 +157,7 @@ void APGridPaint(AHwnd wnd)
                     APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
                     break;
                 case GRID_GRASS:
+                    printf(1,"Grid_Grass");
                     pen.color = RGB(0x00,0x80,0x00);
                     pen.size = 2;
                     brush.color = RGB(0x00,0x80,0x00);
@@ -163,6 +166,7 @@ void APGridPaint(AHwnd wnd)
                     APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
                     break;
                 case GRID_RIVER:
+                    printf(1,"Grid_River");
                     pen.color = RGB(0x00,0xbf,0xff);
                     pen.size = 2;
                     brush.color = RGB(0x00,0xbf,0xff);
