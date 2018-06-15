@@ -59,15 +59,15 @@ int timerListReady = 0;
 
 void APCharacterInit(void)
 {
-    for (int j = 0; j < 10; i++)
+    for (int j = 0; j < 10; j++)
         for (int i = 0; i < 50; i++)
             character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
     
-    for (int j = 40; j < 50; i++)
+    for (int j = 40; j < 50; j++)
         for (int i = 0; i < 50; i++)
             character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
     
-    for (int j = 10; i < 40; j++)
+    for (int j = 10; j < 40; j++)
         for (int i = 0; i < 50; i++)
             character_img[i][j] = RGB(0xdc,0x14,0x3c);
 }
@@ -122,8 +122,12 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         continue;
                     if (character_x * GRID_WIDTH + i > x2)
                         break;
-                    screenBuf [off + i] = character_img[i][j];
-                    screenAddr[off + i] = character_img[i][j];
+                    AColor c = character_img[i][j];
+                    if (c.r != COLOR_TRANSPARENT || c.g!=COLOR_TRANSPARENT || c.b !=COLOR_TRANSPARENT)
+                    {
+                        screenBuf [off + i] = c;
+                        screenAddr[off + i] = c;
+                    }
                 }
                 off += screenWidth;
             }
