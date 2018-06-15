@@ -139,7 +139,7 @@ void APGridPaint(AHwnd wnd)
             switch (wnd->Grid[index])
             {
                 case GRID_WALL:
-                    printf(1,"Grid_Wall");
+                    //printf(1,"Grid_Wall");
                     pen.color = RGB(0xd2,0x69,0x1e);
                     pen.size = 1;
                     brush.color = RGB(0xd2,0x69,0x1e);
@@ -148,31 +148,31 @@ void APGridPaint(AHwnd wnd)
                     APDrawRect(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
                     break;
                 case GRID_ROAD:
-                    printf(1,"Grid_Road");
+                    //printf(1,"Grid_Road");
                     pen.color = RGB(0x69,0x69,0x69);
                     pen.size = 2;
                     brush.color = RGB(0x69,0x69,0x69);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
                     break;
                 case GRID_GRASS:
-                    printf(1,"Grid_Grass");
+                    //printf(1,"Grid_Grass");
                     pen.color = RGB(0x00,0x80,0x00);
                     pen.size = 2;
                     brush.color = RGB(0x00,0x80,0x00);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
                     break;
                 case GRID_RIVER:
-                    printf(1,"Grid_River");
+                    //printf(1,"Grid_River");
                     pen.color = RGB(0x00,0xbf,0xff);
                     pen.size = 2;
                     brush.color = RGB(0x00,0xbf,0xff);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH ,GRID_WIDTH,GRID_WIDTH);
                     break;
                 default: break;
             }

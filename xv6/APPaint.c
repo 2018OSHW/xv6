@@ -38,7 +38,7 @@ static inline int APGetIndex(AHdc hdc,int x,int y)
         return Y_SMALLER;
     else if (y>=hdc->size.cy)
         return Y_BIGGER;
-    return y * hdc->size.cy + x;
+    return y * hdc->size.cx + x;
 }
 
 //-------------------------------bitmap--------------------------------------
