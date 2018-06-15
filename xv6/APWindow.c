@@ -122,8 +122,9 @@ void APGridPaint(AHwnd wnd)
         iconReady = 1;
         //load icon bitmap
         grid_wall = APLoadBitmap ("grid_wall.bmp");
+        printf(1,"bitmap loaded!\n");
         g_wall = APCreateCompatibleDCFromBitmap(grid_wall);
-        
+        printf(1,"bitmap DC created!\n");
     }
     
     if (!wnd->is_grid)
