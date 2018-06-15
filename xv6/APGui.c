@@ -320,11 +320,7 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         continue;
                     if (character_x * GRID_WIDTH + i > x2)
                         break;
-<<<<<<< HEAD
-                    AColor c = character_img2[i][j];
-=======
                     AColor c = character_img[i][j];
->>>>>>> 697694749825a170ab3c8f9782959ad0dadf50bf
                     if (c.r != COLOR_TRANSPARENT || c.g!=COLOR_TRANSPARENT || c.b !=COLOR_TRANSPARENT)
                     {
                         screenBuf [off + i] = c;
