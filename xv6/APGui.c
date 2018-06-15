@@ -15,6 +15,10 @@ struct spinlock screenLock;
 
 
 AColor character_img[GRID_WIDTH][GRID_WIDTH];
+<<<<<<< HEAD
+AColor character_img2[GRID_WIDTH][GRID_WIDTH];
+=======
+>>>>>>> 697694749825a170ab3c8f9782959ad0dadf50bf
 
 //index of character in the grid
 int character_pre_x = 1, character_pre_y = 1;
@@ -63,6 +67,223 @@ int timerListReady = 0;
 
 void APCharacterInit(void)
 {
+<<<<<<< HEAD
+    for (int j = 0; j < GRID_WIDTH; j++)
+        for (int i = 0; i < GRID_WIDTH; i++){
+            character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
+	   character_img2[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
+
+}
+    //
+
+    int line=0;
+  
+    for(int j=line;j<line+3;j++)
+	for(int i=10;i<25;i++)
+		character_img[i][j] = RGB(0xff,0x00,0x00);
+line=line+3;
+ for(int j=line;j<line+3;j++)
+	for(int i=5;i<40;i++)
+		character_img[i][j] = RGB(0xff,0x00,0x00);
+
+line=line+3;
+
+  for(int j=line;j<line+3;j++){
+	for(int i=5;i<30;i++){
+               if(i<15)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=15&&i<22)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=22&&i<26)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=26&&i<30)
+			character_img[i][j] = RGB(249,236,236);
+
+}}
+line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<5)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=5&&i<10)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=10&&i<13)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=13&&i<22)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=22&&i<26)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=26&&i<35)
+			character_img[i][j] = RGB(249,236,236);
+}}
+line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=0;i<44;i++){
+               if(i<5)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=5&&i<10)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=10&&i<16)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=16&&i<26)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=26&&i<30)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=30&&i<40)
+			character_img[i][j] = RGB(249,236,236);
+}}
+line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<10)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=10&&i<22)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=22&&i<35)
+			character_img[i][j] = RGB(128,64,0);
+		
+}}
+line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=10;i<40;i++){
+               if(i<30)
+			character_img[i][j] = RGB(249,236,236);
+		
+		
+}}
+line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=5;i<40;i++){
+               if(i<11)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=11&&i<14)
+			character_img[i][j] = RGB(255,0,0);	
+		else if(i>=14&&i<25)
+			character_img[i][j] = RGB(128,64,0);
+		
+		
+}}
+line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=3;i<40;i++){
+               if(i<11)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=11&&i<14)
+			character_img[i][j] = RGB(255,0,0);
+		else if(i>=14&&i<22)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=22&&i<25)
+			character_img[i][j] = RGB(255,0,0);
+		else if(i>=25&&i<35)
+			character_img[i][j] = RGB(128,64,0);
+
+
+		
+}}line=line+3;
+  for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<11)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=11&&i<25)
+			character_img[i][j] = RGB(255,0,0);
+		else if(i>=25&&i<40)
+			character_img[i][j] = RGB(128,64,0);
+		
+
+
+		
+}}
+line =line +3;
+for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<5)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=5&&i<8)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=8&&i<11)
+			character_img[i][j] = RGB(255,0,0);
+		else if(i>=11&&i<14)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=14&&i<22)
+			character_img[i][j] = RGB(255,0,0);
+		else if(i>=22&&i<25)
+			character_img[i][j] = RGB(249,236,236);
+		else if(i>=25&&i<28)
+			character_img[i][j] = RGB(255,0,0);
+		else if(i>=28&&i<32)
+			character_img[i][j] = RGB(128,64,0);
+		else if(i>=32&&i<40)
+			character_img[i][j] = RGB(249,236,236);
+
+		
+}}
+line =line +3;
+for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<8)
+			character_img[i][j] = RGB(249,236,236);
+		
+		else if(i>=8&&i<28)
+			character_img[i][j] = RGB(255,0,0);
+		
+		
+		else if(i>=28&&i<40)
+			character_img[i][j] = RGB(249,236,236);
+
+		
+}}
+line =line +3;
+for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<5)
+			character_img[i][j] = RGB(249,236,236);
+	
+		else if(i>=5&&i<32)
+			character_img[i][j] = RGB(255,0,0);
+		
+		else if(i>=32&&i<40)
+			character_img[i][j] = RGB(249,236,236);
+
+		
+}}line =line +3;
+for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i>=5&&i<14)
+			character_img[i][j] = RGB(255,0,0);
+		
+		else if(i>=22&&i<32)
+			character_img[i][j] = RGB(255,0,0);
+
+		
+}}
+ line =line +3;
+for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i>=2&&i<11)
+			character_img[i][j] = RGB(128,64,0);
+		
+		else if(i>=25&&i<34)
+			character_img[i][j] = RGB(128,64,0);
+
+		
+}}
+line =line +3;
+for(int j=line;j<line+3;j++){
+	for(int i=0;i<40;i++){
+               if(i<11)
+			character_img[i][j] = RGB(128,64,0);
+		
+		else if(i>=25&&i<35)
+			character_img[i][j] = RGB(128,64,0);
+
+		
+}}
+
+   for(int j=0;j<GRID_WIDTH;j++)
+   	for(int i=0;i<GRID_WIDTH;i++)
+      		character_img2[GRID_WIDTH-1-i][j] = character_img[i][j];
+         
+=======
     for (int j = 0; j < 10; j++)
         for (int i = 0; i < 50; i++)
             character_img[i][j] = RGB(COLOR_TRANSPARENT,COLOR_TRANSPARENT,COLOR_TRANSPARENT);
@@ -74,6 +295,7 @@ void APCharacterInit(void)
     for (int j = 10; j < 40; j++)
         for (int i = 0; i < 50; i++)
             character_img[i][j] = RGB(0x00,0xff,0x00);
+>>>>>>> 697694749825a170ab3c8f9782959ad0dadf50bf
 }
 
 void APGuiInit(void)
@@ -126,7 +348,11 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         continue;
                     if (character_x * GRID_WIDTH + i > x2)
                         break;
+<<<<<<< HEAD
+                    AColor c = character_img2[i][j];
+=======
                     AColor c = character_img[i][j];
+>>>>>>> 697694749825a170ab3c8f9782959ad0dadf50bf
                     if (c.r != COLOR_TRANSPARENT || c.g!=COLOR_TRANSPARENT || c.b !=COLOR_TRANSPARENT)
                     {
                         screenBuf [off + i] = c;
