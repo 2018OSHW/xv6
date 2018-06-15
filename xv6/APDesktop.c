@@ -79,7 +79,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             {
                 int off = j * GRID_W_NUMBER;
                 for (int i = 0; i< GRID_W_NUMBER; i++)
-                    hwnd->Grid[off + i] = desktop_layout[i][j];
+                    hwnd->Grid[off + i] = desktop_layout[j][i];
             }
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);

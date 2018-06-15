@@ -141,11 +141,11 @@ void APGridPaint(AHwnd wnd)
                 case GRID_WALL:
                     printf(1,"Grid_Wall");
                     pen.color = RGB(0xd2,0x69,0x1e);
-                    pen.size = 2;
+                    pen.size = 1;
                     brush.color = RGB(0xd2,0x69,0x1e);
                     APSetPen(&wnd->Dc,pen);
                     APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH + 1,j * GRID_WIDTH + 1,GRID_WIDTH - 2,GRID_WIDTH -2);
+                    APDrawRect(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
                     break;
                 case GRID_ROAD:
                     printf(1,"Grid_Road");
