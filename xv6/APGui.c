@@ -133,7 +133,6 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         screenAddr[off + i] = c;
                     }
                 }
-                off += screenWidth;
             }
         }
     }
