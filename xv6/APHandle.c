@@ -1,6 +1,11 @@
-/*
+#include "types.h"
+#include "x86.h"
+#include "defs.h"
+#include "traps.h"
+#include "memlayout.h"
 #include "APHandle.h"
 #include "APInclude.h"
+#include "APObject.h"
 
 void InitHandle()
 {
@@ -27,6 +32,7 @@ void HandleInterupt()
 	}
 	data = inb(HANDLEATAP);
 	cprintf("%d",data);
+	AMessage msg;
 	switch (data)
 	{
 		
@@ -46,4 +52,3 @@ void DealHandleMessage(int ticks)
 		}
 	}
 }
-*/
