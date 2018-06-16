@@ -2,6 +2,51 @@
 #include "x86.h"
 #include "defs.h"
 #include "kbd.h"
+#include "APObject.h"
+
+extern AWndList wndList;
+
+void kbdInterupt()
+{
+	static int shift = 0;
+	static uchar *charcode[2] = {
+		normalMap, e0Map
+	};
+
+	uint st, data;
+
+	st = inb(KBSTATP);
+	data = inb(KBDATAP);
+	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
+	{
+		//cprintf("kbdInterupt return : %d\n", st);
+		return;
+	}
+
+	if (data == 0xE0) {
+		shift = 1;
+		return;
+	}
+	else if (data & 0x80) {
+		// Key released
+		data &= 0x7F;
+
+		AMessage *msg;
+		msg->type = MSG_KEY_UP;
+		msg->param = charcode[shift][data];
+		if (shift)
+			shift = 0;
+		sendMessage(wndList.entry, msg);
+		return;
+	}
+	AMessage *msg;
+	msg->type = MSG_KEY_DOWN;
+	msg->param = charcode[shift][data];
+	if (shift)
+		shift = 0;
+	sendMessage(wndList.entry, msg);
+
+}
 
 int
 kbdgetc(void)
@@ -40,11 +85,13 @@ kbdgetc(void)
     else if('A' <= c && c <= 'Z')
       c += 'a' - 'A';
   }
+  
   return c;
 }
 
 void
 kbdintr(void)
 {
-  consoleintr(kbdgetc);
+  //consoleintr(kbdgetc);
+	kbdInterupt();
 }

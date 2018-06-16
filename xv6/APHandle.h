@@ -1,9 +1,5 @@
-/*#pragma once
-#include "types.h"
-#include "x86.h"
-#include "defs.h"
-#include "traps.h"
-#include "memlayout.h"
+#pragma once
+
 #define HANDLEATAP 0x60
 #define HANDLESTAP 0x64
 #define TICKS_INTERVAL1 40//间隔多长时间判定一次
@@ -66,5 +62,3 @@ void InitHandle(void);
 void HandleInterupt(void );
 
 void DealHandleMessage(int);
-
-*/

@@ -1,5 +1,7 @@
 // PC keyboard interface constants
 
+#include "APInclude.h"
+
 #define KBSTATP         0x64    // kbd controller status port(I)
 #define KBS_DIB         0x01    // kbd data in buffer
 #define KBDATAP         0x60    // kbd data port(I)
@@ -110,3 +112,26 @@ static uchar ctlmap[256] =
   [0xD2] KEY_INS,   [0xD3] KEY_DEL
 };
 
+static uchar normalMap[256] =
+{
+	NO,   VK_ESC, NO,  NO,  NO,  NO,  NO,  NO,  // 0x00
+	NO,  NO,  NO,  NO,  NO,  NO, NO, NO,
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x10
+	NO,   NO, NO,  NO,  VK_ENTER, NO,  NO,  NO, 
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x20
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x30
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,  // 0x40
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,
+	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,    // 0x50
+	NO
+};
+
+static uchar e0Map[256] =
+{
+	[0x48] VK_UP,[0x4B] VK_LEFT,
+	[0x50] VK_DOWN,[0x4D] VK_RIGHT
+};
+
+void kbdInterupt();
