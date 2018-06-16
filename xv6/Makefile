@@ -8,6 +8,7 @@ OBJS = \
 	ioapic.o\
 	kalloc.o\
 	kbd.o\
+	APHandle.o\
 	lapic.o\
 	log.o\
 	main.o\
@@ -133,7 +134,7 @@ tags: $(OBJS) entryother.S _init
 vectors.S: vectors.pl
 	perl vectors.pl > vectors.S
 
-ULIB = ulib.o usys.o printf.o umalloc.o APPaint.o APWindow.o APLib.o
+ULIB = ulib.o usys.o printf.o umalloc.o APPaint.o APWindow.o APLib.o APHandle.o
 
 _%: %.o $(ULIB)
 	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $@ $^
