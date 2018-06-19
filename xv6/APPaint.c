@@ -91,7 +91,7 @@ AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
     hdc->size.cx = bmp.width;
     hdc->size.cy = bmp.height;
     hdc->content = bmp.data;
-    //printf(1, "%d %d\n", hdc->size.cx, hdc->size.cy);
+    printf(1, "size of bitmap: %d %d %d\n", hdc->size.cx, hdc->size.cy,sizeof(hdc->content));
     return hdc;
 }
 
