@@ -155,6 +155,7 @@ typedef struct ATimerList
     struct spinlock lock;
 }ATimerList;
 
+#pragma pack(2)
 typedef struct
 {
     unsigned short  bfType;
