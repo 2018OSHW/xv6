@@ -188,7 +188,7 @@ void APGridPaint(AHwnd wnd)
                 case GRID_STONE:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_stone,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
-                case grid_MOUNTAIN:
+                case GRID_MOUNTAIN:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_mountain,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
                 default: break;
