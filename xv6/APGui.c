@@ -293,7 +293,7 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
     x2 -= x1;
     x2 *= sizeof(AColor);
     int off = x1 + y1 * screenWidth;
-    for (int y = y1 ; y < y2; y++)
+    for (int y = y1 ; y <= y2; y++)
     {
         memmove(screenBuf + off , screenContent + off, x2);
         memmove(screenAddr + off, screenContent + off, x2);
@@ -386,16 +386,16 @@ int sys_paintWindow(void)
                 screenContent[screen_off_x + j] = c;
         }
     }
-    w += wx;
-    h += wy;
+    w += wx - 1;
+    h += wy - 1;
     if (wx < 0)
         wx = 0;
     if (wy < 0)
         wy = 0;
-    if (h > screenHeight)
-        h = screenHeight;
-    if (w > screenWidth)
-        w = screenWidth;
+    if (h >= screenHeight)
+        h = screenHeight - 1;
+    if (w >= screenWidth)
+        w = screenWidth - 1;
     //release(&videoLock);
     APBufPaint(wx, wy, w, h,is_grid);
     return 0;

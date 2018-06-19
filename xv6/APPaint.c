@@ -91,7 +91,7 @@ AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
     hdc->size.cx = bmp.width;
     hdc->size.cy = bmp.height;
     hdc->content = bmp.data;
-    printf(1, "size of bitmap: %d %d %d\n", hdc->size.cx, hdc->size.cy,sizeof(hdc->content));
+    //printf(1, "size of bitmap: %d %d %d\n", hdc->size.cx, hdc->size.cy,sizeof(hdc->content));
     return hdc;
 }
 
@@ -257,19 +257,19 @@ void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor t
 {
     if (w < 0 || h < 0) return;
     int wx_r = wx + w, wy_r = wy + h;
-    int x_r = x + w, y_r = y + h;
-    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r >= src->size.cx || y_r >= src->size.cy)
+    int x_r = x + w , y_r = y + h ;
+    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r > src->size.cx || y_r > src->size.cy)
         return;
     
-    if (wx_r > dst->size.cx) wx_r = dst->size.cx - 1;
-    if (wy_r > dst->size.cy) wy_r = dst->size.cy - 1;
+    if (wx_r >= dst->size.cx) wx_r = dst->size.cx - 1;
+    if (wy_r >= dst->size.cy) wy_r = dst->size.cy - 1;
     
     int off1 = 0,off2 = 0;
-    for (int j = 0; j < wy_r - wy; j++)
+    for (int j = 0; j <= wy_r - wy; j++)
     {
         off1 = dst->size.cx * (j + wy) + wx;
         off2 = src->size.cx * (j + y) + x;
-        for (int i = 0; i < wx_r - wx; i++)
+        for (int i = 0; i <=  wx_r - wx; i++)
         {
             AColor c = src->content[off2 + i];
             if (c.r != trans.r || c.g != trans.g || c.b != trans.b)
