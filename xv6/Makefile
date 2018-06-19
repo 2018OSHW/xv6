@@ -176,6 +176,12 @@ UPROGS=\
 APFILES=\
     ASCII\
     grid_wall.bmp\
+    grid_forest.bmp\
+    grid_grass.bmp\
+    grid_river.bmp\
+    grid_stone.bmp\
+    grid_lake.bmp\
+    grid_mountain.bmp\
 
 fs.img: mkfs README $(APFILES) $(UPROGS)
 	./mkfs fs.img README $(APFILES) $(UPROGS)

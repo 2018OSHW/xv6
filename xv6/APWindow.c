@@ -123,6 +123,18 @@ void APGridPaint(AHwnd wnd)
         //load icon bitmap
         grid_wall = APLoadBitmap ("grid_wall.bmp");
         g_wall = APCreateCompatibleDCFromBitmap(grid_wall);
+        grid_river = APLoadBitmap ("grid_river.bmp");
+        g_river = APCreateCompatibleDCFromBitmap(grid_river);
+        grid_stone = APLoadBitmap ("grid_stone.bmp");
+        g_stone = APCreateCompatibleDCFromBitmap(grid_stone);
+        grid_lake = APLoadBitmap ("grid_lake.bmp");
+        g_lake = APCreateCompatibleDCFromBitmap(grid_lake);
+        grid_forest = APLoadBitmap ("grid_forest.bmp");
+        g_forest = APCreateCompatibleDCFromBitmap(grid_forest);
+        grid_mountain = APLoadBitmap ("grid_mountain.bmp");
+        g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
+        grid_grass = APLoadBitmap ("grid_grass.bmp");
+        g_grass = APCreateCompatibleDCFromBitmap(grid_grass);
         //printf(1,"bitmap DC created!\n");
     }
     
@@ -149,13 +161,6 @@ void APGridPaint(AHwnd wnd)
             switch (wnd->Grid[index])
             {
                 case GRID_WALL:
-                    //printf(1,"Grid_Wall");
-                    /*pen.color = RGB(0xd2,0x69,0x1e);
-                    pen.size = 1;
-                    brush.color = RGB(0xd2,0x69,0x1e);
-                    APSetPen(&wnd->Dc,pen);
-                    APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);*/
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_wall,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
                 case GRID_ROAD:
@@ -169,21 +174,22 @@ void APGridPaint(AHwnd wnd)
                     break;
                 case GRID_GRASS:
                     //printf(1,"Grid_Grass");
-                    pen.color = RGB(0x00,0x80,0x00);
-                    pen.size = 1;
-                    brush.color = RGB(0x00,0x80,0x00);
-                    APSetPen(&wnd->Dc,pen);
-                    APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_grass,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
                 case GRID_RIVER:
-                    //printf(1,"Grid_River");
-                    pen.color = RGB(0x00,0xbf,0xff);
-                    pen.size = 1;
-                    brush.color = RGB(0x00,0xbf,0xff);
-                    APSetPen(&wnd->Dc,pen);
-                    APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH ,GRID_WIDTH,GRID_WIDTH);
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_river,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                    break;
+                case GRID_FOREST:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_forest,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                    break;
+                case GRID_LAKE:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_lake,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                    break;
+                case GRID_STONE:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_stone,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                    break;
+                case grid_MOUNTAIN:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_mountain,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
                 default: break;
             }

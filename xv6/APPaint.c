@@ -55,12 +55,12 @@ ABitmap APLoadBitmap(char * filename)
     }
     ABitmapFileHeader fileHeader;
     read(fd, (char *)&fileHeader, sizeof(fileHeader));
-    printf(1, "%x %d %d %d %d\n", fileHeader.bfType, fileHeader.bfSize, fileHeader.bfOffBits, fileHeader.bfReserved1, fileHeader.bfReserved2);
+    //printf(1, "%x %d %d %d %d\n", fileHeader.bfType, fileHeader.bfSize, fileHeader.bfOffBits, fileHeader.bfReserved1, fileHeader.bfReserved2);
     ABitmapInfoHeader infoHeader;
     read(fd, (char *)&infoHeader, sizeof(infoHeader));
     bmp.width = infoHeader.biWidth;
     bmp.height = infoHeader.biHeight;
-    printf(1,"bitmap height: %d,bitmap width:%d",bmp.height,bmp.width);
+    //printf(1,"bitmap height: %d,bitmap width:%d",bmp.height,bmp.width);
     bmp.data = (AColor *)malloc(bmp.width * bmp.height * sizeof(AColor));
     int c = infoHeader.biBitCount;
     //printf(1, "%d %d %d\n", w, h, c);
