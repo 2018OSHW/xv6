@@ -36,3 +36,4 @@
 #define IRQ_ERROR       19
 #define IRQ_SPURIOUS    31
 #define IRQ_MOUSE      12
+#define IRQ_HANDLE      15
