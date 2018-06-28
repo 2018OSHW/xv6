@@ -33,7 +33,7 @@ void kbdInterupt()
 	}
 	else if (data & 0x80) {
 		// Key released
-                cprintf("key released!\n");
+        cprintf("key released!\n");
 		data &= 0x7F;
 		AMessage msg;
 		msg.type = MSG_KEY_UP;
@@ -63,10 +63,16 @@ kbdgetc(void)
   uint st, data, c;
 
   st = inb(KBSTATP);
-  if((st & KBS_DIB) == 0)
-    return -1;
   data = inb(KBDATAP);
 
+  if((st & KBS_DIB) == 0 || (st & 0x20) != 0)
+    return -1;
+
+  if (st & 0xc0)
+  {
+    return -1;
+  }
+    
   if(data == 0xE0){
     shift |= E0ESC;
     return 0;
