@@ -254,37 +254,6 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
 
 void APDrawText(AHdc hdc, char * str, int x, int y)
 {
-    int l = strlen(str);
-    char * buf = (char *)malloc(sizeof(char) * l * FONT_SIZE_CY);
-    getStringFigure(str, buf, l);
-    int row = 0;
-    int col = 0;
-    for (int k = 0; k < l; ++k)
-    {
-        if (str[k] == '\n')
-        {
-            row += FONT_SIZE_CY + 2;
-            col = 0;
-            continue;
-        }
-        else if (str[k] == '\t')
-        {
-            col += 4 * FONT_SIZE_CX;
-            continue;
-        }
-        for (int i = 0; i < FONT_SIZE_CY; ++i)
-        {
-            char ch = buf[(k << 4) + i];
-            for (int j = 0; j < FONT_SIZE_CX; ++j)
-            {
-                if (ch < 0)
-                    pvcSetPixel(hdc, x + col + j, y + i + row, hdc->font.color);
-                ch <<= 1;
-            }
-        }
-        col += FONT_SIZE_CX;
-    }
-    free(buf);
 }
 
 
