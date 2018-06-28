@@ -479,7 +479,7 @@ int sys_getMessage(void)
     if (argstr(0, (char **)&hwnd) < 0)
         return -1;
     int wndId = hwnd->id;
-    int pid = hwnd->pid;
+    //int pid = hwnd->pid;
     
     //cprintf("in function --- getMessage:WndId: %d\n",wndId);
     
