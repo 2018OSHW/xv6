@@ -22,6 +22,17 @@ AColor character_img2[GRID_WIDTH][GRID_WIDTH];
 int character_pre_x = 1, character_pre_y = 1;
 int character_x = 1,character_y = 1;
 
+
+void APCharacterMove(int direction)
+{
+switch(direction)
+{
+
+}
+
+
+}
+
 //character_move
 void APDrawCharacter(int is_grid)
 {
@@ -478,11 +489,26 @@ int sys_getMessage(void)
 
 void sendMessage(int wndId, AMessage *msg)
 {
+cprintf("sendMessage,Messgaetype:%d\n",msg->type);
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
     //cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
+	case MSG_KEY_UP:
+		
+		cprintf("WndId:%d",wndId);	    
+//APCharacterMove(msg->param);
+	    break;
+	case MSG_KEY_DOWN:
+
+	    break;
+	case MSG_HANDLE_DOWN:
+	    break;
+	case MSG_HANDLE_UP:
+	    break;
+	default:
+	    break;
 
     }
 

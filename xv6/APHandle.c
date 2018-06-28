@@ -31,14 +31,14 @@ void HandleInterupt()
 	uint state, data;
 
 	state = inb(HANDLESTAP);	
-	cprintf("state : %d\n", state);
+	//cprintf("state : %d\n", state);
 	
 	/*if ((state & 0x01) == 0 || (state & 0x20) != 0)
 	{
 		cprintf("HandleInterupt return : %d\n", state);
 		return;
 	}*/
-	data = inb(HANDLEATAP);
+	//data = inb(HANDLEATAP);
 	cprintf("data  : %d\n", data);
 	AMessage msg;
 	msg.type = MSG_HANDLE_DOWN;

@@ -27,7 +27,7 @@ main(int argc, char *argv[])
       17:	7f 17                	jg     30 <main+0x30>
     printf(2, "Usage: mkdir files...\n");
       19:	83 ec 08             	sub    $0x8,%esp
-      1c:	68 c8 1e 00 00       	push   $0x1ec8
+      1c:	68 cc 20 00 00       	push   $0x20cc
       21:	6a 02                	push   $0x2
       23:	e8 5e 04 00 00       	call   486 <printf>
       28:	83 c4 10             	add    $0x10,%esp
@@ -58,7 +58,7 @@ main(int argc, char *argv[])
       69:	8b 00                	mov    (%eax),%eax
       6b:	83 ec 04             	sub    $0x4,%esp
       6e:	50                   	push   %eax
-      6f:	68 df 1e 00 00       	push   $0x1edf
+      6f:	68 e3 20 00 00       	push   $0x20e3
       74:	6a 02                	push   $0x2
       76:	e8 0b 04 00 00       	call   486 <printf>
       7b:	83 c4 10             	add    $0x10,%esp
@@ -722,7 +722,7 @@ printint(int fd, int xx, int base, int sgn)
      419:	ba 00 00 00 00       	mov    $0x0,%edx
      41e:	f7 f3                	div    %ebx
      420:	89 d0                	mov    %edx,%eax
-     422:	0f b6 80 6c 25 00 00 	movzbl 0x256c(%eax),%eax
+     422:	0f b6 80 8c 27 00 00 	movzbl 0x278c(%eax),%eax
      429:	88 44 0d dc          	mov    %al,-0x24(%ebp,%ecx,1)
   }while((x /= base) != 0);
      42d:	8b 5d 10             	mov    0x10(%ebp),%ebx
@@ -868,7 +868,7 @@ printf(int fd, char *fmt, ...)
      55a:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
      55e:	75 25                	jne    585 <printf+0xff>
           s = "(null)";
-     560:	c7 45 f4 fb 1e 00 00 	movl   $0x1efb,-0xc(%ebp)
+     560:	c7 45 f4 ff 20 00 00 	movl   $0x20ff,-0xc(%ebp)
         while(*s != 0){
      567:	eb 1c                	jmp    585 <printf+0xff>
           putc(fd, *s);
@@ -982,7 +982,7 @@ free(void *ap)
      620:	83 e8 08             	sub    $0x8,%eax
      623:	89 45 f8             	mov    %eax,-0x8(%ebp)
   for(p = freep; !(bp > p && bp < p->s.ptr); p = p->s.ptr)
-     626:	a1 9c 25 00 00       	mov    0x259c,%eax
+     626:	a1 bc 27 00 00       	mov    0x27bc,%eax
      62b:	89 45 fc             	mov    %eax,-0x4(%ebp)
      62e:	eb 24                	jmp    654 <free+0x3d>
     if(p >= p->s.ptr && (bp > p || bp < p->s.ptr))
@@ -1076,7 +1076,7 @@ free(void *ap)
      6ec:	89 10                	mov    %edx,(%eax)
   freep = p;
      6ee:	8b 45 fc             	mov    -0x4(%ebp),%eax
-     6f1:	a3 9c 25 00 00       	mov    %eax,0x259c
+     6f1:	a3 bc 27 00 00       	mov    %eax,0x27bc
 }
      6f6:	90                   	nop
      6f7:	c9                   	leave  
@@ -1127,7 +1127,7 @@ morecore(uint nu)
      74a:	e8 c8 fe ff ff       	call   617 <free>
      74f:	83 c4 10             	add    $0x10,%esp
   return freep;
-     752:	a1 9c 25 00 00       	mov    0x259c,%eax
+     752:	a1 bc 27 00 00       	mov    0x27bc,%eax
 }
      757:	c9                   	leave  
      758:	c3                   	ret    
@@ -1150,18 +1150,18 @@ malloc(uint nbytes)
      768:	83 c0 01             	add    $0x1,%eax
      76b:	89 45 ec             	mov    %eax,-0x14(%ebp)
   if((prevp = freep) == 0){
-     76e:	a1 9c 25 00 00       	mov    0x259c,%eax
+     76e:	a1 bc 27 00 00       	mov    0x27bc,%eax
      773:	89 45 f0             	mov    %eax,-0x10(%ebp)
      776:	83 7d f0 00          	cmpl   $0x0,-0x10(%ebp)
      77a:	75 23                	jne    79f <malloc+0x46>
     base.s.ptr = freep = prevp = &base;
-     77c:	c7 45 f0 94 25 00 00 	movl   $0x2594,-0x10(%ebp)
+     77c:	c7 45 f0 b4 27 00 00 	movl   $0x27b4,-0x10(%ebp)
      783:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     786:	a3 9c 25 00 00       	mov    %eax,0x259c
-     78b:	a1 9c 25 00 00       	mov    0x259c,%eax
-     790:	a3 94 25 00 00       	mov    %eax,0x2594
+     786:	a3 bc 27 00 00       	mov    %eax,0x27bc
+     78b:	a1 bc 27 00 00       	mov    0x27bc,%eax
+     790:	a3 b4 27 00 00       	mov    %eax,0x27b4
     base.s.size = 0;
-     795:	c7 05 98 25 00 00 00 	movl   $0x0,0x2598
+     795:	c7 05 b8 27 00 00 00 	movl   $0x0,0x27b8
      79c:	00 00 00 
   }
   for(p = prevp->s.ptr; ; prevp = p, p = p->s.ptr){
@@ -1204,14 +1204,14 @@ malloc(uint nbytes)
       }
       freep = prevp;
      7ef:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     7f2:	a3 9c 25 00 00       	mov    %eax,0x259c
+     7f2:	a3 bc 27 00 00       	mov    %eax,0x27bc
       return (void*)(p + 1);
      7f7:	8b 45 f4             	mov    -0xc(%ebp),%eax
      7fa:	83 c0 08             	add    $0x8,%eax
      7fd:	eb 3b                	jmp    83a <malloc+0xe1>
     }
     if(p == freep)
-     7ff:	a1 9c 25 00 00       	mov    0x259c,%eax
+     7ff:	a1 bc 27 00 00       	mov    0x27bc,%eax
      804:	39 45 f4             	cmp    %eax,-0xc(%ebp)
      807:	75 1e                	jne    827 <malloc+0xce>
       if((p = morecore(nunits)) == 0)
@@ -1382,2633 +1382,2767 @@ ABitmap APLoadBitmap(char * filename)
 {
      90c:	55                   	push   %ebp
      90d:	89 e5                	mov    %esp,%ebp
-     90f:	56                   	push   %esi
-     910:	53                   	push   %ebx
-     911:	83 ec 70             	sub    $0x70,%esp
+     90f:	83 ec 78             	sub    $0x78,%esp
     ABitmap bmp;
     bmp.width = bmp.height = 0;
-     914:	c7 45 cc 00 00 00 00 	movl   $0x0,-0x34(%ebp)
-     91b:	8b 45 cc             	mov    -0x34(%ebp),%eax
-     91e:	89 45 c8             	mov    %eax,-0x38(%ebp)
+     912:	c7 45 cc 00 00 00 00 	movl   $0x0,-0x34(%ebp)
+     919:	8b 45 cc             	mov    -0x34(%ebp),%eax
+     91c:	89 45 c8             	mov    %eax,-0x38(%ebp)
     bmp.data = 0;
-     921:	c7 45 d0 00 00 00 00 	movl   $0x0,-0x30(%ebp)
+     91f:	c7 45 d0 00 00 00 00 	movl   $0x0,-0x30(%ebp)
     int fd = open(filename, O_RDONLY);
-     928:	83 ec 08             	sub    $0x8,%esp
-     92b:	6a 00                	push   $0x0
-     92d:	ff 75 0c             	pushl  0xc(%ebp)
-     930:	e8 f2 f9 ff ff       	call   327 <open>
-     935:	83 c4 10             	add    $0x10,%esp
-     938:	89 45 ec             	mov    %eax,-0x14(%ebp)
+     926:	83 ec 08             	sub    $0x8,%esp
+     929:	6a 00                	push   $0x0
+     92b:	ff 75 0c             	pushl  0xc(%ebp)
+     92e:	e8 f4 f9 ff ff       	call   327 <open>
+     933:	83 c4 10             	add    $0x10,%esp
+     936:	89 45 ec             	mov    %eax,-0x14(%ebp)
     if (fd < 0)
-     93b:	83 7d ec 00          	cmpl   $0x0,-0x14(%ebp)
-     93f:	79 2e                	jns    96f <APLoadBitmap+0x63>
+     939:	83 7d ec 00          	cmpl   $0x0,-0x14(%ebp)
+     93d:	79 2e                	jns    96d <APLoadBitmap+0x61>
     {
         printf(1, "Cannot open %s\n", filename);
-     941:	83 ec 04             	sub    $0x4,%esp
-     944:	ff 75 0c             	pushl  0xc(%ebp)
-     947:	68 04 1f 00 00       	push   $0x1f04
-     94c:	6a 01                	push   $0x1
-     94e:	e8 33 fb ff ff       	call   486 <printf>
-     953:	83 c4 10             	add    $0x10,%esp
+     93f:	83 ec 04             	sub    $0x4,%esp
+     942:	ff 75 0c             	pushl  0xc(%ebp)
+     945:	68 06 21 00 00       	push   $0x2106
+     94a:	6a 01                	push   $0x1
+     94c:	e8 35 fb ff ff       	call   486 <printf>
+     951:	83 c4 10             	add    $0x10,%esp
         return bmp;
-     956:	8b 45 08             	mov    0x8(%ebp),%eax
-     959:	8b 55 c8             	mov    -0x38(%ebp),%edx
-     95c:	89 10                	mov    %edx,(%eax)
-     95e:	8b 55 cc             	mov    -0x34(%ebp),%edx
-     961:	89 50 04             	mov    %edx,0x4(%eax)
-     964:	8b 55 d0             	mov    -0x30(%ebp),%edx
-     967:	89 50 08             	mov    %edx,0x8(%eax)
-     96a:	e9 1b 02 00 00       	jmp    b8a <APLoadBitmap+0x27e>
+     954:	8b 45 08             	mov    0x8(%ebp),%eax
+     957:	8b 55 c8             	mov    -0x38(%ebp),%edx
+     95a:	89 10                	mov    %edx,(%eax)
+     95c:	8b 55 cc             	mov    -0x34(%ebp),%edx
+     95f:	89 50 04             	mov    %edx,0x4(%eax)
+     962:	8b 55 d0             	mov    -0x30(%ebp),%edx
+     965:	89 50 08             	mov    %edx,0x8(%eax)
+     968:	e9 d2 01 00 00       	jmp    b3f <APLoadBitmap+0x233>
     }
     ABitmapFileHeader fileHeader;
     read(fd, (char *)&fileHeader, sizeof(fileHeader));
-     96f:	83 ec 04             	sub    $0x4,%esp
-     972:	6a 10                	push   $0x10
-     974:	8d 45 b8             	lea    -0x48(%ebp),%eax
-     977:	50                   	push   %eax
-     978:	ff 75 ec             	pushl  -0x14(%ebp)
-     97b:	e8 7f f9 ff ff       	call   2ff <read>
-     980:	83 c4 10             	add    $0x10,%esp
-    printf(1, "%x %d %d %d %d\n", fileHeader.bfType, fileHeader.bfSize, fileHeader.bfOffBits, fileHeader.bfReserved1, fileHeader.bfReserved2);
-     983:	0f b7 45 c2          	movzwl -0x3e(%ebp),%eax
-     987:	0f b7 f0             	movzwl %ax,%esi
-     98a:	0f b7 45 c0          	movzwl -0x40(%ebp),%eax
-     98e:	0f b7 d8             	movzwl %ax,%ebx
-     991:	8b 4d c4             	mov    -0x3c(%ebp),%ecx
-     994:	8b 55 bc             	mov    -0x44(%ebp),%edx
-     997:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-     99b:	0f b7 c0             	movzwl %ax,%eax
-     99e:	83 ec 04             	sub    $0x4,%esp
-     9a1:	56                   	push   %esi
-     9a2:	53                   	push   %ebx
-     9a3:	51                   	push   %ecx
-     9a4:	52                   	push   %edx
-     9a5:	50                   	push   %eax
-     9a6:	68 14 1f 00 00       	push   $0x1f14
-     9ab:	6a 01                	push   $0x1
-     9ad:	e8 d4 fa ff ff       	call   486 <printf>
-     9b2:	83 c4 20             	add    $0x20,%esp
+     96d:	83 ec 04             	sub    $0x4,%esp
+     970:	6a 0e                	push   $0xe
+     972:	8d 45 ba             	lea    -0x46(%ebp),%eax
+     975:	50                   	push   %eax
+     976:	ff 75 ec             	pushl  -0x14(%ebp)
+     979:	e8 81 f9 ff ff       	call   2ff <read>
+     97e:	83 c4 10             	add    $0x10,%esp
+    //printf(1, "%x %d %d %d %d\n", fileHeader.bfType, fileHeader.bfSize, fileHeader.bfOffBits, fileHeader.bfReserved1, fileHeader.bfReserved2);
     ABitmapInfoHeader infoHeader;
     read(fd, (char *)&infoHeader, sizeof(infoHeader));
-     9b5:	83 ec 04             	sub    $0x4,%esp
-     9b8:	6a 28                	push   $0x28
-     9ba:	8d 45 90             	lea    -0x70(%ebp),%eax
-     9bd:	50                   	push   %eax
-     9be:	ff 75 ec             	pushl  -0x14(%ebp)
-     9c1:	e8 39 f9 ff ff       	call   2ff <read>
-     9c6:	83 c4 10             	add    $0x10,%esp
+     981:	83 ec 04             	sub    $0x4,%esp
+     984:	6a 28                	push   $0x28
+     986:	8d 45 92             	lea    -0x6e(%ebp),%eax
+     989:	50                   	push   %eax
+     98a:	ff 75 ec             	pushl  -0x14(%ebp)
+     98d:	e8 6d f9 ff ff       	call   2ff <read>
+     992:	83 c4 10             	add    $0x10,%esp
     bmp.width = infoHeader.biWidth;
-     9c9:	8b 45 94             	mov    -0x6c(%ebp),%eax
-     9cc:	89 45 c8             	mov    %eax,-0x38(%ebp)
+     995:	8b 45 96             	mov    -0x6a(%ebp),%eax
+     998:	89 45 c8             	mov    %eax,-0x38(%ebp)
     bmp.height = infoHeader.biHeight;
-     9cf:	8b 45 98             	mov    -0x68(%ebp),%eax
-     9d2:	89 45 cc             	mov    %eax,-0x34(%ebp)
-    printf(1,"bitmap height: %d,bitmap width:%d",bmp.height,bmp.width);
-     9d5:	8b 55 c8             	mov    -0x38(%ebp),%edx
-     9d8:	8b 45 cc             	mov    -0x34(%ebp),%eax
-     9db:	52                   	push   %edx
-     9dc:	50                   	push   %eax
-     9dd:	68 24 1f 00 00       	push   $0x1f24
-     9e2:	6a 01                	push   $0x1
-     9e4:	e8 9d fa ff ff       	call   486 <printf>
-     9e9:	83 c4 10             	add    $0x10,%esp
+     99b:	8b 45 9a             	mov    -0x66(%ebp),%eax
+     99e:	89 45 cc             	mov    %eax,-0x34(%ebp)
+    //printf(1,"bitmap height: %d,bitmap width:%d",bmp.height,bmp.width);
     bmp.data = (AColor *)malloc(bmp.width * bmp.height * sizeof(AColor));
-     9ec:	8b 55 c8             	mov    -0x38(%ebp),%edx
-     9ef:	8b 45 cc             	mov    -0x34(%ebp),%eax
-     9f2:	0f af d0             	imul   %eax,%edx
-     9f5:	89 d0                	mov    %edx,%eax
-     9f7:	01 c0                	add    %eax,%eax
-     9f9:	01 d0                	add    %edx,%eax
-     9fb:	83 ec 0c             	sub    $0xc,%esp
-     9fe:	50                   	push   %eax
-     9ff:	e8 55 fd ff ff       	call   759 <malloc>
-     a04:	83 c4 10             	add    $0x10,%esp
-     a07:	89 45 d0             	mov    %eax,-0x30(%ebp)
+     9a1:	8b 55 c8             	mov    -0x38(%ebp),%edx
+     9a4:	8b 45 cc             	mov    -0x34(%ebp),%eax
+     9a7:	0f af d0             	imul   %eax,%edx
+     9aa:	89 d0                	mov    %edx,%eax
+     9ac:	01 c0                	add    %eax,%eax
+     9ae:	01 d0                	add    %edx,%eax
+     9b0:	83 ec 0c             	sub    $0xc,%esp
+     9b3:	50                   	push   %eax
+     9b4:	e8 a0 fd ff ff       	call   759 <malloc>
+     9b9:	83 c4 10             	add    $0x10,%esp
+     9bc:	89 45 d0             	mov    %eax,-0x30(%ebp)
     int c = infoHeader.biBitCount;
-     a0a:	0f b7 45 9e          	movzwl -0x62(%ebp),%eax
-     a0e:	0f b7 c0             	movzwl %ax,%eax
-     a11:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     9bf:	0f b7 45 a0          	movzwl -0x60(%ebp),%eax
+     9c3:	0f b7 c0             	movzwl %ax,%eax
+     9c6:	89 45 e8             	mov    %eax,-0x18(%ebp)
     //printf(1, "%d %d %d\n", w, h, c);
     int l = (((bmp.width * c) + 31) >> 5) << 2;
-     a14:	8b 55 c8             	mov    -0x38(%ebp),%edx
-     a17:	8b 45 e8             	mov    -0x18(%ebp),%eax
-     a1a:	0f af c2             	imul   %edx,%eax
-     a1d:	83 c0 1f             	add    $0x1f,%eax
-     a20:	c1 e8 05             	shr    $0x5,%eax
-     a23:	c1 e0 02             	shl    $0x2,%eax
-     a26:	89 45 e4             	mov    %eax,-0x1c(%ebp)
+     9c9:	8b 55 c8             	mov    -0x38(%ebp),%edx
+     9cc:	8b 45 e8             	mov    -0x18(%ebp),%eax
+     9cf:	0f af c2             	imul   %edx,%eax
+     9d2:	83 c0 1f             	add    $0x1f,%eax
+     9d5:	c1 e8 05             	shr    $0x5,%eax
+     9d8:	c1 e0 02             	shl    $0x2,%eax
+     9db:	89 45 e4             	mov    %eax,-0x1c(%ebp)
     int s = l * bmp.height;
-     a29:	8b 55 cc             	mov    -0x34(%ebp),%edx
-     a2c:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-     a2f:	0f af c2             	imul   %edx,%eax
-     a32:	89 45 e0             	mov    %eax,-0x20(%ebp)
+     9de:	8b 55 cc             	mov    -0x34(%ebp),%edx
+     9e1:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+     9e4:	0f af c2             	imul   %edx,%eax
+     9e7:	89 45 e0             	mov    %eax,-0x20(%ebp)
     unsigned char * data = (unsigned char *)malloc(sizeof(unsigned char) * s);
-     a35:	8b 45 e0             	mov    -0x20(%ebp),%eax
-     a38:	83 ec 0c             	sub    $0xc,%esp
-     a3b:	50                   	push   %eax
-     a3c:	e8 18 fd ff ff       	call   759 <malloc>
-     a41:	83 c4 10             	add    $0x10,%esp
-     a44:	89 45 dc             	mov    %eax,-0x24(%ebp)
+     9ea:	8b 45 e0             	mov    -0x20(%ebp),%eax
+     9ed:	83 ec 0c             	sub    $0xc,%esp
+     9f0:	50                   	push   %eax
+     9f1:	e8 63 fd ff ff       	call   759 <malloc>
+     9f6:	83 c4 10             	add    $0x10,%esp
+     9f9:	89 45 dc             	mov    %eax,-0x24(%ebp)
     read(fd, (char *)data, sizeof(unsigned char) * s);
-     a47:	83 ec 04             	sub    $0x4,%esp
-     a4a:	ff 75 e0             	pushl  -0x20(%ebp)
-     a4d:	ff 75 dc             	pushl  -0x24(%ebp)
-     a50:	ff 75 ec             	pushl  -0x14(%ebp)
-     a53:	e8 a7 f8 ff ff       	call   2ff <read>
-     a58:	83 c4 10             	add    $0x10,%esp
+     9fc:	83 ec 04             	sub    $0x4,%esp
+     9ff:	ff 75 e0             	pushl  -0x20(%ebp)
+     a02:	ff 75 dc             	pushl  -0x24(%ebp)
+     a05:	ff 75 ec             	pushl  -0x14(%ebp)
+     a08:	e8 f2 f8 ff ff       	call   2ff <read>
+     a0d:	83 c4 10             	add    $0x10,%esp
     int bit = infoHeader.biBitCount / 8;
-     a5b:	0f b7 45 9e          	movzwl -0x62(%ebp),%eax
-     a5f:	66 c1 e8 03          	shr    $0x3,%ax
-     a63:	0f b7 c0             	movzwl %ax,%eax
-     a66:	89 45 d8             	mov    %eax,-0x28(%ebp)
+     a10:	0f b7 45 a0          	movzwl -0x60(%ebp),%eax
+     a14:	66 c1 e8 03          	shr    $0x3,%ax
+     a18:	0f b7 c0             	movzwl %ax,%eax
+     a1b:	89 45 d8             	mov    %eax,-0x28(%ebp)
     for (int j = 0; j < bmp.height; ++j)
-     a69:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
-     a70:	e9 e5 00 00 00       	jmp    b5a <APLoadBitmap+0x24e>
+     a1e:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+     a25:	e9 e5 00 00 00       	jmp    b0f <APLoadBitmap+0x203>
     {
         int off = (bmp.height - j - 1) * bmp.width;
-     a75:	8b 55 cc             	mov    -0x34(%ebp),%edx
-     a78:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     a7b:	29 c2                	sub    %eax,%edx
-     a7d:	89 d0                	mov    %edx,%eax
-     a7f:	8d 50 ff             	lea    -0x1(%eax),%edx
-     a82:	8b 45 c8             	mov    -0x38(%ebp),%eax
-     a85:	0f af c2             	imul   %edx,%eax
-     a88:	89 45 d4             	mov    %eax,-0x2c(%ebp)
+     a2a:	8b 55 cc             	mov    -0x34(%ebp),%edx
+     a2d:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     a30:	29 c2                	sub    %eax,%edx
+     a32:	89 d0                	mov    %edx,%eax
+     a34:	8d 50 ff             	lea    -0x1(%eax),%edx
+     a37:	8b 45 c8             	mov    -0x38(%ebp),%eax
+     a3a:	0f af c2             	imul   %edx,%eax
+     a3d:	89 45 d4             	mov    %eax,-0x2c(%ebp)
         for (int i = 0; i < bmp.width; ++i)
-     a8b:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
-     a92:	e9 b1 00 00 00       	jmp    b48 <APLoadBitmap+0x23c>
+     a40:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+     a47:	e9 b1 00 00 00       	jmp    afd <APLoadBitmap+0x1f1>
         {
             bmp.data[off + i].r = (int)data[j * l + bit * i + bit - 1];
-     a97:	8b 55 d0             	mov    -0x30(%ebp),%edx
-     a9a:	8b 4d d4             	mov    -0x2c(%ebp),%ecx
-     a9d:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     aa0:	01 c8                	add    %ecx,%eax
-     aa2:	89 c1                	mov    %eax,%ecx
-     aa4:	89 c8                	mov    %ecx,%eax
-     aa6:	01 c0                	add    %eax,%eax
-     aa8:	01 c8                	add    %ecx,%eax
-     aaa:	01 c2                	add    %eax,%edx
-     aac:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     aaf:	0f af 45 e4          	imul   -0x1c(%ebp),%eax
-     ab3:	89 c1                	mov    %eax,%ecx
-     ab5:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     ab8:	0f af 45 f0          	imul   -0x10(%ebp),%eax
-     abc:	01 c1                	add    %eax,%ecx
-     abe:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     ac1:	01 c8                	add    %ecx,%eax
-     ac3:	8d 48 ff             	lea    -0x1(%eax),%ecx
-     ac6:	8b 45 dc             	mov    -0x24(%ebp),%eax
-     ac9:	01 c8                	add    %ecx,%eax
-     acb:	0f b6 00             	movzbl (%eax),%eax
-     ace:	88 42 02             	mov    %al,0x2(%edx)
+     a4c:	8b 55 d0             	mov    -0x30(%ebp),%edx
+     a4f:	8b 4d d4             	mov    -0x2c(%ebp),%ecx
+     a52:	8b 45 f0             	mov    -0x10(%ebp),%eax
+     a55:	01 c8                	add    %ecx,%eax
+     a57:	89 c1                	mov    %eax,%ecx
+     a59:	89 c8                	mov    %ecx,%eax
+     a5b:	01 c0                	add    %eax,%eax
+     a5d:	01 c8                	add    %ecx,%eax
+     a5f:	01 c2                	add    %eax,%edx
+     a61:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     a64:	0f af 45 e4          	imul   -0x1c(%ebp),%eax
+     a68:	89 c1                	mov    %eax,%ecx
+     a6a:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     a6d:	0f af 45 f0          	imul   -0x10(%ebp),%eax
+     a71:	01 c1                	add    %eax,%ecx
+     a73:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     a76:	01 c8                	add    %ecx,%eax
+     a78:	8d 48 ff             	lea    -0x1(%eax),%ecx
+     a7b:	8b 45 dc             	mov    -0x24(%ebp),%eax
+     a7e:	01 c8                	add    %ecx,%eax
+     a80:	0f b6 00             	movzbl (%eax),%eax
+     a83:	88 42 02             	mov    %al,0x2(%edx)
             bmp.data[off + i].g = (int)data[j * l + bit * i + bit - 2];
-     ad1:	8b 55 d0             	mov    -0x30(%ebp),%edx
-     ad4:	8b 4d d4             	mov    -0x2c(%ebp),%ecx
-     ad7:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     ada:	01 c8                	add    %ecx,%eax
-     adc:	89 c1                	mov    %eax,%ecx
-     ade:	89 c8                	mov    %ecx,%eax
-     ae0:	01 c0                	add    %eax,%eax
-     ae2:	01 c8                	add    %ecx,%eax
-     ae4:	01 c2                	add    %eax,%edx
-     ae6:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     ae9:	0f af 45 e4          	imul   -0x1c(%ebp),%eax
-     aed:	89 c1                	mov    %eax,%ecx
-     aef:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     af2:	0f af 45 f0          	imul   -0x10(%ebp),%eax
-     af6:	01 c1                	add    %eax,%ecx
-     af8:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     afb:	01 c8                	add    %ecx,%eax
-     afd:	8d 48 fe             	lea    -0x2(%eax),%ecx
-     b00:	8b 45 dc             	mov    -0x24(%ebp),%eax
-     b03:	01 c8                	add    %ecx,%eax
-     b05:	0f b6 00             	movzbl (%eax),%eax
-     b08:	88 42 01             	mov    %al,0x1(%edx)
+     a86:	8b 55 d0             	mov    -0x30(%ebp),%edx
+     a89:	8b 4d d4             	mov    -0x2c(%ebp),%ecx
+     a8c:	8b 45 f0             	mov    -0x10(%ebp),%eax
+     a8f:	01 c8                	add    %ecx,%eax
+     a91:	89 c1                	mov    %eax,%ecx
+     a93:	89 c8                	mov    %ecx,%eax
+     a95:	01 c0                	add    %eax,%eax
+     a97:	01 c8                	add    %ecx,%eax
+     a99:	01 c2                	add    %eax,%edx
+     a9b:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     a9e:	0f af 45 e4          	imul   -0x1c(%ebp),%eax
+     aa2:	89 c1                	mov    %eax,%ecx
+     aa4:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     aa7:	0f af 45 f0          	imul   -0x10(%ebp),%eax
+     aab:	01 c1                	add    %eax,%ecx
+     aad:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     ab0:	01 c8                	add    %ecx,%eax
+     ab2:	8d 48 fe             	lea    -0x2(%eax),%ecx
+     ab5:	8b 45 dc             	mov    -0x24(%ebp),%eax
+     ab8:	01 c8                	add    %ecx,%eax
+     aba:	0f b6 00             	movzbl (%eax),%eax
+     abd:	88 42 01             	mov    %al,0x1(%edx)
             bmp.data[off + i].b = (int)data[j * l + bit * i + bit - 3];
-     b0b:	8b 55 d0             	mov    -0x30(%ebp),%edx
-     b0e:	8b 4d d4             	mov    -0x2c(%ebp),%ecx
-     b11:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     b14:	01 c8                	add    %ecx,%eax
-     b16:	89 c1                	mov    %eax,%ecx
-     b18:	89 c8                	mov    %ecx,%eax
-     b1a:	01 c0                	add    %eax,%eax
-     b1c:	01 c8                	add    %ecx,%eax
-     b1e:	01 c2                	add    %eax,%edx
-     b20:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     b23:	0f af 45 e4          	imul   -0x1c(%ebp),%eax
-     b27:	89 c1                	mov    %eax,%ecx
-     b29:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     b2c:	0f af 45 f0          	imul   -0x10(%ebp),%eax
-     b30:	01 c1                	add    %eax,%ecx
-     b32:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     b35:	01 c8                	add    %ecx,%eax
-     b37:	8d 48 fd             	lea    -0x3(%eax),%ecx
-     b3a:	8b 45 dc             	mov    -0x24(%ebp),%eax
-     b3d:	01 c8                	add    %ecx,%eax
-     b3f:	0f b6 00             	movzbl (%eax),%eax
-     b42:	88 02                	mov    %al,(%edx)
+     ac0:	8b 55 d0             	mov    -0x30(%ebp),%edx
+     ac3:	8b 4d d4             	mov    -0x2c(%ebp),%ecx
+     ac6:	8b 45 f0             	mov    -0x10(%ebp),%eax
+     ac9:	01 c8                	add    %ecx,%eax
+     acb:	89 c1                	mov    %eax,%ecx
+     acd:	89 c8                	mov    %ecx,%eax
+     acf:	01 c0                	add    %eax,%eax
+     ad1:	01 c8                	add    %ecx,%eax
+     ad3:	01 c2                	add    %eax,%edx
+     ad5:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     ad8:	0f af 45 e4          	imul   -0x1c(%ebp),%eax
+     adc:	89 c1                	mov    %eax,%ecx
+     ade:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     ae1:	0f af 45 f0          	imul   -0x10(%ebp),%eax
+     ae5:	01 c1                	add    %eax,%ecx
+     ae7:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     aea:	01 c8                	add    %ecx,%eax
+     aec:	8d 48 fd             	lea    -0x3(%eax),%ecx
+     aef:	8b 45 dc             	mov    -0x24(%ebp),%eax
+     af2:	01 c8                	add    %ecx,%eax
+     af4:	0f b6 00             	movzbl (%eax),%eax
+     af7:	88 02                	mov    %al,(%edx)
     read(fd, (char *)data, sizeof(unsigned char) * s);
     int bit = infoHeader.biBitCount / 8;
     for (int j = 0; j < bmp.height; ++j)
     {
         int off = (bmp.height - j - 1) * bmp.width;
         for (int i = 0; i < bmp.width; ++i)
-     b44:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
-     b48:	8b 55 c8             	mov    -0x38(%ebp),%edx
-     b4b:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     b4e:	39 c2                	cmp    %eax,%edx
-     b50:	0f 87 41 ff ff ff    	ja     a97 <APLoadBitmap+0x18b>
+     af9:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+     afd:	8b 55 c8             	mov    -0x38(%ebp),%edx
+     b00:	8b 45 f0             	mov    -0x10(%ebp),%eax
+     b03:	39 c2                	cmp    %eax,%edx
+     b05:	0f 87 41 ff ff ff    	ja     a4c <APLoadBitmap+0x140>
     int l = (((bmp.width * c) + 31) >> 5) << 2;
     int s = l * bmp.height;
     unsigned char * data = (unsigned char *)malloc(sizeof(unsigned char) * s);
     read(fd, (char *)data, sizeof(unsigned char) * s);
     int bit = infoHeader.biBitCount / 8;
     for (int j = 0; j < bmp.height; ++j)
-     b56:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
-     b5a:	8b 55 cc             	mov    -0x34(%ebp),%edx
-     b5d:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     b60:	39 c2                	cmp    %eax,%edx
-     b62:	0f 87 0d ff ff ff    	ja     a75 <APLoadBitmap+0x169>
+     b0b:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+     b0f:	8b 55 cc             	mov    -0x34(%ebp),%edx
+     b12:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     b15:	39 c2                	cmp    %eax,%edx
+     b17:	0f 87 0d ff ff ff    	ja     a2a <APLoadBitmap+0x11e>
             bmp.data[off + i].r = (int)data[j * l + bit * i + bit - 1];
             bmp.data[off + i].g = (int)data[j * l + bit * i + bit - 2];
             bmp.data[off + i].b = (int)data[j * l + bit * i + bit - 3];
         }
     }
     close(fd);
-     b68:	83 ec 0c             	sub    $0xc,%esp
-     b6b:	ff 75 ec             	pushl  -0x14(%ebp)
-     b6e:	e8 9c f7 ff ff       	call   30f <close>
-     b73:	83 c4 10             	add    $0x10,%esp
+     b1d:	83 ec 0c             	sub    $0xc,%esp
+     b20:	ff 75 ec             	pushl  -0x14(%ebp)
+     b23:	e8 e7 f7 ff ff       	call   30f <close>
+     b28:	83 c4 10             	add    $0x10,%esp
     return bmp;
-     b76:	8b 45 08             	mov    0x8(%ebp),%eax
-     b79:	8b 55 c8             	mov    -0x38(%ebp),%edx
-     b7c:	89 10                	mov    %edx,(%eax)
-     b7e:	8b 55 cc             	mov    -0x34(%ebp),%edx
-     b81:	89 50 04             	mov    %edx,0x4(%eax)
-     b84:	8b 55 d0             	mov    -0x30(%ebp),%edx
-     b87:	89 50 08             	mov    %edx,0x8(%eax)
+     b2b:	8b 45 08             	mov    0x8(%ebp),%eax
+     b2e:	8b 55 c8             	mov    -0x38(%ebp),%edx
+     b31:	89 10                	mov    %edx,(%eax)
+     b33:	8b 55 cc             	mov    -0x34(%ebp),%edx
+     b36:	89 50 04             	mov    %edx,0x4(%eax)
+     b39:	8b 55 d0             	mov    -0x30(%ebp),%edx
+     b3c:	89 50 08             	mov    %edx,0x8(%eax)
 }
-     b8a:	8b 45 08             	mov    0x8(%ebp),%eax
-     b8d:	8d 65 f8             	lea    -0x8(%ebp),%esp
-     b90:	5b                   	pop    %ebx
-     b91:	5e                   	pop    %esi
-     b92:	5d                   	pop    %ebp
-     b93:	c2 04 00             	ret    $0x4
+     b3f:	8b 45 08             	mov    0x8(%ebp),%eax
+     b42:	c9                   	leave  
+     b43:	c2 04 00             	ret    $0x4
 
-00000b96 <APCreateCompatibleDCFromBitmap>:
+00000b46 <APCreateCompatibleDCFromBitmap>:
 
 AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp)
 {
-     b96:	55                   	push   %ebp
-     b97:	89 e5                	mov    %esp,%ebp
-     b99:	53                   	push   %ebx
-     b9a:	83 ec 24             	sub    $0x24,%esp
+     b46:	55                   	push   %ebp
+     b47:	89 e5                	mov    %esp,%ebp
+     b49:	53                   	push   %ebx
+     b4a:	83 ec 24             	sub    $0x24,%esp
     AHdc hdc = (AHdc)malloc(sizeof(ADc));
-     b9d:	83 ec 0c             	sub    $0xc,%esp
-     ba0:	6a 1c                	push   $0x1c
-     ba2:	e8 b2 fb ff ff       	call   759 <malloc>
-     ba7:	83 c4 10             	add    $0x10,%esp
-     baa:	89 45 f4             	mov    %eax,-0xc(%ebp)
+     b4d:	83 ec 0c             	sub    $0xc,%esp
+     b50:	6a 1c                	push   $0x1c
+     b52:	e8 02 fc ff ff       	call   759 <malloc>
+     b57:	83 c4 10             	add    $0x10,%esp
+     b5a:	89 45 f4             	mov    %eax,-0xc(%ebp)
     hdc->pen.size = 0;
-     bad:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     bb0:	c7 40 0c 00 00 00 00 	movl   $0x0,0xc(%eax)
+     b5d:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     b60:	c7 40 0c 00 00 00 00 	movl   $0x0,0xc(%eax)
     hdc->pen.color = hdc->brush.color = hdc->font.color = COLOR_NULL;
-     bb7:	8b 5d f4             	mov    -0xc(%ebp),%ebx
-     bba:	8d 45 d8             	lea    -0x28(%ebp),%eax
-     bbd:	6a 0c                	push   $0xc
-     bbf:	6a 0c                	push   $0xc
-     bc1:	6a 0c                	push   $0xc
-     bc3:	50                   	push   %eax
-     bc4:	e8 73 fc ff ff       	call   83c <RGB>
-     bc9:	83 c4 0c             	add    $0xc,%esp
-     bcc:	0f b7 45 d8          	movzwl -0x28(%ebp),%eax
-     bd0:	66 89 43 13          	mov    %ax,0x13(%ebx)
-     bd4:	0f b6 45 da          	movzbl -0x26(%ebp),%eax
-     bd8:	88 43 15             	mov    %al,0x15(%ebx)
-     bdb:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     bde:	8b 55 f4             	mov    -0xc(%ebp),%edx
-     be1:	0f b7 4a 13          	movzwl 0x13(%edx),%ecx
-     be5:	66 89 48 10          	mov    %cx,0x10(%eax)
-     be9:	0f b6 52 15          	movzbl 0x15(%edx),%edx
-     bed:	88 50 12             	mov    %dl,0x12(%eax)
-     bf0:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     bf3:	8b 55 f4             	mov    -0xc(%ebp),%edx
-     bf6:	0f b7 4a 10          	movzwl 0x10(%edx),%ecx
-     bfa:	66 89 48 08          	mov    %cx,0x8(%eax)
-     bfe:	0f b6 52 12          	movzbl 0x12(%edx),%edx
-     c02:	88 50 0a             	mov    %dl,0xa(%eax)
+     b67:	8b 5d f4             	mov    -0xc(%ebp),%ebx
+     b6a:	8d 45 d8             	lea    -0x28(%ebp),%eax
+     b6d:	6a 0c                	push   $0xc
+     b6f:	6a 0c                	push   $0xc
+     b71:	6a 0c                	push   $0xc
+     b73:	50                   	push   %eax
+     b74:	e8 c3 fc ff ff       	call   83c <RGB>
+     b79:	83 c4 0c             	add    $0xc,%esp
+     b7c:	0f b7 45 d8          	movzwl -0x28(%ebp),%eax
+     b80:	66 89 43 13          	mov    %ax,0x13(%ebx)
+     b84:	0f b6 45 da          	movzbl -0x26(%ebp),%eax
+     b88:	88 43 15             	mov    %al,0x15(%ebx)
+     b8b:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     b8e:	8b 55 f4             	mov    -0xc(%ebp),%edx
+     b91:	0f b7 4a 13          	movzwl 0x13(%edx),%ecx
+     b95:	66 89 48 10          	mov    %cx,0x10(%eax)
+     b99:	0f b6 52 15          	movzbl 0x15(%edx),%edx
+     b9d:	88 50 12             	mov    %dl,0x12(%eax)
+     ba0:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     ba3:	8b 55 f4             	mov    -0xc(%ebp),%edx
+     ba6:	0f b7 4a 10          	movzwl 0x10(%edx),%ecx
+     baa:	66 89 48 08          	mov    %cx,0x8(%eax)
+     bae:	0f b6 52 12          	movzbl 0x12(%edx),%edx
+     bb2:	88 50 0a             	mov    %dl,0xa(%eax)
     hdc->size.cx = bmp.width;
-     c05:	8b 45 08             	mov    0x8(%ebp),%eax
-     c08:	89 c2                	mov    %eax,%edx
-     c0a:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     c0d:	89 10                	mov    %edx,(%eax)
+     bb5:	8b 45 08             	mov    0x8(%ebp),%eax
+     bb8:	89 c2                	mov    %eax,%edx
+     bba:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     bbd:	89 10                	mov    %edx,(%eax)
     hdc->size.cy = bmp.height;
-     c0f:	8b 45 0c             	mov    0xc(%ebp),%eax
-     c12:	89 c2                	mov    %eax,%edx
-     c14:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     c17:	89 50 04             	mov    %edx,0x4(%eax)
+     bbf:	8b 45 0c             	mov    0xc(%ebp),%eax
+     bc2:	89 c2                	mov    %eax,%edx
+     bc4:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     bc7:	89 50 04             	mov    %edx,0x4(%eax)
     hdc->content = bmp.data;
-     c1a:	8b 55 10             	mov    0x10(%ebp),%edx
-     c1d:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     c20:	89 50 18             	mov    %edx,0x18(%eax)
-    //printf(1, "%d %d\n", hdc->size.cx, hdc->size.cy);
+     bca:	8b 55 10             	mov    0x10(%ebp),%edx
+     bcd:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     bd0:	89 50 18             	mov    %edx,0x18(%eax)
+    //printf(1, "size of bitmap: %d %d %d\n", hdc->size.cx, hdc->size.cy,sizeof(hdc->content));
     return hdc;
-     c23:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     bd3:	8b 45 f4             	mov    -0xc(%ebp),%eax
 }
-     c26:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-     c29:	c9                   	leave  
-     c2a:	c3                   	ret    
+     bd6:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+     bd9:	c9                   	leave  
+     bda:	c3                   	ret    
 
-00000c2b <APSetPen>:
+00000bdb <APSetPen>:
 
 //--------------------------------settings---------------------------
 APen APSetPen(AHdc hdc, APen pen)
 {
-     c2b:	55                   	push   %ebp
-     c2c:	89 e5                	mov    %esp,%ebp
-     c2e:	83 ec 10             	sub    $0x10,%esp
+     bdb:	55                   	push   %ebp
+     bdc:	89 e5                	mov    %esp,%ebp
+     bde:	83 ec 10             	sub    $0x10,%esp
     APen r = hdc->pen;
-     c31:	8b 45 0c             	mov    0xc(%ebp),%eax
-     c34:	8b 50 08             	mov    0x8(%eax),%edx
-     c37:	89 55 f8             	mov    %edx,-0x8(%ebp)
-     c3a:	8b 40 0c             	mov    0xc(%eax),%eax
-     c3d:	89 45 fc             	mov    %eax,-0x4(%ebp)
+     be1:	8b 45 0c             	mov    0xc(%ebp),%eax
+     be4:	8b 50 08             	mov    0x8(%eax),%edx
+     be7:	89 55 f8             	mov    %edx,-0x8(%ebp)
+     bea:	8b 40 0c             	mov    0xc(%eax),%eax
+     bed:	89 45 fc             	mov    %eax,-0x4(%ebp)
     hdc->pen = pen;
-     c40:	8b 45 0c             	mov    0xc(%ebp),%eax
-     c43:	8b 55 10             	mov    0x10(%ebp),%edx
-     c46:	89 50 08             	mov    %edx,0x8(%eax)
-     c49:	8b 55 14             	mov    0x14(%ebp),%edx
-     c4c:	89 50 0c             	mov    %edx,0xc(%eax)
+     bf0:	8b 45 0c             	mov    0xc(%ebp),%eax
+     bf3:	8b 55 10             	mov    0x10(%ebp),%edx
+     bf6:	89 50 08             	mov    %edx,0x8(%eax)
+     bf9:	8b 55 14             	mov    0x14(%ebp),%edx
+     bfc:	89 50 0c             	mov    %edx,0xc(%eax)
     return r;
-     c4f:	8b 45 08             	mov    0x8(%ebp),%eax
-     c52:	8b 55 f8             	mov    -0x8(%ebp),%edx
-     c55:	89 10                	mov    %edx,(%eax)
-     c57:	8b 55 fc             	mov    -0x4(%ebp),%edx
-     c5a:	89 50 04             	mov    %edx,0x4(%eax)
+     bff:	8b 45 08             	mov    0x8(%ebp),%eax
+     c02:	8b 55 f8             	mov    -0x8(%ebp),%edx
+     c05:	89 10                	mov    %edx,(%eax)
+     c07:	8b 55 fc             	mov    -0x4(%ebp),%edx
+     c0a:	89 50 04             	mov    %edx,0x4(%eax)
 }
-     c5d:	8b 45 08             	mov    0x8(%ebp),%eax
-     c60:	c9                   	leave  
-     c61:	c2 04 00             	ret    $0x4
+     c0d:	8b 45 08             	mov    0x8(%ebp),%eax
+     c10:	c9                   	leave  
+     c11:	c2 04 00             	ret    $0x4
 
-00000c64 <APSetBrush>:
+00000c14 <APSetBrush>:
 
 ABrush APSetBrush(AHdc hdc, ABrush brush)
 {
-     c64:	55                   	push   %ebp
-     c65:	89 e5                	mov    %esp,%ebp
-     c67:	83 ec 10             	sub    $0x10,%esp
+     c14:	55                   	push   %ebp
+     c15:	89 e5                	mov    %esp,%ebp
+     c17:	83 ec 10             	sub    $0x10,%esp
     ABrush r = hdc->brush;
-     c6a:	8b 45 0c             	mov    0xc(%ebp),%eax
-     c6d:	0f b7 50 10          	movzwl 0x10(%eax),%edx
-     c71:	66 89 55 fd          	mov    %dx,-0x3(%ebp)
-     c75:	0f b6 40 12          	movzbl 0x12(%eax),%eax
-     c79:	88 45 ff             	mov    %al,-0x1(%ebp)
+     c1a:	8b 45 0c             	mov    0xc(%ebp),%eax
+     c1d:	0f b7 50 10          	movzwl 0x10(%eax),%edx
+     c21:	66 89 55 fd          	mov    %dx,-0x3(%ebp)
+     c25:	0f b6 40 12          	movzbl 0x12(%eax),%eax
+     c29:	88 45 ff             	mov    %al,-0x1(%ebp)
     hdc->brush = brush;
-     c7c:	8b 45 0c             	mov    0xc(%ebp),%eax
-     c7f:	0f b7 55 10          	movzwl 0x10(%ebp),%edx
-     c83:	66 89 50 10          	mov    %dx,0x10(%eax)
-     c87:	0f b6 55 12          	movzbl 0x12(%ebp),%edx
-     c8b:	88 50 12             	mov    %dl,0x12(%eax)
+     c2c:	8b 45 0c             	mov    0xc(%ebp),%eax
+     c2f:	0f b7 55 10          	movzwl 0x10(%ebp),%edx
+     c33:	66 89 50 10          	mov    %dx,0x10(%eax)
+     c37:	0f b6 55 12          	movzbl 0x12(%ebp),%edx
+     c3b:	88 50 12             	mov    %dl,0x12(%eax)
     return r;
-     c8e:	8b 45 08             	mov    0x8(%ebp),%eax
-     c91:	0f b7 55 fd          	movzwl -0x3(%ebp),%edx
-     c95:	66 89 10             	mov    %dx,(%eax)
-     c98:	0f b6 55 ff          	movzbl -0x1(%ebp),%edx
-     c9c:	88 50 02             	mov    %dl,0x2(%eax)
+     c3e:	8b 45 08             	mov    0x8(%ebp),%eax
+     c41:	0f b7 55 fd          	movzwl -0x3(%ebp),%edx
+     c45:	66 89 10             	mov    %dx,(%eax)
+     c48:	0f b6 55 ff          	movzbl -0x1(%ebp),%edx
+     c4c:	88 50 02             	mov    %dl,0x2(%eax)
 }
-     c9f:	8b 45 08             	mov    0x8(%ebp),%eax
-     ca2:	c9                   	leave  
-     ca3:	c2 04 00             	ret    $0x4
+     c4f:	8b 45 08             	mov    0x8(%ebp),%eax
+     c52:	c9                   	leave  
+     c53:	c2 04 00             	ret    $0x4
 
-00000ca6 <APDrawPoint>:
+00000c56 <APDrawPoint>:
 
 
 //--------------------------------drawing----------------------------
 
 void APDrawPoint(AHdc hdc, int x, int y)
 {
-     ca6:	55                   	push   %ebp
-     ca7:	89 e5                	mov    %esp,%ebp
-     ca9:	83 ec 20             	sub    $0x20,%esp
+     c56:	55                   	push   %ebp
+     c57:	89 e5                	mov    %esp,%ebp
+     c59:	83 ec 20             	sub    $0x20,%esp
     int i, j, t;
     int off = hdc->pen.size / 2;
-     cac:	8b 45 08             	mov    0x8(%ebp),%eax
-     caf:	8b 40 0c             	mov    0xc(%eax),%eax
-     cb2:	89 c2                	mov    %eax,%edx
-     cb4:	c1 ea 1f             	shr    $0x1f,%edx
-     cb7:	01 d0                	add    %edx,%eax
-     cb9:	d1 f8                	sar    %eax
-     cbb:	89 45 f4             	mov    %eax,-0xc(%ebp)
+     c5c:	8b 45 08             	mov    0x8(%ebp),%eax
+     c5f:	8b 40 0c             	mov    0xc(%eax),%eax
+     c62:	89 c2                	mov    %eax,%edx
+     c64:	c1 ea 1f             	shr    $0x1f,%edx
+     c67:	01 d0                	add    %edx,%eax
+     c69:	d1 f8                	sar    %eax
+     c6b:	89 45 f4             	mov    %eax,-0xc(%ebp)
     int d2 = off * off;
-     cbe:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     cc1:	0f af 45 f4          	imul   -0xc(%ebp),%eax
-     cc5:	89 45 f0             	mov    %eax,-0x10(%ebp)
+     c6e:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     c71:	0f af 45 f4          	imul   -0xc(%ebp),%eax
+     c75:	89 45 f0             	mov    %eax,-0x10(%ebp)
     i = y - off;
-     cc8:	8b 45 10             	mov    0x10(%ebp),%eax
-     ccb:	2b 45 f4             	sub    -0xc(%ebp),%eax
-     cce:	89 45 fc             	mov    %eax,-0x4(%ebp)
+     c78:	8b 45 10             	mov    0x10(%ebp),%eax
+     c7b:	2b 45 f4             	sub    -0xc(%ebp),%eax
+     c7e:	89 45 fc             	mov    %eax,-0x4(%ebp)
     if (i < 0)
-     cd1:	83 7d fc 00          	cmpl   $0x0,-0x4(%ebp)
-     cd5:	0f 89 98 00 00 00    	jns    d73 <APDrawPoint+0xcd>
+     c81:	83 7d fc 00          	cmpl   $0x0,-0x4(%ebp)
+     c85:	0f 89 98 00 00 00    	jns    d23 <APDrawPoint+0xcd>
         i = 0;
-     cdb:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
+     c8b:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%ebp)
     for (; i <= y + off; ++i)
-     ce2:	e9 8c 00 00 00       	jmp    d73 <APDrawPoint+0xcd>
+     c92:	e9 8c 00 00 00       	jmp    d23 <APDrawPoint+0xcd>
     {
         j = x - off;
-     ce7:	8b 45 0c             	mov    0xc(%ebp),%eax
-     cea:	2b 45 f4             	sub    -0xc(%ebp),%eax
-     ced:	89 45 f8             	mov    %eax,-0x8(%ebp)
+     c97:	8b 45 0c             	mov    0xc(%ebp),%eax
+     c9a:	2b 45 f4             	sub    -0xc(%ebp),%eax
+     c9d:	89 45 f8             	mov    %eax,-0x8(%ebp)
         if (j < 0)
-     cf0:	83 7d f8 00          	cmpl   $0x0,-0x8(%ebp)
-     cf4:	79 69                	jns    d5f <APDrawPoint+0xb9>
+     ca0:	83 7d f8 00          	cmpl   $0x0,-0x8(%ebp)
+     ca4:	79 69                	jns    d0f <APDrawPoint+0xb9>
             j = 0;
-     cf6:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
+     ca6:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
         for (; j <= x + off; ++j)
-     cfd:	eb 60                	jmp    d5f <APDrawPoint+0xb9>
+     cad:	eb 60                	jmp    d0f <APDrawPoint+0xb9>
         {
             t = APGetIndex(hdc, j, i);
-     cff:	ff 75 fc             	pushl  -0x4(%ebp)
-     d02:	ff 75 f8             	pushl  -0x8(%ebp)
-     d05:	ff 75 08             	pushl  0x8(%ebp)
-     d08:	e8 ad fb ff ff       	call   8ba <APGetIndex>
-     d0d:	83 c4 0c             	add    $0xc,%esp
-     d10:	89 45 ec             	mov    %eax,-0x14(%ebp)
+     caf:	ff 75 fc             	pushl  -0x4(%ebp)
+     cb2:	ff 75 f8             	pushl  -0x8(%ebp)
+     cb5:	ff 75 08             	pushl  0x8(%ebp)
+     cb8:	e8 fd fb ff ff       	call   8ba <APGetIndex>
+     cbd:	83 c4 0c             	add    $0xc,%esp
+     cc0:	89 45 ec             	mov    %eax,-0x14(%ebp)
             if (t == X_BIGGER)
-     d13:	83 7d ec ff          	cmpl   $0xffffffff,-0x14(%ebp)
-     d17:	74 55                	je     d6e <APDrawPoint+0xc8>
+     cc3:	83 7d ec ff          	cmpl   $0xffffffff,-0x14(%ebp)
+     cc7:	74 55                	je     d1e <APDrawPoint+0xc8>
                 break;
             if (t == Y_BIGGER)
-     d19:	83 7d ec fd          	cmpl   $0xfffffffd,-0x14(%ebp)
-     d1d:	74 67                	je     d86 <APDrawPoint+0xe0>
+     cc9:	83 7d ec fd          	cmpl   $0xfffffffd,-0x14(%ebp)
+     ccd:	74 67                	je     d36 <APDrawPoint+0xe0>
                 return;
             if (distance_2(j, i, x, y) <= d2)
-     d1f:	ff 75 10             	pushl  0x10(%ebp)
-     d22:	ff 75 0c             	pushl  0xc(%ebp)
-     d25:	ff 75 fc             	pushl  -0x4(%ebp)
-     d28:	ff 75 f8             	pushl  -0x8(%ebp)
-     d2b:	e8 51 fb ff ff       	call   881 <distance_2>
-     d30:	83 c4 10             	add    $0x10,%esp
-     d33:	3b 45 f0             	cmp    -0x10(%ebp),%eax
-     d36:	7f 23                	jg     d5b <APDrawPoint+0xb5>
+     ccf:	ff 75 10             	pushl  0x10(%ebp)
+     cd2:	ff 75 0c             	pushl  0xc(%ebp)
+     cd5:	ff 75 fc             	pushl  -0x4(%ebp)
+     cd8:	ff 75 f8             	pushl  -0x8(%ebp)
+     cdb:	e8 a1 fb ff ff       	call   881 <distance_2>
+     ce0:	83 c4 10             	add    $0x10,%esp
+     ce3:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+     ce6:	7f 23                	jg     d0b <APDrawPoint+0xb5>
                 hdc->content[t] = hdc->pen.color;
-     d38:	8b 45 08             	mov    0x8(%ebp),%eax
-     d3b:	8b 48 18             	mov    0x18(%eax),%ecx
-     d3e:	8b 55 ec             	mov    -0x14(%ebp),%edx
-     d41:	89 d0                	mov    %edx,%eax
-     d43:	01 c0                	add    %eax,%eax
-     d45:	01 d0                	add    %edx,%eax
-     d47:	8d 14 01             	lea    (%ecx,%eax,1),%edx
-     d4a:	8b 45 08             	mov    0x8(%ebp),%eax
-     d4d:	0f b7 48 08          	movzwl 0x8(%eax),%ecx
-     d51:	66 89 0a             	mov    %cx,(%edx)
-     d54:	0f b6 40 0a          	movzbl 0xa(%eax),%eax
-     d58:	88 42 02             	mov    %al,0x2(%edx)
+     ce8:	8b 45 08             	mov    0x8(%ebp),%eax
+     ceb:	8b 48 18             	mov    0x18(%eax),%ecx
+     cee:	8b 55 ec             	mov    -0x14(%ebp),%edx
+     cf1:	89 d0                	mov    %edx,%eax
+     cf3:	01 c0                	add    %eax,%eax
+     cf5:	01 d0                	add    %edx,%eax
+     cf7:	8d 14 01             	lea    (%ecx,%eax,1),%edx
+     cfa:	8b 45 08             	mov    0x8(%ebp),%eax
+     cfd:	0f b7 48 08          	movzwl 0x8(%eax),%ecx
+     d01:	66 89 0a             	mov    %cx,(%edx)
+     d04:	0f b6 40 0a          	movzbl 0xa(%eax),%eax
+     d08:	88 42 02             	mov    %al,0x2(%edx)
     for (; i <= y + off; ++i)
     {
         j = x - off;
         if (j < 0)
             j = 0;
         for (; j <= x + off; ++j)
-     d5b:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
-     d5f:	8b 55 0c             	mov    0xc(%ebp),%edx
-     d62:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     d65:	01 d0                	add    %edx,%eax
-     d67:	3b 45 f8             	cmp    -0x8(%ebp),%eax
-     d6a:	7d 93                	jge    cff <APDrawPoint+0x59>
-     d6c:	eb 01                	jmp    d6f <APDrawPoint+0xc9>
+     d0b:	83 45 f8 01          	addl   $0x1,-0x8(%ebp)
+     d0f:	8b 55 0c             	mov    0xc(%ebp),%edx
+     d12:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     d15:	01 d0                	add    %edx,%eax
+     d17:	3b 45 f8             	cmp    -0x8(%ebp),%eax
+     d1a:	7d 93                	jge    caf <APDrawPoint+0x59>
+     d1c:	eb 01                	jmp    d1f <APDrawPoint+0xc9>
         {
             t = APGetIndex(hdc, j, i);
             if (t == X_BIGGER)
                 break;
-     d6e:	90                   	nop
+     d1e:	90                   	nop
     int off = hdc->pen.size / 2;
     int d2 = off * off;
     i = y - off;
     if (i < 0)
         i = 0;
     for (; i <= y + off; ++i)
-     d6f:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
-     d73:	8b 55 10             	mov    0x10(%ebp),%edx
-     d76:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     d79:	01 d0                	add    %edx,%eax
-     d7b:	3b 45 fc             	cmp    -0x4(%ebp),%eax
-     d7e:	0f 8d 63 ff ff ff    	jge    ce7 <APDrawPoint+0x41>
-     d84:	eb 01                	jmp    d87 <APDrawPoint+0xe1>
+     d1f:	83 45 fc 01          	addl   $0x1,-0x4(%ebp)
+     d23:	8b 55 10             	mov    0x10(%ebp),%edx
+     d26:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     d29:	01 d0                	add    %edx,%eax
+     d2b:	3b 45 fc             	cmp    -0x4(%ebp),%eax
+     d2e:	0f 8d 63 ff ff ff    	jge    c97 <APDrawPoint+0x41>
+     d34:	eb 01                	jmp    d37 <APDrawPoint+0xe1>
         {
             t = APGetIndex(hdc, j, i);
             if (t == X_BIGGER)
                 break;
             if (t == Y_BIGGER)
                 return;
-     d86:	90                   	nop
+     d36:	90                   	nop
             if (distance_2(j, i, x, y) <= d2)
                 hdc->content[t] = hdc->pen.color;
         }
     }
 }
-     d87:	c9                   	leave  
-     d88:	c3                   	ret    
+     d37:	c9                   	leave  
+     d38:	c3                   	ret    
 
-00000d89 <APDrawLine>:
+00000d39 <APDrawLine>:
 
 void APDrawLine(AHdc hdc,int x1, int y1,int x2,int y2)
 {
-     d89:	55                   	push   %ebp
-     d8a:	89 e5                	mov    %esp,%ebp
-     d8c:	53                   	push   %ebx
-     d8d:	83 ec 4c             	sub    $0x4c,%esp
+     d39:	55                   	push   %ebp
+     d3a:	89 e5                	mov    %esp,%ebp
+     d3c:	53                   	push   %ebx
+     d3d:	83 ec 4c             	sub    $0x4c,%esp
     if (x1 == x2)
-     d90:	8b 45 0c             	mov    0xc(%ebp),%eax
-     d93:	3b 45 14             	cmp    0x14(%ebp),%eax
-     d96:	0f 85 80 00 00 00    	jne    e1c <APDrawLine+0x93>
+     d40:	8b 45 0c             	mov    0xc(%ebp),%eax
+     d43:	3b 45 14             	cmp    0x14(%ebp),%eax
+     d46:	0f 85 80 00 00 00    	jne    dcc <APDrawLine+0x93>
     {
         if (x1 < 0 || x1 >= hdc->size.cx)
-     d9c:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
-     da0:	0f 88 9d 02 00 00    	js     1043 <APDrawLine+0x2ba>
-     da6:	8b 45 08             	mov    0x8(%ebp),%eax
-     da9:	8b 00                	mov    (%eax),%eax
-     dab:	3b 45 0c             	cmp    0xc(%ebp),%eax
-     dae:	0f 8e 8f 02 00 00    	jle    1043 <APDrawLine+0x2ba>
+     d4c:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
+     d50:	0f 88 9d 02 00 00    	js     ff3 <APDrawLine+0x2ba>
+     d56:	8b 45 08             	mov    0x8(%ebp),%eax
+     d59:	8b 00                	mov    (%eax),%eax
+     d5b:	3b 45 0c             	cmp    0xc(%ebp),%eax
+     d5e:	0f 8e 8f 02 00 00    	jle    ff3 <APDrawLine+0x2ba>
             return;
         if (y1 > y2)
-     db4:	8b 45 10             	mov    0x10(%ebp),%eax
-     db7:	3b 45 18             	cmp    0x18(%ebp),%eax
-     dba:	7e 12                	jle    dce <APDrawLine+0x45>
+     d64:	8b 45 10             	mov    0x10(%ebp),%eax
+     d67:	3b 45 18             	cmp    0x18(%ebp),%eax
+     d6a:	7e 12                	jle    d7e <APDrawLine+0x45>
         {
             int tmp = y2;
-     dbc:	8b 45 18             	mov    0x18(%ebp),%eax
-     dbf:	89 45 dc             	mov    %eax,-0x24(%ebp)
+     d6c:	8b 45 18             	mov    0x18(%ebp),%eax
+     d6f:	89 45 dc             	mov    %eax,-0x24(%ebp)
             y2 = y1;
-     dc2:	8b 45 10             	mov    0x10(%ebp),%eax
-     dc5:	89 45 18             	mov    %eax,0x18(%ebp)
+     d72:	8b 45 10             	mov    0x10(%ebp),%eax
+     d75:	89 45 18             	mov    %eax,0x18(%ebp)
             y1 = tmp;
-     dc8:	8b 45 dc             	mov    -0x24(%ebp),%eax
-     dcb:	89 45 10             	mov    %eax,0x10(%ebp)
+     d78:	8b 45 dc             	mov    -0x24(%ebp),%eax
+     d7b:	89 45 10             	mov    %eax,0x10(%ebp)
         }
         if (y1 < 0) y1 = 0;
-     dce:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
-     dd2:	79 07                	jns    ddb <APDrawLine+0x52>
-     dd4:	c7 45 10 00 00 00 00 	movl   $0x0,0x10(%ebp)
+     d7e:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
+     d82:	79 07                	jns    d8b <APDrawLine+0x52>
+     d84:	c7 45 10 00 00 00 00 	movl   $0x0,0x10(%ebp)
         if (y2 > hdc->size.cy) y2 = hdc->size.cy - 1;
-     ddb:	8b 45 08             	mov    0x8(%ebp),%eax
-     dde:	8b 40 04             	mov    0x4(%eax),%eax
-     de1:	3b 45 18             	cmp    0x18(%ebp),%eax
-     de4:	7d 0c                	jge    df2 <APDrawLine+0x69>
-     de6:	8b 45 08             	mov    0x8(%ebp),%eax
-     de9:	8b 40 04             	mov    0x4(%eax),%eax
-     dec:	83 e8 01             	sub    $0x1,%eax
-     def:	89 45 18             	mov    %eax,0x18(%ebp)
+     d8b:	8b 45 08             	mov    0x8(%ebp),%eax
+     d8e:	8b 40 04             	mov    0x4(%eax),%eax
+     d91:	3b 45 18             	cmp    0x18(%ebp),%eax
+     d94:	7d 0c                	jge    da2 <APDrawLine+0x69>
+     d96:	8b 45 08             	mov    0x8(%ebp),%eax
+     d99:	8b 40 04             	mov    0x4(%eax),%eax
+     d9c:	83 e8 01             	sub    $0x1,%eax
+     d9f:	89 45 18             	mov    %eax,0x18(%ebp)
         for (int j = y1; j <= y2;j++ )
-     df2:	8b 45 10             	mov    0x10(%ebp),%eax
-     df5:	89 45 f4             	mov    %eax,-0xc(%ebp)
-     df8:	eb 15                	jmp    e0f <APDrawLine+0x86>
+     da2:	8b 45 10             	mov    0x10(%ebp),%eax
+     da5:	89 45 f4             	mov    %eax,-0xc(%ebp)
+     da8:	eb 15                	jmp    dbf <APDrawLine+0x86>
             APDrawPoint(hdc,x1,j);
-     dfa:	ff 75 f4             	pushl  -0xc(%ebp)
-     dfd:	ff 75 0c             	pushl  0xc(%ebp)
-     e00:	ff 75 08             	pushl  0x8(%ebp)
-     e03:	e8 9e fe ff ff       	call   ca6 <APDrawPoint>
-     e08:	83 c4 0c             	add    $0xc,%esp
+     daa:	ff 75 f4             	pushl  -0xc(%ebp)
+     dad:	ff 75 0c             	pushl  0xc(%ebp)
+     db0:	ff 75 08             	pushl  0x8(%ebp)
+     db3:	e8 9e fe ff ff       	call   c56 <APDrawPoint>
+     db8:	83 c4 0c             	add    $0xc,%esp
             y2 = y1;
             y1 = tmp;
         }
         if (y1 < 0) y1 = 0;
         if (y2 > hdc->size.cy) y2 = hdc->size.cy - 1;
         for (int j = y1; j <= y2;j++ )
-     e0b:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
-     e0f:	8b 45 f4             	mov    -0xc(%ebp),%eax
-     e12:	3b 45 18             	cmp    0x18(%ebp),%eax
-     e15:	7e e3                	jle    dfa <APDrawLine+0x71>
+     dbb:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+     dbf:	8b 45 f4             	mov    -0xc(%ebp),%eax
+     dc2:	3b 45 18             	cmp    0x18(%ebp),%eax
+     dc5:	7e e3                	jle    daa <APDrawLine+0x71>
             APDrawPoint(hdc,x1,j);
         return;
-     e17:	e9 2b 02 00 00       	jmp    1047 <APDrawLine+0x2be>
+     dc7:	e9 2b 02 00 00       	jmp    ff7 <APDrawLine+0x2be>
     }
     else if (y1 == y2)
-     e1c:	8b 45 10             	mov    0x10(%ebp),%eax
-     e1f:	3b 45 18             	cmp    0x18(%ebp),%eax
-     e22:	75 7f                	jne    ea3 <APDrawLine+0x11a>
+     dcc:	8b 45 10             	mov    0x10(%ebp),%eax
+     dcf:	3b 45 18             	cmp    0x18(%ebp),%eax
+     dd2:	75 7f                	jne    e53 <APDrawLine+0x11a>
     {
         if (y1 < 0 || y1 >= hdc->size.cy)
-     e24:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
-     e28:	0f 88 18 02 00 00    	js     1046 <APDrawLine+0x2bd>
-     e2e:	8b 45 08             	mov    0x8(%ebp),%eax
-     e31:	8b 40 04             	mov    0x4(%eax),%eax
-     e34:	3b 45 10             	cmp    0x10(%ebp),%eax
-     e37:	0f 8e 09 02 00 00    	jle    1046 <APDrawLine+0x2bd>
+     dd4:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
+     dd8:	0f 88 18 02 00 00    	js     ff6 <APDrawLine+0x2bd>
+     dde:	8b 45 08             	mov    0x8(%ebp),%eax
+     de1:	8b 40 04             	mov    0x4(%eax),%eax
+     de4:	3b 45 10             	cmp    0x10(%ebp),%eax
+     de7:	0f 8e 09 02 00 00    	jle    ff6 <APDrawLine+0x2bd>
             return;
         if (x1 > x2)
-     e3d:	8b 45 0c             	mov    0xc(%ebp),%eax
-     e40:	3b 45 14             	cmp    0x14(%ebp),%eax
-     e43:	7e 12                	jle    e57 <APDrawLine+0xce>
+     ded:	8b 45 0c             	mov    0xc(%ebp),%eax
+     df0:	3b 45 14             	cmp    0x14(%ebp),%eax
+     df3:	7e 12                	jle    e07 <APDrawLine+0xce>
         {
             int tmp = x2;
-     e45:	8b 45 14             	mov    0x14(%ebp),%eax
-     e48:	89 45 d8             	mov    %eax,-0x28(%ebp)
+     df5:	8b 45 14             	mov    0x14(%ebp),%eax
+     df8:	89 45 d8             	mov    %eax,-0x28(%ebp)
             x2 = x1;
-     e4b:	8b 45 0c             	mov    0xc(%ebp),%eax
-     e4e:	89 45 14             	mov    %eax,0x14(%ebp)
+     dfb:	8b 45 0c             	mov    0xc(%ebp),%eax
+     dfe:	89 45 14             	mov    %eax,0x14(%ebp)
             x1 = tmp;
-     e51:	8b 45 d8             	mov    -0x28(%ebp),%eax
-     e54:	89 45 0c             	mov    %eax,0xc(%ebp)
+     e01:	8b 45 d8             	mov    -0x28(%ebp),%eax
+     e04:	89 45 0c             	mov    %eax,0xc(%ebp)
         }
         if (x1 < 0) x1 = 0;
-     e57:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
-     e5b:	79 07                	jns    e64 <APDrawLine+0xdb>
-     e5d:	c7 45 0c 00 00 00 00 	movl   $0x0,0xc(%ebp)
+     e07:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
+     e0b:	79 07                	jns    e14 <APDrawLine+0xdb>
+     e0d:	c7 45 0c 00 00 00 00 	movl   $0x0,0xc(%ebp)
         if (x2 > hdc->size.cx) x2 = hdc->size.cx - 1;
-     e64:	8b 45 08             	mov    0x8(%ebp),%eax
-     e67:	8b 00                	mov    (%eax),%eax
-     e69:	3b 45 14             	cmp    0x14(%ebp),%eax
-     e6c:	7d 0b                	jge    e79 <APDrawLine+0xf0>
-     e6e:	8b 45 08             	mov    0x8(%ebp),%eax
-     e71:	8b 00                	mov    (%eax),%eax
-     e73:	83 e8 01             	sub    $0x1,%eax
-     e76:	89 45 14             	mov    %eax,0x14(%ebp)
+     e14:	8b 45 08             	mov    0x8(%ebp),%eax
+     e17:	8b 00                	mov    (%eax),%eax
+     e19:	3b 45 14             	cmp    0x14(%ebp),%eax
+     e1c:	7d 0b                	jge    e29 <APDrawLine+0xf0>
+     e1e:	8b 45 08             	mov    0x8(%ebp),%eax
+     e21:	8b 00                	mov    (%eax),%eax
+     e23:	83 e8 01             	sub    $0x1,%eax
+     e26:	89 45 14             	mov    %eax,0x14(%ebp)
         for (int i = x1 ; i <= x2; i++)
-     e79:	8b 45 0c             	mov    0xc(%ebp),%eax
-     e7c:	89 45 f0             	mov    %eax,-0x10(%ebp)
-     e7f:	eb 15                	jmp    e96 <APDrawLine+0x10d>
+     e29:	8b 45 0c             	mov    0xc(%ebp),%eax
+     e2c:	89 45 f0             	mov    %eax,-0x10(%ebp)
+     e2f:	eb 15                	jmp    e46 <APDrawLine+0x10d>
             APDrawPoint(hdc,i,y1);
-     e81:	ff 75 10             	pushl  0x10(%ebp)
-     e84:	ff 75 f0             	pushl  -0x10(%ebp)
-     e87:	ff 75 08             	pushl  0x8(%ebp)
-     e8a:	e8 17 fe ff ff       	call   ca6 <APDrawPoint>
-     e8f:	83 c4 0c             	add    $0xc,%esp
+     e31:	ff 75 10             	pushl  0x10(%ebp)
+     e34:	ff 75 f0             	pushl  -0x10(%ebp)
+     e37:	ff 75 08             	pushl  0x8(%ebp)
+     e3a:	e8 17 fe ff ff       	call   c56 <APDrawPoint>
+     e3f:	83 c4 0c             	add    $0xc,%esp
             x2 = x1;
             x1 = tmp;
         }
         if (x1 < 0) x1 = 0;
         if (x2 > hdc->size.cx) x2 = hdc->size.cx - 1;
         for (int i = x1 ; i <= x2; i++)
-     e92:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
-     e96:	8b 45 f0             	mov    -0x10(%ebp),%eax
-     e99:	3b 45 14             	cmp    0x14(%ebp),%eax
-     e9c:	7e e3                	jle    e81 <APDrawLine+0xf8>
+     e42:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+     e46:	8b 45 f0             	mov    -0x10(%ebp),%eax
+     e49:	3b 45 14             	cmp    0x14(%ebp),%eax
+     e4c:	7e e3                	jle    e31 <APDrawLine+0xf8>
             APDrawPoint(hdc,i,y1);
         return;
-     e9e:	e9 a4 01 00 00       	jmp    1047 <APDrawLine+0x2be>
+     e4e:	e9 a4 01 00 00       	jmp    ff7 <APDrawLine+0x2be>
     }
     
     int s = 0,e = 0;
-     ea3:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
-     eaa:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%ebp)
+     e53:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
+     e5a:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%ebp)
     if (abs_int(x1 - x2) > abs_int(y1 - y2))
-     eb1:	8b 45 0c             	mov    0xc(%ebp),%eax
-     eb4:	2b 45 14             	sub    0x14(%ebp),%eax
-     eb7:	50                   	push   %eax
-     eb8:	e8 ed f9 ff ff       	call   8aa <abs_int>
-     ebd:	83 c4 04             	add    $0x4,%esp
-     ec0:	89 c3                	mov    %eax,%ebx
-     ec2:	8b 45 10             	mov    0x10(%ebp),%eax
-     ec5:	2b 45 18             	sub    0x18(%ebp),%eax
-     ec8:	50                   	push   %eax
-     ec9:	e8 dc f9 ff ff       	call   8aa <abs_int>
-     ece:	83 c4 04             	add    $0x4,%esp
-     ed1:	39 c3                	cmp    %eax,%ebx
-     ed3:	0f 8e b5 00 00 00    	jle    f8e <APDrawLine+0x205>
+     e61:	8b 45 0c             	mov    0xc(%ebp),%eax
+     e64:	2b 45 14             	sub    0x14(%ebp),%eax
+     e67:	50                   	push   %eax
+     e68:	e8 3d fa ff ff       	call   8aa <abs_int>
+     e6d:	83 c4 04             	add    $0x4,%esp
+     e70:	89 c3                	mov    %eax,%ebx
+     e72:	8b 45 10             	mov    0x10(%ebp),%eax
+     e75:	2b 45 18             	sub    0x18(%ebp),%eax
+     e78:	50                   	push   %eax
+     e79:	e8 2c fa ff ff       	call   8aa <abs_int>
+     e7e:	83 c4 04             	add    $0x4,%esp
+     e81:	39 c3                	cmp    %eax,%ebx
+     e83:	0f 8e b5 00 00 00    	jle    f3e <APDrawLine+0x205>
     {
         double angle = (double)(y1 - y2) / (double)(x1 - x2);
-     ed9:	8b 45 10             	mov    0x10(%ebp),%eax
-     edc:	2b 45 18             	sub    0x18(%ebp),%eax
-     edf:	89 45 b0             	mov    %eax,-0x50(%ebp)
-     ee2:	db 45 b0             	fildl  -0x50(%ebp)
-     ee5:	8b 45 0c             	mov    0xc(%ebp),%eax
-     ee8:	2b 45 14             	sub    0x14(%ebp),%eax
-     eeb:	89 45 b0             	mov    %eax,-0x50(%ebp)
-     eee:	db 45 b0             	fildl  -0x50(%ebp)
-     ef1:	de f9                	fdivrp %st,%st(1)
-     ef3:	dd 5d d0             	fstpl  -0x30(%ebp)
+     e89:	8b 45 10             	mov    0x10(%ebp),%eax
+     e8c:	2b 45 18             	sub    0x18(%ebp),%eax
+     e8f:	89 45 b0             	mov    %eax,-0x50(%ebp)
+     e92:	db 45 b0             	fildl  -0x50(%ebp)
+     e95:	8b 45 0c             	mov    0xc(%ebp),%eax
+     e98:	2b 45 14             	sub    0x14(%ebp),%eax
+     e9b:	89 45 b0             	mov    %eax,-0x50(%ebp)
+     e9e:	db 45 b0             	fildl  -0x50(%ebp)
+     ea1:	de f9                	fdivrp %st,%st(1)
+     ea3:	dd 5d d0             	fstpl  -0x30(%ebp)
         if (x2 > x1)
-     ef6:	8b 45 14             	mov    0x14(%ebp),%eax
-     ef9:	3b 45 0c             	cmp    0xc(%ebp),%eax
-     efc:	7e 0e                	jle    f0c <APDrawLine+0x183>
+     ea6:	8b 45 14             	mov    0x14(%ebp),%eax
+     ea9:	3b 45 0c             	cmp    0xc(%ebp),%eax
+     eac:	7e 0e                	jle    ebc <APDrawLine+0x183>
         {
             s = x1;
-     efe:	8b 45 0c             	mov    0xc(%ebp),%eax
-     f01:	89 45 ec             	mov    %eax,-0x14(%ebp)
+     eae:	8b 45 0c             	mov    0xc(%ebp),%eax
+     eb1:	89 45 ec             	mov    %eax,-0x14(%ebp)
             e = x2;
-     f04:	8b 45 14             	mov    0x14(%ebp),%eax
-     f07:	89 45 e8             	mov    %eax,-0x18(%ebp)
-     f0a:	eb 0c                	jmp    f18 <APDrawLine+0x18f>
+     eb4:	8b 45 14             	mov    0x14(%ebp),%eax
+     eb7:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     eba:	eb 0c                	jmp    ec8 <APDrawLine+0x18f>
         }
         else
         {
             s = x2;
-     f0c:	8b 45 14             	mov    0x14(%ebp),%eax
-     f0f:	89 45 ec             	mov    %eax,-0x14(%ebp)
+     ebc:	8b 45 14             	mov    0x14(%ebp),%eax
+     ebf:	89 45 ec             	mov    %eax,-0x14(%ebp)
             e = x1;
-     f12:	8b 45 0c             	mov    0xc(%ebp),%eax
-     f15:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     ec2:	8b 45 0c             	mov    0xc(%ebp),%eax
+     ec5:	89 45 e8             	mov    %eax,-0x18(%ebp)
         }
         if (s < 0) s = 0;
-     f18:	83 7d ec 00          	cmpl   $0x0,-0x14(%ebp)
-     f1c:	79 07                	jns    f25 <APDrawLine+0x19c>
-     f1e:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
+     ec8:	83 7d ec 00          	cmpl   $0x0,-0x14(%ebp)
+     ecc:	79 07                	jns    ed5 <APDrawLine+0x19c>
+     ece:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
         if (e >= hdc->size.cx) e = hdc->size.cx - 1;
-     f25:	8b 45 08             	mov    0x8(%ebp),%eax
-     f28:	8b 00                	mov    (%eax),%eax
-     f2a:	3b 45 e8             	cmp    -0x18(%ebp),%eax
-     f2d:	7f 0b                	jg     f3a <APDrawLine+0x1b1>
-     f2f:	8b 45 08             	mov    0x8(%ebp),%eax
-     f32:	8b 00                	mov    (%eax),%eax
-     f34:	83 e8 01             	sub    $0x1,%eax
-     f37:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     ed5:	8b 45 08             	mov    0x8(%ebp),%eax
+     ed8:	8b 00                	mov    (%eax),%eax
+     eda:	3b 45 e8             	cmp    -0x18(%ebp),%eax
+     edd:	7f 0b                	jg     eea <APDrawLine+0x1b1>
+     edf:	8b 45 08             	mov    0x8(%ebp),%eax
+     ee2:	8b 00                	mov    (%eax),%eax
+     ee4:	83 e8 01             	sub    $0x1,%eax
+     ee7:	89 45 e8             	mov    %eax,-0x18(%ebp)
         for (int i = s; i <= e; i++)
-     f3a:	8b 45 ec             	mov    -0x14(%ebp),%eax
-     f3d:	89 45 e4             	mov    %eax,-0x1c(%ebp)
-     f40:	eb 3f                	jmp    f81 <APDrawLine+0x1f8>
+     eea:	8b 45 ec             	mov    -0x14(%ebp),%eax
+     eed:	89 45 e4             	mov    %eax,-0x1c(%ebp)
+     ef0:	eb 3f                	jmp    f31 <APDrawLine+0x1f8>
         {
             int j = (int)((i - x1) * angle + y1);
-     f42:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-     f45:	2b 45 0c             	sub    0xc(%ebp),%eax
-     f48:	89 45 b0             	mov    %eax,-0x50(%ebp)
-     f4b:	db 45 b0             	fildl  -0x50(%ebp)
-     f4e:	dc 4d d0             	fmull  -0x30(%ebp)
-     f51:	db 45 10             	fildl  0x10(%ebp)
-     f54:	de c1                	faddp  %st,%st(1)
-     f56:	d9 7d b6             	fnstcw -0x4a(%ebp)
-     f59:	0f b7 45 b6          	movzwl -0x4a(%ebp),%eax
-     f5d:	b4 0c                	mov    $0xc,%ah
-     f5f:	66 89 45 b4          	mov    %ax,-0x4c(%ebp)
-     f63:	d9 6d b4             	fldcw  -0x4c(%ebp)
-     f66:	db 5d cc             	fistpl -0x34(%ebp)
-     f69:	d9 6d b6             	fldcw  -0x4a(%ebp)
+     ef2:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+     ef5:	2b 45 0c             	sub    0xc(%ebp),%eax
+     ef8:	89 45 b0             	mov    %eax,-0x50(%ebp)
+     efb:	db 45 b0             	fildl  -0x50(%ebp)
+     efe:	dc 4d d0             	fmull  -0x30(%ebp)
+     f01:	db 45 10             	fildl  0x10(%ebp)
+     f04:	de c1                	faddp  %st,%st(1)
+     f06:	d9 7d b6             	fnstcw -0x4a(%ebp)
+     f09:	0f b7 45 b6          	movzwl -0x4a(%ebp),%eax
+     f0d:	b4 0c                	mov    $0xc,%ah
+     f0f:	66 89 45 b4          	mov    %ax,-0x4c(%ebp)
+     f13:	d9 6d b4             	fldcw  -0x4c(%ebp)
+     f16:	db 5d cc             	fistpl -0x34(%ebp)
+     f19:	d9 6d b6             	fldcw  -0x4a(%ebp)
             APDrawPoint(hdc,i,j);
-     f6c:	ff 75 cc             	pushl  -0x34(%ebp)
-     f6f:	ff 75 e4             	pushl  -0x1c(%ebp)
-     f72:	ff 75 08             	pushl  0x8(%ebp)
-     f75:	e8 2c fd ff ff       	call   ca6 <APDrawPoint>
-     f7a:	83 c4 0c             	add    $0xc,%esp
+     f1c:	ff 75 cc             	pushl  -0x34(%ebp)
+     f1f:	ff 75 e4             	pushl  -0x1c(%ebp)
+     f22:	ff 75 08             	pushl  0x8(%ebp)
+     f25:	e8 2c fd ff ff       	call   c56 <APDrawPoint>
+     f2a:	83 c4 0c             	add    $0xc,%esp
             s = x2;
             e = x1;
         }
         if (s < 0) s = 0;
         if (e >= hdc->size.cx) e = hdc->size.cx - 1;
         for (int i = s; i <= e; i++)
-     f7d:	83 45 e4 01          	addl   $0x1,-0x1c(%ebp)
-     f81:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-     f84:	3b 45 e8             	cmp    -0x18(%ebp),%eax
-     f87:	7e b9                	jle    f42 <APDrawLine+0x1b9>
+     f2d:	83 45 e4 01          	addl   $0x1,-0x1c(%ebp)
+     f31:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+     f34:	3b 45 e8             	cmp    -0x18(%ebp),%eax
+     f37:	7e b9                	jle    ef2 <APDrawLine+0x1b9>
         {
             int j = (int)((i - x1) * angle + y1);
             APDrawPoint(hdc,i,j);
         }
         return;
-     f89:	e9 b9 00 00 00       	jmp    1047 <APDrawLine+0x2be>
+     f39:	e9 b9 00 00 00       	jmp    ff7 <APDrawLine+0x2be>
     }
     double angle = (double)(x1 - x2)/(double)(y1 - y2);
-     f8e:	8b 45 0c             	mov    0xc(%ebp),%eax
-     f91:	2b 45 14             	sub    0x14(%ebp),%eax
-     f94:	89 45 b0             	mov    %eax,-0x50(%ebp)
-     f97:	db 45 b0             	fildl  -0x50(%ebp)
-     f9a:	8b 45 10             	mov    0x10(%ebp),%eax
-     f9d:	2b 45 18             	sub    0x18(%ebp),%eax
-     fa0:	89 45 b0             	mov    %eax,-0x50(%ebp)
-     fa3:	db 45 b0             	fildl  -0x50(%ebp)
-     fa6:	de f9                	fdivrp %st,%st(1)
-     fa8:	dd 5d c0             	fstpl  -0x40(%ebp)
+     f3e:	8b 45 0c             	mov    0xc(%ebp),%eax
+     f41:	2b 45 14             	sub    0x14(%ebp),%eax
+     f44:	89 45 b0             	mov    %eax,-0x50(%ebp)
+     f47:	db 45 b0             	fildl  -0x50(%ebp)
+     f4a:	8b 45 10             	mov    0x10(%ebp),%eax
+     f4d:	2b 45 18             	sub    0x18(%ebp),%eax
+     f50:	89 45 b0             	mov    %eax,-0x50(%ebp)
+     f53:	db 45 b0             	fildl  -0x50(%ebp)
+     f56:	de f9                	fdivrp %st,%st(1)
+     f58:	dd 5d c0             	fstpl  -0x40(%ebp)
     if (y1 > y2)
-     fab:	8b 45 10             	mov    0x10(%ebp),%eax
-     fae:	3b 45 18             	cmp    0x18(%ebp),%eax
-     fb1:	7e 0e                	jle    fc1 <APDrawLine+0x238>
+     f5b:	8b 45 10             	mov    0x10(%ebp),%eax
+     f5e:	3b 45 18             	cmp    0x18(%ebp),%eax
+     f61:	7e 0e                	jle    f71 <APDrawLine+0x238>
     {
         s = y2;
-     fb3:	8b 45 18             	mov    0x18(%ebp),%eax
-     fb6:	89 45 ec             	mov    %eax,-0x14(%ebp)
+     f63:	8b 45 18             	mov    0x18(%ebp),%eax
+     f66:	89 45 ec             	mov    %eax,-0x14(%ebp)
         e = y1;
-     fb9:	8b 45 10             	mov    0x10(%ebp),%eax
-     fbc:	89 45 e8             	mov    %eax,-0x18(%ebp)
-     fbf:	eb 0c                	jmp    fcd <APDrawLine+0x244>
+     f69:	8b 45 10             	mov    0x10(%ebp),%eax
+     f6c:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     f6f:	eb 0c                	jmp    f7d <APDrawLine+0x244>
     }
     else
     {
         s = y1;
-     fc1:	8b 45 10             	mov    0x10(%ebp),%eax
-     fc4:	89 45 ec             	mov    %eax,-0x14(%ebp)
+     f71:	8b 45 10             	mov    0x10(%ebp),%eax
+     f74:	89 45 ec             	mov    %eax,-0x14(%ebp)
         e = y2;
-     fc7:	8b 45 18             	mov    0x18(%ebp),%eax
-     fca:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     f77:	8b 45 18             	mov    0x18(%ebp),%eax
+     f7a:	89 45 e8             	mov    %eax,-0x18(%ebp)
     }
     if (s < 0)  s = 0;
-     fcd:	83 7d ec 00          	cmpl   $0x0,-0x14(%ebp)
-     fd1:	79 07                	jns    fda <APDrawLine+0x251>
-     fd3:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
+     f7d:	83 7d ec 00          	cmpl   $0x0,-0x14(%ebp)
+     f81:	79 07                	jns    f8a <APDrawLine+0x251>
+     f83:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
     if (e >= hdc->size.cy) e = hdc->size.cy - 1;
-     fda:	8b 45 08             	mov    0x8(%ebp),%eax
-     fdd:	8b 40 04             	mov    0x4(%eax),%eax
-     fe0:	3b 45 e8             	cmp    -0x18(%ebp),%eax
-     fe3:	7f 0c                	jg     ff1 <APDrawLine+0x268>
-     fe5:	8b 45 08             	mov    0x8(%ebp),%eax
-     fe8:	8b 40 04             	mov    0x4(%eax),%eax
-     feb:	83 e8 01             	sub    $0x1,%eax
-     fee:	89 45 e8             	mov    %eax,-0x18(%ebp)
+     f8a:	8b 45 08             	mov    0x8(%ebp),%eax
+     f8d:	8b 40 04             	mov    0x4(%eax),%eax
+     f90:	3b 45 e8             	cmp    -0x18(%ebp),%eax
+     f93:	7f 0c                	jg     fa1 <APDrawLine+0x268>
+     f95:	8b 45 08             	mov    0x8(%ebp),%eax
+     f98:	8b 40 04             	mov    0x4(%eax),%eax
+     f9b:	83 e8 01             	sub    $0x1,%eax
+     f9e:	89 45 e8             	mov    %eax,-0x18(%ebp)
     for (int j = s; j <= e; j++)
-     ff1:	8b 45 ec             	mov    -0x14(%ebp),%eax
-     ff4:	89 45 e0             	mov    %eax,-0x20(%ebp)
-     ff7:	eb 3f                	jmp    1038 <APDrawLine+0x2af>
+     fa1:	8b 45 ec             	mov    -0x14(%ebp),%eax
+     fa4:	89 45 e0             	mov    %eax,-0x20(%ebp)
+     fa7:	eb 3f                	jmp    fe8 <APDrawLine+0x2af>
     {
         int i = (int)((j - y1)*angle + x1);
-     ff9:	8b 45 e0             	mov    -0x20(%ebp),%eax
-     ffc:	2b 45 10             	sub    0x10(%ebp),%eax
-     fff:	89 45 b0             	mov    %eax,-0x50(%ebp)
-    1002:	db 45 b0             	fildl  -0x50(%ebp)
-    1005:	dc 4d c0             	fmull  -0x40(%ebp)
-    1008:	db 45 0c             	fildl  0xc(%ebp)
-    100b:	de c1                	faddp  %st,%st(1)
-    100d:	d9 7d b6             	fnstcw -0x4a(%ebp)
-    1010:	0f b7 45 b6          	movzwl -0x4a(%ebp),%eax
-    1014:	b4 0c                	mov    $0xc,%ah
-    1016:	66 89 45 b4          	mov    %ax,-0x4c(%ebp)
-    101a:	d9 6d b4             	fldcw  -0x4c(%ebp)
-    101d:	db 5d bc             	fistpl -0x44(%ebp)
-    1020:	d9 6d b6             	fldcw  -0x4a(%ebp)
+     fa9:	8b 45 e0             	mov    -0x20(%ebp),%eax
+     fac:	2b 45 10             	sub    0x10(%ebp),%eax
+     faf:	89 45 b0             	mov    %eax,-0x50(%ebp)
+     fb2:	db 45 b0             	fildl  -0x50(%ebp)
+     fb5:	dc 4d c0             	fmull  -0x40(%ebp)
+     fb8:	db 45 0c             	fildl  0xc(%ebp)
+     fbb:	de c1                	faddp  %st,%st(1)
+     fbd:	d9 7d b6             	fnstcw -0x4a(%ebp)
+     fc0:	0f b7 45 b6          	movzwl -0x4a(%ebp),%eax
+     fc4:	b4 0c                	mov    $0xc,%ah
+     fc6:	66 89 45 b4          	mov    %ax,-0x4c(%ebp)
+     fca:	d9 6d b4             	fldcw  -0x4c(%ebp)
+     fcd:	db 5d bc             	fistpl -0x44(%ebp)
+     fd0:	d9 6d b6             	fldcw  -0x4a(%ebp)
         APDrawPoint(hdc,i,j);
-    1023:	ff 75 e0             	pushl  -0x20(%ebp)
-    1026:	ff 75 bc             	pushl  -0x44(%ebp)
-    1029:	ff 75 08             	pushl  0x8(%ebp)
-    102c:	e8 75 fc ff ff       	call   ca6 <APDrawPoint>
-    1031:	83 c4 0c             	add    $0xc,%esp
+     fd3:	ff 75 e0             	pushl  -0x20(%ebp)
+     fd6:	ff 75 bc             	pushl  -0x44(%ebp)
+     fd9:	ff 75 08             	pushl  0x8(%ebp)
+     fdc:	e8 75 fc ff ff       	call   c56 <APDrawPoint>
+     fe1:	83 c4 0c             	add    $0xc,%esp
         s = y1;
         e = y2;
     }
     if (s < 0)  s = 0;
     if (e >= hdc->size.cy) e = hdc->size.cy - 1;
     for (int j = s; j <= e; j++)
-    1034:	83 45 e0 01          	addl   $0x1,-0x20(%ebp)
-    1038:	8b 45 e0             	mov    -0x20(%ebp),%eax
-    103b:	3b 45 e8             	cmp    -0x18(%ebp),%eax
-    103e:	7e b9                	jle    ff9 <APDrawLine+0x270>
+     fe4:	83 45 e0 01          	addl   $0x1,-0x20(%ebp)
+     fe8:	8b 45 e0             	mov    -0x20(%ebp),%eax
+     feb:	3b 45 e8             	cmp    -0x18(%ebp),%eax
+     fee:	7e b9                	jle    fa9 <APDrawLine+0x270>
     {
         int i = (int)((j - y1)*angle + x1);
         APDrawPoint(hdc,i,j);
     }
     return;
-    1040:	90                   	nop
-    1041:	eb 04                	jmp    1047 <APDrawLine+0x2be>
+     ff0:	90                   	nop
+     ff1:	eb 04                	jmp    ff7 <APDrawLine+0x2be>
 void APDrawLine(AHdc hdc,int x1, int y1,int x2,int y2)
 {
     if (x1 == x2)
     {
         if (x1 < 0 || x1 >= hdc->size.cx)
             return;
-    1043:	90                   	nop
-    1044:	eb 01                	jmp    1047 <APDrawLine+0x2be>
+     ff3:	90                   	nop
+     ff4:	eb 01                	jmp    ff7 <APDrawLine+0x2be>
         return;
     }
     else if (y1 == y2)
     {
         if (y1 < 0 || y1 >= hdc->size.cy)
             return;
-    1046:	90                   	nop
+     ff6:	90                   	nop
     {
         int i = (int)((j - y1)*angle + x1);
         APDrawPoint(hdc,i,j);
     }
     return;
 }
-    1047:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-    104a:	c9                   	leave  
-    104b:	c3                   	ret    
+     ff7:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+     ffa:	c9                   	leave  
+     ffb:	c3                   	ret    
 
-0000104c <APDrawRect>:
+00000ffc <APDrawRect>:
 
 void APDrawRect(AHdc hdc, int x, int y, int w, int h)
 {
-    104c:	55                   	push   %ebp
-    104d:	89 e5                	mov    %esp,%ebp
-    104f:	53                   	push   %ebx
-    1050:	83 ec 24             	sub    $0x24,%esp
+     ffc:	55                   	push   %ebp
+     ffd:	89 e5                	mov    %esp,%ebp
+     fff:	53                   	push   %ebx
+    1000:	83 ec 24             	sub    $0x24,%esp
     //edge - color
     APDrawLine(hdc,x,y,x,y+h-1);
-    1053:	8b 55 10             	mov    0x10(%ebp),%edx
-    1056:	8b 45 18             	mov    0x18(%ebp),%eax
-    1059:	01 d0                	add    %edx,%eax
-    105b:	83 e8 01             	sub    $0x1,%eax
-    105e:	83 ec 04             	sub    $0x4,%esp
-    1061:	50                   	push   %eax
-    1062:	ff 75 0c             	pushl  0xc(%ebp)
-    1065:	ff 75 10             	pushl  0x10(%ebp)
-    1068:	ff 75 0c             	pushl  0xc(%ebp)
-    106b:	ff 75 08             	pushl  0x8(%ebp)
-    106e:	e8 16 fd ff ff       	call   d89 <APDrawLine>
-    1073:	83 c4 18             	add    $0x18,%esp
+    1003:	8b 55 10             	mov    0x10(%ebp),%edx
+    1006:	8b 45 18             	mov    0x18(%ebp),%eax
+    1009:	01 d0                	add    %edx,%eax
+    100b:	83 e8 01             	sub    $0x1,%eax
+    100e:	83 ec 04             	sub    $0x4,%esp
+    1011:	50                   	push   %eax
+    1012:	ff 75 0c             	pushl  0xc(%ebp)
+    1015:	ff 75 10             	pushl  0x10(%ebp)
+    1018:	ff 75 0c             	pushl  0xc(%ebp)
+    101b:	ff 75 08             	pushl  0x8(%ebp)
+    101e:	e8 16 fd ff ff       	call   d39 <APDrawLine>
+    1023:	83 c4 18             	add    $0x18,%esp
     APDrawLine(hdc,x,y,x+w-1,y);
-    1076:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1079:	8b 45 14             	mov    0x14(%ebp),%eax
-    107c:	01 d0                	add    %edx,%eax
-    107e:	83 e8 01             	sub    $0x1,%eax
-    1081:	83 ec 04             	sub    $0x4,%esp
-    1084:	ff 75 10             	pushl  0x10(%ebp)
-    1087:	50                   	push   %eax
-    1088:	ff 75 10             	pushl  0x10(%ebp)
-    108b:	ff 75 0c             	pushl  0xc(%ebp)
-    108e:	ff 75 08             	pushl  0x8(%ebp)
-    1091:	e8 f3 fc ff ff       	call   d89 <APDrawLine>
-    1096:	83 c4 18             	add    $0x18,%esp
+    1026:	8b 55 0c             	mov    0xc(%ebp),%edx
+    1029:	8b 45 14             	mov    0x14(%ebp),%eax
+    102c:	01 d0                	add    %edx,%eax
+    102e:	83 e8 01             	sub    $0x1,%eax
+    1031:	83 ec 04             	sub    $0x4,%esp
+    1034:	ff 75 10             	pushl  0x10(%ebp)
+    1037:	50                   	push   %eax
+    1038:	ff 75 10             	pushl  0x10(%ebp)
+    103b:	ff 75 0c             	pushl  0xc(%ebp)
+    103e:	ff 75 08             	pushl  0x8(%ebp)
+    1041:	e8 f3 fc ff ff       	call   d39 <APDrawLine>
+    1046:	83 c4 18             	add    $0x18,%esp
     APDrawLine(hdc,x+w-1,y,x+w-1,y+h-1);
-    1099:	8b 55 10             	mov    0x10(%ebp),%edx
-    109c:	8b 45 18             	mov    0x18(%ebp),%eax
-    109f:	01 d0                	add    %edx,%eax
-    10a1:	8d 48 ff             	lea    -0x1(%eax),%ecx
-    10a4:	8b 55 0c             	mov    0xc(%ebp),%edx
-    10a7:	8b 45 14             	mov    0x14(%ebp),%eax
-    10aa:	01 d0                	add    %edx,%eax
-    10ac:	8d 50 ff             	lea    -0x1(%eax),%edx
-    10af:	8b 5d 0c             	mov    0xc(%ebp),%ebx
-    10b2:	8b 45 14             	mov    0x14(%ebp),%eax
-    10b5:	01 d8                	add    %ebx,%eax
-    10b7:	83 e8 01             	sub    $0x1,%eax
-    10ba:	83 ec 04             	sub    $0x4,%esp
-    10bd:	51                   	push   %ecx
-    10be:	52                   	push   %edx
-    10bf:	ff 75 10             	pushl  0x10(%ebp)
-    10c2:	50                   	push   %eax
-    10c3:	ff 75 08             	pushl  0x8(%ebp)
-    10c6:	e8 be fc ff ff       	call   d89 <APDrawLine>
-    10cb:	83 c4 18             	add    $0x18,%esp
+    1049:	8b 55 10             	mov    0x10(%ebp),%edx
+    104c:	8b 45 18             	mov    0x18(%ebp),%eax
+    104f:	01 d0                	add    %edx,%eax
+    1051:	8d 48 ff             	lea    -0x1(%eax),%ecx
+    1054:	8b 55 0c             	mov    0xc(%ebp),%edx
+    1057:	8b 45 14             	mov    0x14(%ebp),%eax
+    105a:	01 d0                	add    %edx,%eax
+    105c:	8d 50 ff             	lea    -0x1(%eax),%edx
+    105f:	8b 5d 0c             	mov    0xc(%ebp),%ebx
+    1062:	8b 45 14             	mov    0x14(%ebp),%eax
+    1065:	01 d8                	add    %ebx,%eax
+    1067:	83 e8 01             	sub    $0x1,%eax
+    106a:	83 ec 04             	sub    $0x4,%esp
+    106d:	51                   	push   %ecx
+    106e:	52                   	push   %edx
+    106f:	ff 75 10             	pushl  0x10(%ebp)
+    1072:	50                   	push   %eax
+    1073:	ff 75 08             	pushl  0x8(%ebp)
+    1076:	e8 be fc ff ff       	call   d39 <APDrawLine>
+    107b:	83 c4 18             	add    $0x18,%esp
     APDrawLine(hdc,x,y+h-1,x+w-1,y+h-1);
-    10ce:	8b 55 10             	mov    0x10(%ebp),%edx
-    10d1:	8b 45 18             	mov    0x18(%ebp),%eax
-    10d4:	01 d0                	add    %edx,%eax
-    10d6:	8d 48 ff             	lea    -0x1(%eax),%ecx
-    10d9:	8b 55 0c             	mov    0xc(%ebp),%edx
-    10dc:	8b 45 14             	mov    0x14(%ebp),%eax
-    10df:	01 d0                	add    %edx,%eax
-    10e1:	8d 50 ff             	lea    -0x1(%eax),%edx
-    10e4:	8b 5d 10             	mov    0x10(%ebp),%ebx
-    10e7:	8b 45 18             	mov    0x18(%ebp),%eax
-    10ea:	01 d8                	add    %ebx,%eax
-    10ec:	83 e8 01             	sub    $0x1,%eax
-    10ef:	83 ec 04             	sub    $0x4,%esp
-    10f2:	51                   	push   %ecx
-    10f3:	52                   	push   %edx
-    10f4:	50                   	push   %eax
-    10f5:	ff 75 0c             	pushl  0xc(%ebp)
-    10f8:	ff 75 08             	pushl  0x8(%ebp)
-    10fb:	e8 89 fc ff ff       	call   d89 <APDrawLine>
-    1100:	83 c4 18             	add    $0x18,%esp
+    107e:	8b 55 10             	mov    0x10(%ebp),%edx
+    1081:	8b 45 18             	mov    0x18(%ebp),%eax
+    1084:	01 d0                	add    %edx,%eax
+    1086:	8d 48 ff             	lea    -0x1(%eax),%ecx
+    1089:	8b 55 0c             	mov    0xc(%ebp),%edx
+    108c:	8b 45 14             	mov    0x14(%ebp),%eax
+    108f:	01 d0                	add    %edx,%eax
+    1091:	8d 50 ff             	lea    -0x1(%eax),%edx
+    1094:	8b 5d 10             	mov    0x10(%ebp),%ebx
+    1097:	8b 45 18             	mov    0x18(%ebp),%eax
+    109a:	01 d8                	add    %ebx,%eax
+    109c:	83 e8 01             	sub    $0x1,%eax
+    109f:	83 ec 04             	sub    $0x4,%esp
+    10a2:	51                   	push   %ecx
+    10a3:	52                   	push   %edx
+    10a4:	50                   	push   %eax
+    10a5:	ff 75 0c             	pushl  0xc(%ebp)
+    10a8:	ff 75 08             	pushl  0x8(%ebp)
+    10ab:	e8 89 fc ff ff       	call   d39 <APDrawLine>
+    10b0:	83 c4 18             	add    $0x18,%esp
     
     //fill - color
     int x_r = x + w - 1 - hdc->pen.size/2,
-    1103:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1106:	8b 45 14             	mov    0x14(%ebp),%eax
-    1109:	01 d0                	add    %edx,%eax
-    110b:	8d 50 ff             	lea    -0x1(%eax),%edx
-    110e:	8b 45 08             	mov    0x8(%ebp),%eax
-    1111:	8b 40 0c             	mov    0xc(%eax),%eax
-    1114:	89 c1                	mov    %eax,%ecx
-    1116:	c1 e9 1f             	shr    $0x1f,%ecx
-    1119:	01 c8                	add    %ecx,%eax
-    111b:	d1 f8                	sar    %eax
-    111d:	29 c2                	sub    %eax,%edx
-    111f:	89 d0                	mov    %edx,%eax
-    1121:	89 45 f4             	mov    %eax,-0xc(%ebp)
+    10b3:	8b 55 0c             	mov    0xc(%ebp),%edx
+    10b6:	8b 45 14             	mov    0x14(%ebp),%eax
+    10b9:	01 d0                	add    %edx,%eax
+    10bb:	8d 50 ff             	lea    -0x1(%eax),%edx
+    10be:	8b 45 08             	mov    0x8(%ebp),%eax
+    10c1:	8b 40 0c             	mov    0xc(%eax),%eax
+    10c4:	89 c1                	mov    %eax,%ecx
+    10c6:	c1 e9 1f             	shr    $0x1f,%ecx
+    10c9:	01 c8                	add    %ecx,%eax
+    10cb:	d1 f8                	sar    %eax
+    10cd:	29 c2                	sub    %eax,%edx
+    10cf:	89 d0                	mov    %edx,%eax
+    10d1:	89 45 f4             	mov    %eax,-0xc(%ebp)
         y_r = y + h - 1 - hdc->pen.size/2;
-    1124:	8b 55 10             	mov    0x10(%ebp),%edx
-    1127:	8b 45 18             	mov    0x18(%ebp),%eax
-    112a:	01 d0                	add    %edx,%eax
-    112c:	8d 50 ff             	lea    -0x1(%eax),%edx
-    112f:	8b 45 08             	mov    0x8(%ebp),%eax
-    1132:	8b 40 0c             	mov    0xc(%eax),%eax
-    1135:	89 c1                	mov    %eax,%ecx
-    1137:	c1 e9 1f             	shr    $0x1f,%ecx
-    113a:	01 c8                	add    %ecx,%eax
-    113c:	d1 f8                	sar    %eax
-    113e:	29 c2                	sub    %eax,%edx
-    1140:	89 d0                	mov    %edx,%eax
-    1142:	89 45 f0             	mov    %eax,-0x10(%ebp)
+    10d4:	8b 55 10             	mov    0x10(%ebp),%edx
+    10d7:	8b 45 18             	mov    0x18(%ebp),%eax
+    10da:	01 d0                	add    %edx,%eax
+    10dc:	8d 50 ff             	lea    -0x1(%eax),%edx
+    10df:	8b 45 08             	mov    0x8(%ebp),%eax
+    10e2:	8b 40 0c             	mov    0xc(%eax),%eax
+    10e5:	89 c1                	mov    %eax,%ecx
+    10e7:	c1 e9 1f             	shr    $0x1f,%ecx
+    10ea:	01 c8                	add    %ecx,%eax
+    10ec:	d1 f8                	sar    %eax
+    10ee:	29 c2                	sub    %eax,%edx
+    10f0:	89 d0                	mov    %edx,%eax
+    10f2:	89 45 f0             	mov    %eax,-0x10(%ebp)
     x += hdc->pen.size/2;
-    1145:	8b 45 08             	mov    0x8(%ebp),%eax
-    1148:	8b 40 0c             	mov    0xc(%eax),%eax
-    114b:	89 c2                	mov    %eax,%edx
-    114d:	c1 ea 1f             	shr    $0x1f,%edx
-    1150:	01 d0                	add    %edx,%eax
-    1152:	d1 f8                	sar    %eax
-    1154:	01 45 0c             	add    %eax,0xc(%ebp)
+    10f5:	8b 45 08             	mov    0x8(%ebp),%eax
+    10f8:	8b 40 0c             	mov    0xc(%eax),%eax
+    10fb:	89 c2                	mov    %eax,%edx
+    10fd:	c1 ea 1f             	shr    $0x1f,%edx
+    1100:	01 d0                	add    %edx,%eax
+    1102:	d1 f8                	sar    %eax
+    1104:	01 45 0c             	add    %eax,0xc(%ebp)
     y += hdc->pen.size/2;
-    1157:	8b 45 08             	mov    0x8(%ebp),%eax
-    115a:	8b 40 0c             	mov    0xc(%eax),%eax
-    115d:	89 c2                	mov    %eax,%edx
-    115f:	c1 ea 1f             	shr    $0x1f,%edx
-    1162:	01 d0                	add    %edx,%eax
-    1164:	d1 f8                	sar    %eax
-    1166:	01 45 10             	add    %eax,0x10(%ebp)
+    1107:	8b 45 08             	mov    0x8(%ebp),%eax
+    110a:	8b 40 0c             	mov    0xc(%eax),%eax
+    110d:	89 c2                	mov    %eax,%edx
+    110f:	c1 ea 1f             	shr    $0x1f,%edx
+    1112:	01 d0                	add    %edx,%eax
+    1114:	d1 f8                	sar    %eax
+    1116:	01 45 10             	add    %eax,0x10(%ebp)
     
     if (x_r < 0 || y_r < 0 || x >= hdc->size.cx || y >= hdc->size.cy)
-    1169:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
-    116d:	0f 88 d8 00 00 00    	js     124b <APDrawRect+0x1ff>
-    1173:	83 7d f0 00          	cmpl   $0x0,-0x10(%ebp)
-    1177:	0f 88 ce 00 00 00    	js     124b <APDrawRect+0x1ff>
-    117d:	8b 45 08             	mov    0x8(%ebp),%eax
-    1180:	8b 00                	mov    (%eax),%eax
-    1182:	3b 45 0c             	cmp    0xc(%ebp),%eax
-    1185:	0f 8e c0 00 00 00    	jle    124b <APDrawRect+0x1ff>
-    118b:	8b 45 08             	mov    0x8(%ebp),%eax
-    118e:	8b 40 04             	mov    0x4(%eax),%eax
-    1191:	3b 45 10             	cmp    0x10(%ebp),%eax
-    1194:	0f 8e b1 00 00 00    	jle    124b <APDrawRect+0x1ff>
+    1119:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
+    111d:	0f 88 d8 00 00 00    	js     11fb <APDrawRect+0x1ff>
+    1123:	83 7d f0 00          	cmpl   $0x0,-0x10(%ebp)
+    1127:	0f 88 ce 00 00 00    	js     11fb <APDrawRect+0x1ff>
+    112d:	8b 45 08             	mov    0x8(%ebp),%eax
+    1130:	8b 00                	mov    (%eax),%eax
+    1132:	3b 45 0c             	cmp    0xc(%ebp),%eax
+    1135:	0f 8e c0 00 00 00    	jle    11fb <APDrawRect+0x1ff>
+    113b:	8b 45 08             	mov    0x8(%ebp),%eax
+    113e:	8b 40 04             	mov    0x4(%eax),%eax
+    1141:	3b 45 10             	cmp    0x10(%ebp),%eax
+    1144:	0f 8e b1 00 00 00    	jle    11fb <APDrawRect+0x1ff>
         return;
     
     if (x < 0) x = 0;
-    119a:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
-    119e:	79 07                	jns    11a7 <APDrawRect+0x15b>
-    11a0:	c7 45 0c 00 00 00 00 	movl   $0x0,0xc(%ebp)
+    114a:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
+    114e:	79 07                	jns    1157 <APDrawRect+0x15b>
+    1150:	c7 45 0c 00 00 00 00 	movl   $0x0,0xc(%ebp)
     if (y < 0) y = 0;
-    11a7:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
-    11ab:	79 07                	jns    11b4 <APDrawRect+0x168>
-    11ad:	c7 45 10 00 00 00 00 	movl   $0x0,0x10(%ebp)
+    1157:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
+    115b:	79 07                	jns    1164 <APDrawRect+0x168>
+    115d:	c7 45 10 00 00 00 00 	movl   $0x0,0x10(%ebp)
     if (x_r >= hdc->size.cx) x_r = hdc->size.cx - 1;
-    11b4:	8b 45 08             	mov    0x8(%ebp),%eax
-    11b7:	8b 00                	mov    (%eax),%eax
-    11b9:	3b 45 f4             	cmp    -0xc(%ebp),%eax
-    11bc:	7f 0b                	jg     11c9 <APDrawRect+0x17d>
-    11be:	8b 45 08             	mov    0x8(%ebp),%eax
-    11c1:	8b 00                	mov    (%eax),%eax
-    11c3:	83 e8 01             	sub    $0x1,%eax
-    11c6:	89 45 f4             	mov    %eax,-0xc(%ebp)
+    1164:	8b 45 08             	mov    0x8(%ebp),%eax
+    1167:	8b 00                	mov    (%eax),%eax
+    1169:	3b 45 f4             	cmp    -0xc(%ebp),%eax
+    116c:	7f 0b                	jg     1179 <APDrawRect+0x17d>
+    116e:	8b 45 08             	mov    0x8(%ebp),%eax
+    1171:	8b 00                	mov    (%eax),%eax
+    1173:	83 e8 01             	sub    $0x1,%eax
+    1176:	89 45 f4             	mov    %eax,-0xc(%ebp)
     if (y_r >= hdc->size.cy) y_r = hdc->size.cy - 1;
-    11c9:	8b 45 08             	mov    0x8(%ebp),%eax
-    11cc:	8b 40 04             	mov    0x4(%eax),%eax
-    11cf:	3b 45 f0             	cmp    -0x10(%ebp),%eax
-    11d2:	7f 0c                	jg     11e0 <APDrawRect+0x194>
-    11d4:	8b 45 08             	mov    0x8(%ebp),%eax
-    11d7:	8b 40 04             	mov    0x4(%eax),%eax
-    11da:	83 e8 01             	sub    $0x1,%eax
-    11dd:	89 45 f0             	mov    %eax,-0x10(%ebp)
+    1179:	8b 45 08             	mov    0x8(%ebp),%eax
+    117c:	8b 40 04             	mov    0x4(%eax),%eax
+    117f:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+    1182:	7f 0c                	jg     1190 <APDrawRect+0x194>
+    1184:	8b 45 08             	mov    0x8(%ebp),%eax
+    1187:	8b 40 04             	mov    0x4(%eax),%eax
+    118a:	83 e8 01             	sub    $0x1,%eax
+    118d:	89 45 f0             	mov    %eax,-0x10(%ebp)
     
     int index = 0;
-    11e0:	c7 45 e4 00 00 00 00 	movl   $0x0,-0x1c(%ebp)
+    1190:	c7 45 e4 00 00 00 00 	movl   $0x0,-0x1c(%ebp)
     //cprintf("%d,%d,%d",hdc->brush.color.r,hdc->brush.color.g,hdc->pbrush.color.b);
     for (int i = x; i <= x_r; i++)
-    11e7:	8b 45 0c             	mov    0xc(%ebp),%eax
-    11ea:	89 45 ec             	mov    %eax,-0x14(%ebp)
-    11ed:	eb 52                	jmp    1241 <APDrawRect+0x1f5>
+    1197:	8b 45 0c             	mov    0xc(%ebp),%eax
+    119a:	89 45 ec             	mov    %eax,-0x14(%ebp)
+    119d:	eb 52                	jmp    11f1 <APDrawRect+0x1f5>
     {
         for (int j = y; j <= y_r; j++)
-    11ef:	8b 45 10             	mov    0x10(%ebp),%eax
-    11f2:	89 45 e8             	mov    %eax,-0x18(%ebp)
-    11f5:	eb 3e                	jmp    1235 <APDrawRect+0x1e9>
+    119f:	8b 45 10             	mov    0x10(%ebp),%eax
+    11a2:	89 45 e8             	mov    %eax,-0x18(%ebp)
+    11a5:	eb 3e                	jmp    11e5 <APDrawRect+0x1e9>
         {
             index = APGetIndex(hdc,i,j);
-    11f7:	83 ec 04             	sub    $0x4,%esp
-    11fa:	ff 75 e8             	pushl  -0x18(%ebp)
-    11fd:	ff 75 ec             	pushl  -0x14(%ebp)
-    1200:	ff 75 08             	pushl  0x8(%ebp)
-    1203:	e8 b2 f6 ff ff       	call   8ba <APGetIndex>
-    1208:	83 c4 10             	add    $0x10,%esp
-    120b:	89 45 e4             	mov    %eax,-0x1c(%ebp)
+    11a7:	83 ec 04             	sub    $0x4,%esp
+    11aa:	ff 75 e8             	pushl  -0x18(%ebp)
+    11ad:	ff 75 ec             	pushl  -0x14(%ebp)
+    11b0:	ff 75 08             	pushl  0x8(%ebp)
+    11b3:	e8 02 f7 ff ff       	call   8ba <APGetIndex>
+    11b8:	83 c4 10             	add    $0x10,%esp
+    11bb:	89 45 e4             	mov    %eax,-0x1c(%ebp)
             hdc->content[index] = hdc->brush.color;
-    120e:	8b 45 08             	mov    0x8(%ebp),%eax
-    1211:	8b 48 18             	mov    0x18(%eax),%ecx
-    1214:	8b 55 e4             	mov    -0x1c(%ebp),%edx
-    1217:	89 d0                	mov    %edx,%eax
-    1219:	01 c0                	add    %eax,%eax
-    121b:	01 d0                	add    %edx,%eax
-    121d:	8d 14 01             	lea    (%ecx,%eax,1),%edx
-    1220:	8b 45 08             	mov    0x8(%ebp),%eax
-    1223:	0f b7 48 10          	movzwl 0x10(%eax),%ecx
-    1227:	66 89 0a             	mov    %cx,(%edx)
-    122a:	0f b6 40 12          	movzbl 0x12(%eax),%eax
-    122e:	88 42 02             	mov    %al,0x2(%edx)
+    11be:	8b 45 08             	mov    0x8(%ebp),%eax
+    11c1:	8b 48 18             	mov    0x18(%eax),%ecx
+    11c4:	8b 55 e4             	mov    -0x1c(%ebp),%edx
+    11c7:	89 d0                	mov    %edx,%eax
+    11c9:	01 c0                	add    %eax,%eax
+    11cb:	01 d0                	add    %edx,%eax
+    11cd:	8d 14 01             	lea    (%ecx,%eax,1),%edx
+    11d0:	8b 45 08             	mov    0x8(%ebp),%eax
+    11d3:	0f b7 48 10          	movzwl 0x10(%eax),%ecx
+    11d7:	66 89 0a             	mov    %cx,(%edx)
+    11da:	0f b6 40 12          	movzbl 0x12(%eax),%eax
+    11de:	88 42 02             	mov    %al,0x2(%edx)
     
     int index = 0;
     //cprintf("%d,%d,%d",hdc->brush.color.r,hdc->brush.color.g,hdc->pbrush.color.b);
     for (int i = x; i <= x_r; i++)
     {
         for (int j = y; j <= y_r; j++)
-    1231:	83 45 e8 01          	addl   $0x1,-0x18(%ebp)
-    1235:	8b 45 e8             	mov    -0x18(%ebp),%eax
-    1238:	3b 45 f0             	cmp    -0x10(%ebp),%eax
-    123b:	7e ba                	jle    11f7 <APDrawRect+0x1ab>
+    11e1:	83 45 e8 01          	addl   $0x1,-0x18(%ebp)
+    11e5:	8b 45 e8             	mov    -0x18(%ebp),%eax
+    11e8:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+    11eb:	7e ba                	jle    11a7 <APDrawRect+0x1ab>
     if (x_r >= hdc->size.cx) x_r = hdc->size.cx - 1;
     if (y_r >= hdc->size.cy) y_r = hdc->size.cy - 1;
     
     int index = 0;
     //cprintf("%d,%d,%d",hdc->brush.color.r,hdc->brush.color.g,hdc->pbrush.color.b);
     for (int i = x; i <= x_r; i++)
-    123d:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
-    1241:	8b 45 ec             	mov    -0x14(%ebp),%eax
-    1244:	3b 45 f4             	cmp    -0xc(%ebp),%eax
-    1247:	7e a6                	jle    11ef <APDrawRect+0x1a3>
-    1249:	eb 01                	jmp    124c <APDrawRect+0x200>
+    11ed:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
+    11f1:	8b 45 ec             	mov    -0x14(%ebp),%eax
+    11f4:	3b 45 f4             	cmp    -0xc(%ebp),%eax
+    11f7:	7e a6                	jle    119f <APDrawRect+0x1a3>
+    11f9:	eb 01                	jmp    11fc <APDrawRect+0x200>
         y_r = y + h - 1 - hdc->pen.size/2;
     x += hdc->pen.size/2;
     y += hdc->pen.size/2;
     
     if (x_r < 0 || y_r < 0 || x >= hdc->size.cx || y >= hdc->size.cy)
         return;
-    124b:	90                   	nop
+    11fb:	90                   	nop
         {
             index = APGetIndex(hdc,i,j);
             hdc->content[index] = hdc->brush.color;
         }
     }
 }
-    124c:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-    124f:	c9                   	leave  
-    1250:	c3                   	ret    
+    11fc:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+    11ff:	c9                   	leave  
+    1200:	c3                   	ret    
 
-00001251 <APDcCopy>:
+00001201 <APDcCopy>:
 
 //--------------------------Dc operation-----------------------------------
 void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor trans)
 {
-    1251:	55                   	push   %ebp
-    1252:	89 e5                	mov    %esp,%ebp
-    1254:	83 ec 30             	sub    $0x30,%esp
+    1201:	55                   	push   %ebp
+    1202:	89 e5                	mov    %esp,%ebp
+    1204:	83 ec 30             	sub    $0x30,%esp
     if (w < 0 || h < 0) return;
-    1257:	83 7d 20 00          	cmpl   $0x0,0x20(%ebp)
-    125b:	0f 88 8e 01 00 00    	js     13ef <APDcCopy+0x19e>
-    1261:	83 7d 24 00          	cmpl   $0x0,0x24(%ebp)
-    1265:	0f 88 84 01 00 00    	js     13ef <APDcCopy+0x19e>
+    1207:	83 7d 20 00          	cmpl   $0x0,0x20(%ebp)
+    120b:	0f 88 8e 01 00 00    	js     139f <APDcCopy+0x19e>
+    1211:	83 7d 24 00          	cmpl   $0x0,0x24(%ebp)
+    1215:	0f 88 84 01 00 00    	js     139f <APDcCopy+0x19e>
     int wx_r = wx + w, wy_r = wy + h;
-    126b:	8b 55 0c             	mov    0xc(%ebp),%edx
-    126e:	8b 45 20             	mov    0x20(%ebp),%eax
-    1271:	01 d0                	add    %edx,%eax
-    1273:	89 45 fc             	mov    %eax,-0x4(%ebp)
-    1276:	8b 55 10             	mov    0x10(%ebp),%edx
-    1279:	8b 45 24             	mov    0x24(%ebp),%eax
-    127c:	01 d0                	add    %edx,%eax
-    127e:	89 45 f8             	mov    %eax,-0x8(%ebp)
-    int x_r = x + w, y_r = y + h;
-    1281:	8b 55 18             	mov    0x18(%ebp),%edx
-    1284:	8b 45 20             	mov    0x20(%ebp),%eax
-    1287:	01 d0                	add    %edx,%eax
-    1289:	89 45 ec             	mov    %eax,-0x14(%ebp)
-    128c:	8b 55 1c             	mov    0x1c(%ebp),%edx
-    128f:	8b 45 24             	mov    0x24(%ebp),%eax
-    1292:	01 d0                	add    %edx,%eax
-    1294:	89 45 e8             	mov    %eax,-0x18(%ebp)
-    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r >= src->size.cx || y_r >= src->size.cy)
-    1297:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
-    129b:	0f 88 51 01 00 00    	js     13f2 <APDcCopy+0x1a1>
-    12a1:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
-    12a5:	0f 88 47 01 00 00    	js     13f2 <APDcCopy+0x1a1>
-    12ab:	83 7d 18 00          	cmpl   $0x0,0x18(%ebp)
-    12af:	0f 88 3d 01 00 00    	js     13f2 <APDcCopy+0x1a1>
-    12b5:	83 7d 1c 00          	cmpl   $0x0,0x1c(%ebp)
-    12b9:	0f 88 33 01 00 00    	js     13f2 <APDcCopy+0x1a1>
-    12bf:	8b 45 14             	mov    0x14(%ebp),%eax
-    12c2:	8b 00                	mov    (%eax),%eax
-    12c4:	3b 45 ec             	cmp    -0x14(%ebp),%eax
-    12c7:	0f 8e 25 01 00 00    	jle    13f2 <APDcCopy+0x1a1>
-    12cd:	8b 45 14             	mov    0x14(%ebp),%eax
-    12d0:	8b 40 04             	mov    0x4(%eax),%eax
-    12d3:	3b 45 e8             	cmp    -0x18(%ebp),%eax
-    12d6:	0f 8e 16 01 00 00    	jle    13f2 <APDcCopy+0x1a1>
+    121b:	8b 55 0c             	mov    0xc(%ebp),%edx
+    121e:	8b 45 20             	mov    0x20(%ebp),%eax
+    1221:	01 d0                	add    %edx,%eax
+    1223:	89 45 fc             	mov    %eax,-0x4(%ebp)
+    1226:	8b 55 10             	mov    0x10(%ebp),%edx
+    1229:	8b 45 24             	mov    0x24(%ebp),%eax
+    122c:	01 d0                	add    %edx,%eax
+    122e:	89 45 f8             	mov    %eax,-0x8(%ebp)
+    int x_r = x + w , y_r = y + h ;
+    1231:	8b 55 18             	mov    0x18(%ebp),%edx
+    1234:	8b 45 20             	mov    0x20(%ebp),%eax
+    1237:	01 d0                	add    %edx,%eax
+    1239:	89 45 ec             	mov    %eax,-0x14(%ebp)
+    123c:	8b 55 1c             	mov    0x1c(%ebp),%edx
+    123f:	8b 45 24             	mov    0x24(%ebp),%eax
+    1242:	01 d0                	add    %edx,%eax
+    1244:	89 45 e8             	mov    %eax,-0x18(%ebp)
+    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r > src->size.cx || y_r > src->size.cy)
+    1247:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
+    124b:	0f 88 51 01 00 00    	js     13a2 <APDcCopy+0x1a1>
+    1251:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
+    1255:	0f 88 47 01 00 00    	js     13a2 <APDcCopy+0x1a1>
+    125b:	83 7d 18 00          	cmpl   $0x0,0x18(%ebp)
+    125f:	0f 88 3d 01 00 00    	js     13a2 <APDcCopy+0x1a1>
+    1265:	83 7d 1c 00          	cmpl   $0x0,0x1c(%ebp)
+    1269:	0f 88 33 01 00 00    	js     13a2 <APDcCopy+0x1a1>
+    126f:	8b 45 14             	mov    0x14(%ebp),%eax
+    1272:	8b 00                	mov    (%eax),%eax
+    1274:	3b 45 ec             	cmp    -0x14(%ebp),%eax
+    1277:	0f 8c 25 01 00 00    	jl     13a2 <APDcCopy+0x1a1>
+    127d:	8b 45 14             	mov    0x14(%ebp),%eax
+    1280:	8b 40 04             	mov    0x4(%eax),%eax
+    1283:	3b 45 e8             	cmp    -0x18(%ebp),%eax
+    1286:	0f 8c 16 01 00 00    	jl     13a2 <APDcCopy+0x1a1>
         return;
     
-    if (wx_r > dst->size.cx) wx_r = dst->size.cx - 1;
-    12dc:	8b 45 08             	mov    0x8(%ebp),%eax
-    12df:	8b 00                	mov    (%eax),%eax
-    12e1:	3b 45 fc             	cmp    -0x4(%ebp),%eax
-    12e4:	7d 0b                	jge    12f1 <APDcCopy+0xa0>
-    12e6:	8b 45 08             	mov    0x8(%ebp),%eax
-    12e9:	8b 00                	mov    (%eax),%eax
-    12eb:	83 e8 01             	sub    $0x1,%eax
-    12ee:	89 45 fc             	mov    %eax,-0x4(%ebp)
-    if (wy_r > dst->size.cy) wy_r = dst->size.cy - 1;
-    12f1:	8b 45 08             	mov    0x8(%ebp),%eax
-    12f4:	8b 40 04             	mov    0x4(%eax),%eax
-    12f7:	3b 45 f8             	cmp    -0x8(%ebp),%eax
-    12fa:	7d 0c                	jge    1308 <APDcCopy+0xb7>
-    12fc:	8b 45 08             	mov    0x8(%ebp),%eax
-    12ff:	8b 40 04             	mov    0x4(%eax),%eax
-    1302:	83 e8 01             	sub    $0x1,%eax
-    1305:	89 45 f8             	mov    %eax,-0x8(%ebp)
+    if (wx_r >= dst->size.cx) wx_r = dst->size.cx - 1;
+    128c:	8b 45 08             	mov    0x8(%ebp),%eax
+    128f:	8b 00                	mov    (%eax),%eax
+    1291:	3b 45 fc             	cmp    -0x4(%ebp),%eax
+    1294:	7f 0b                	jg     12a1 <APDcCopy+0xa0>
+    1296:	8b 45 08             	mov    0x8(%ebp),%eax
+    1299:	8b 00                	mov    (%eax),%eax
+    129b:	83 e8 01             	sub    $0x1,%eax
+    129e:	89 45 fc             	mov    %eax,-0x4(%ebp)
+    if (wy_r >= dst->size.cy) wy_r = dst->size.cy - 1;
+    12a1:	8b 45 08             	mov    0x8(%ebp),%eax
+    12a4:	8b 40 04             	mov    0x4(%eax),%eax
+    12a7:	3b 45 f8             	cmp    -0x8(%ebp),%eax
+    12aa:	7f 0c                	jg     12b8 <APDcCopy+0xb7>
+    12ac:	8b 45 08             	mov    0x8(%ebp),%eax
+    12af:	8b 40 04             	mov    0x4(%eax),%eax
+    12b2:	83 e8 01             	sub    $0x1,%eax
+    12b5:	89 45 f8             	mov    %eax,-0x8(%ebp)
     
     int off1 = 0,off2 = 0;
-    1308:	c7 45 e4 00 00 00 00 	movl   $0x0,-0x1c(%ebp)
-    130f:	c7 45 e0 00 00 00 00 	movl   $0x0,-0x20(%ebp)
-    for (int j = 0; j < wy_r - wy; j++)
-    1316:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
-    131d:	e9 bc 00 00 00       	jmp    13de <APDcCopy+0x18d>
+    12b8:	c7 45 e4 00 00 00 00 	movl   $0x0,-0x1c(%ebp)
+    12bf:	c7 45 e0 00 00 00 00 	movl   $0x0,-0x20(%ebp)
+    for (int j = 0; j <= wy_r - wy; j++)
+    12c6:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+    12cd:	e9 bc 00 00 00       	jmp    138e <APDcCopy+0x18d>
     {
         off1 = dst->size.cx * (j + wy) + wx;
-    1322:	8b 45 08             	mov    0x8(%ebp),%eax
-    1325:	8b 00                	mov    (%eax),%eax
-    1327:	8b 4d f4             	mov    -0xc(%ebp),%ecx
-    132a:	8b 55 10             	mov    0x10(%ebp),%edx
-    132d:	01 ca                	add    %ecx,%edx
-    132f:	0f af d0             	imul   %eax,%edx
-    1332:	8b 45 0c             	mov    0xc(%ebp),%eax
-    1335:	01 d0                	add    %edx,%eax
-    1337:	89 45 e4             	mov    %eax,-0x1c(%ebp)
+    12d2:	8b 45 08             	mov    0x8(%ebp),%eax
+    12d5:	8b 00                	mov    (%eax),%eax
+    12d7:	8b 4d f4             	mov    -0xc(%ebp),%ecx
+    12da:	8b 55 10             	mov    0x10(%ebp),%edx
+    12dd:	01 ca                	add    %ecx,%edx
+    12df:	0f af d0             	imul   %eax,%edx
+    12e2:	8b 45 0c             	mov    0xc(%ebp),%eax
+    12e5:	01 d0                	add    %edx,%eax
+    12e7:	89 45 e4             	mov    %eax,-0x1c(%ebp)
         off2 = src->size.cx * (j + y) + x;
-    133a:	8b 45 14             	mov    0x14(%ebp),%eax
-    133d:	8b 00                	mov    (%eax),%eax
-    133f:	8b 4d f4             	mov    -0xc(%ebp),%ecx
-    1342:	8b 55 1c             	mov    0x1c(%ebp),%edx
-    1345:	01 ca                	add    %ecx,%edx
-    1347:	0f af d0             	imul   %eax,%edx
-    134a:	8b 45 18             	mov    0x18(%ebp),%eax
-    134d:	01 d0                	add    %edx,%eax
-    134f:	89 45 e0             	mov    %eax,-0x20(%ebp)
-        for (int i = 0; i < wx_r - wx; i++)
-    1352:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
-    1359:	eb 74                	jmp    13cf <APDcCopy+0x17e>
+    12ea:	8b 45 14             	mov    0x14(%ebp),%eax
+    12ed:	8b 00                	mov    (%eax),%eax
+    12ef:	8b 4d f4             	mov    -0xc(%ebp),%ecx
+    12f2:	8b 55 1c             	mov    0x1c(%ebp),%edx
+    12f5:	01 ca                	add    %ecx,%edx
+    12f7:	0f af d0             	imul   %eax,%edx
+    12fa:	8b 45 18             	mov    0x18(%ebp),%eax
+    12fd:	01 d0                	add    %edx,%eax
+    12ff:	89 45 e0             	mov    %eax,-0x20(%ebp)
+        for (int i = 0; i <=  wx_r - wx; i++)
+    1302:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+    1309:	eb 74                	jmp    137f <APDcCopy+0x17e>
         {
             AColor c = src->content[off2 + i];
-    135b:	8b 45 14             	mov    0x14(%ebp),%eax
-    135e:	8b 50 18             	mov    0x18(%eax),%edx
-    1361:	8b 4d e0             	mov    -0x20(%ebp),%ecx
-    1364:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    1367:	01 c8                	add    %ecx,%eax
-    1369:	89 c1                	mov    %eax,%ecx
-    136b:	89 c8                	mov    %ecx,%eax
-    136d:	01 c0                	add    %eax,%eax
-    136f:	01 c8                	add    %ecx,%eax
-    1371:	01 d0                	add    %edx,%eax
-    1373:	0f b7 10             	movzwl (%eax),%edx
-    1376:	66 89 55 dd          	mov    %dx,-0x23(%ebp)
-    137a:	0f b6 40 02          	movzbl 0x2(%eax),%eax
-    137e:	88 45 df             	mov    %al,-0x21(%ebp)
+    130b:	8b 45 14             	mov    0x14(%ebp),%eax
+    130e:	8b 50 18             	mov    0x18(%eax),%edx
+    1311:	8b 4d e0             	mov    -0x20(%ebp),%ecx
+    1314:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    1317:	01 c8                	add    %ecx,%eax
+    1319:	89 c1                	mov    %eax,%ecx
+    131b:	89 c8                	mov    %ecx,%eax
+    131d:	01 c0                	add    %eax,%eax
+    131f:	01 c8                	add    %ecx,%eax
+    1321:	01 d0                	add    %edx,%eax
+    1323:	0f b7 10             	movzwl (%eax),%edx
+    1326:	66 89 55 dd          	mov    %dx,-0x23(%ebp)
+    132a:	0f b6 40 02          	movzbl 0x2(%eax),%eax
+    132e:	88 45 df             	mov    %al,-0x21(%ebp)
             if (c.r != trans.r || c.g != trans.g || c.b != trans.b)
-    1381:	0f b6 55 df          	movzbl -0x21(%ebp),%edx
-    1385:	0f b6 45 2a          	movzbl 0x2a(%ebp),%eax
-    1389:	38 c2                	cmp    %al,%dl
-    138b:	75 18                	jne    13a5 <APDcCopy+0x154>
-    138d:	0f b6 55 de          	movzbl -0x22(%ebp),%edx
-    1391:	0f b6 45 29          	movzbl 0x29(%ebp),%eax
-    1395:	38 c2                	cmp    %al,%dl
-    1397:	75 0c                	jne    13a5 <APDcCopy+0x154>
-    1399:	0f b6 55 dd          	movzbl -0x23(%ebp),%edx
-    139d:	0f b6 45 28          	movzbl 0x28(%ebp),%eax
-    13a1:	38 c2                	cmp    %al,%dl
-    13a3:	74 26                	je     13cb <APDcCopy+0x17a>
+    1331:	0f b6 55 df          	movzbl -0x21(%ebp),%edx
+    1335:	0f b6 45 2a          	movzbl 0x2a(%ebp),%eax
+    1339:	38 c2                	cmp    %al,%dl
+    133b:	75 18                	jne    1355 <APDcCopy+0x154>
+    133d:	0f b6 55 de          	movzbl -0x22(%ebp),%edx
+    1341:	0f b6 45 29          	movzbl 0x29(%ebp),%eax
+    1345:	38 c2                	cmp    %al,%dl
+    1347:	75 0c                	jne    1355 <APDcCopy+0x154>
+    1349:	0f b6 55 dd          	movzbl -0x23(%ebp),%edx
+    134d:	0f b6 45 28          	movzbl 0x28(%ebp),%eax
+    1351:	38 c2                	cmp    %al,%dl
+    1353:	74 26                	je     137b <APDcCopy+0x17a>
                 dst->content[off1 + i] = c;
-    13a5:	8b 45 08             	mov    0x8(%ebp),%eax
-    13a8:	8b 50 18             	mov    0x18(%eax),%edx
-    13ab:	8b 4d e4             	mov    -0x1c(%ebp),%ecx
-    13ae:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    13b1:	01 c8                	add    %ecx,%eax
-    13b3:	89 c1                	mov    %eax,%ecx
-    13b5:	89 c8                	mov    %ecx,%eax
-    13b7:	01 c0                	add    %eax,%eax
-    13b9:	01 c8                	add    %ecx,%eax
-    13bb:	01 d0                	add    %edx,%eax
-    13bd:	0f b7 55 dd          	movzwl -0x23(%ebp),%edx
-    13c1:	66 89 10             	mov    %dx,(%eax)
-    13c4:	0f b6 55 df          	movzbl -0x21(%ebp),%edx
-    13c8:	88 50 02             	mov    %dl,0x2(%eax)
+    1355:	8b 45 08             	mov    0x8(%ebp),%eax
+    1358:	8b 50 18             	mov    0x18(%eax),%edx
+    135b:	8b 4d e4             	mov    -0x1c(%ebp),%ecx
+    135e:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    1361:	01 c8                	add    %ecx,%eax
+    1363:	89 c1                	mov    %eax,%ecx
+    1365:	89 c8                	mov    %ecx,%eax
+    1367:	01 c0                	add    %eax,%eax
+    1369:	01 c8                	add    %ecx,%eax
+    136b:	01 d0                	add    %edx,%eax
+    136d:	0f b7 55 dd          	movzwl -0x23(%ebp),%edx
+    1371:	66 89 10             	mov    %dx,(%eax)
+    1374:	0f b6 55 df          	movzbl -0x21(%ebp),%edx
+    1378:	88 50 02             	mov    %dl,0x2(%eax)
     int off1 = 0,off2 = 0;
-    for (int j = 0; j < wy_r - wy; j++)
+    for (int j = 0; j <= wy_r - wy; j++)
     {
         off1 = dst->size.cx * (j + wy) + wx;
         off2 = src->size.cx * (j + y) + x;
-        for (int i = 0; i < wx_r - wx; i++)
-    13cb:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
-    13cf:	8b 45 fc             	mov    -0x4(%ebp),%eax
-    13d2:	2b 45 0c             	sub    0xc(%ebp),%eax
-    13d5:	3b 45 f0             	cmp    -0x10(%ebp),%eax
-    13d8:	7f 81                	jg     135b <APDcCopy+0x10a>
+        for (int i = 0; i <=  wx_r - wx; i++)
+    137b:	83 45 f0 01          	addl   $0x1,-0x10(%ebp)
+    137f:	8b 45 fc             	mov    -0x4(%ebp),%eax
+    1382:	2b 45 0c             	sub    0xc(%ebp),%eax
+    1385:	3b 45 f0             	cmp    -0x10(%ebp),%eax
+    1388:	7d 81                	jge    130b <APDcCopy+0x10a>
     
-    if (wx_r > dst->size.cx) wx_r = dst->size.cx - 1;
-    if (wy_r > dst->size.cy) wy_r = dst->size.cy - 1;
+    if (wx_r >= dst->size.cx) wx_r = dst->size.cx - 1;
+    if (wy_r >= dst->size.cy) wy_r = dst->size.cy - 1;
     
     int off1 = 0,off2 = 0;
-    for (int j = 0; j < wy_r - wy; j++)
-    13da:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
-    13de:	8b 45 f8             	mov    -0x8(%ebp),%eax
-    13e1:	2b 45 10             	sub    0x10(%ebp),%eax
-    13e4:	3b 45 f4             	cmp    -0xc(%ebp),%eax
-    13e7:	0f 8f 35 ff ff ff    	jg     1322 <APDcCopy+0xd1>
-    13ed:	eb 04                	jmp    13f3 <APDcCopy+0x1a2>
+    for (int j = 0; j <= wy_r - wy; j++)
+    138a:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+    138e:	8b 45 f8             	mov    -0x8(%ebp),%eax
+    1391:	2b 45 10             	sub    0x10(%ebp),%eax
+    1394:	3b 45 f4             	cmp    -0xc(%ebp),%eax
+    1397:	0f 8d 35 ff ff ff    	jge    12d2 <APDcCopy+0xd1>
+    139d:	eb 04                	jmp    13a3 <APDcCopy+0x1a2>
 }
 
 //--------------------------Dc operation-----------------------------------
 void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor trans)
 {
     if (w < 0 || h < 0) return;
-    13ef:	90                   	nop
-    13f0:	eb 01                	jmp    13f3 <APDcCopy+0x1a2>
+    139f:	90                   	nop
+    13a0:	eb 01                	jmp    13a3 <APDcCopy+0x1a2>
     int wx_r = wx + w, wy_r = wy + h;
-    int x_r = x + w, y_r = y + h;
-    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r >= src->size.cx || y_r >= src->size.cy)
+    int x_r = x + w , y_r = y + h ;
+    if (wx < 0 || wy < 0 || x < 0 || y < 0 || x_r > src->size.cx || y_r > src->size.cy)
         return;
-    13f2:	90                   	nop
+    13a2:	90                   	nop
             AColor c = src->content[off2 + i];
             if (c.r != trans.r || c.g != trans.g || c.b != trans.b)
                 dst->content[off1 + i] = c;
         }
     }
 }
-    13f3:	c9                   	leave  
-    13f4:	c3                   	ret    
+    13a3:	c9                   	leave  
+    13a4:	c3                   	ret    
 
-000013f5 <RGB>:
+000013a5 <RGB>:
     uchar g;
     uchar r;
 }AColor;
 
 static inline AColor RGB(uchar r, uchar g, uchar b)
 {
-    13f5:	55                   	push   %ebp
-    13f6:	89 e5                	mov    %esp,%ebp
-    13f8:	83 ec 1c             	sub    $0x1c,%esp
-    13fb:	8b 4d 0c             	mov    0xc(%ebp),%ecx
-    13fe:	8b 55 10             	mov    0x10(%ebp),%edx
-    1401:	8b 45 14             	mov    0x14(%ebp),%eax
-    1404:	88 4d ec             	mov    %cl,-0x14(%ebp)
-    1407:	88 55 e8             	mov    %dl,-0x18(%ebp)
-    140a:	88 45 e4             	mov    %al,-0x1c(%ebp)
+    13a5:	55                   	push   %ebp
+    13a6:	89 e5                	mov    %esp,%ebp
+    13a8:	83 ec 1c             	sub    $0x1c,%esp
+    13ab:	8b 4d 0c             	mov    0xc(%ebp),%ecx
+    13ae:	8b 55 10             	mov    0x10(%ebp),%edx
+    13b1:	8b 45 14             	mov    0x14(%ebp),%eax
+    13b4:	88 4d ec             	mov    %cl,-0x14(%ebp)
+    13b7:	88 55 e8             	mov    %dl,-0x18(%ebp)
+    13ba:	88 45 e4             	mov    %al,-0x1c(%ebp)
     AColor rgb;
     rgb.r = r;
-    140d:	0f b6 45 ec          	movzbl -0x14(%ebp),%eax
-    1411:	88 45 ff             	mov    %al,-0x1(%ebp)
+    13bd:	0f b6 45 ec          	movzbl -0x14(%ebp),%eax
+    13c1:	88 45 ff             	mov    %al,-0x1(%ebp)
     rgb.g = g;
-    1414:	0f b6 45 e8          	movzbl -0x18(%ebp),%eax
-    1418:	88 45 fe             	mov    %al,-0x2(%ebp)
+    13c4:	0f b6 45 e8          	movzbl -0x18(%ebp),%eax
+    13c8:	88 45 fe             	mov    %al,-0x2(%ebp)
     rgb.b = b;
-    141b:	0f b6 45 e4          	movzbl -0x1c(%ebp),%eax
-    141f:	88 45 fd             	mov    %al,-0x3(%ebp)
+    13cb:	0f b6 45 e4          	movzbl -0x1c(%ebp),%eax
+    13cf:	88 45 fd             	mov    %al,-0x3(%ebp)
     return rgb;
-    1422:	8b 45 08             	mov    0x8(%ebp),%eax
-    1425:	0f b7 55 fd          	movzwl -0x3(%ebp),%edx
-    1429:	66 89 10             	mov    %dx,(%eax)
-    142c:	0f b6 55 ff          	movzbl -0x1(%ebp),%edx
-    1430:	88 50 02             	mov    %dl,0x2(%eax)
+    13d2:	8b 45 08             	mov    0x8(%ebp),%eax
+    13d5:	0f b7 55 fd          	movzwl -0x3(%ebp),%edx
+    13d9:	66 89 10             	mov    %dx,(%eax)
+    13dc:	0f b6 55 ff          	movzbl -0x1(%ebp),%edx
+    13e0:	88 50 02             	mov    %dl,0x2(%eax)
 }
-    1433:	8b 45 08             	mov    0x8(%ebp),%eax
-    1436:	c9                   	leave  
-    1437:	c2 04 00             	ret    $0x4
+    13e3:	8b 45 08             	mov    0x8(%ebp),%eax
+    13e6:	c9                   	leave  
+    13e7:	c2 04 00             	ret    $0x4
 
-0000143a <APSendMessage>:
+000013ea <APSendMessage>:
 #include "APWindow.h"
 
 int iconReady = 0;
 
 void APSendMessage(AHwnd hwnd, AMessage msg)
 {
-    143a:	55                   	push   %ebp
-    143b:	89 e5                	mov    %esp,%ebp
-    143d:	83 ec 08             	sub    $0x8,%esp
+    13ea:	55                   	push   %ebp
+    13eb:	89 e5                	mov    %esp,%ebp
+    13ed:	83 ec 08             	sub    $0x8,%esp
       sendMessage(hwnd->id, &msg);
-    1440:	8b 45 08             	mov    0x8(%ebp),%eax
-    1443:	8b 00                	mov    (%eax),%eax
-    1445:	83 ec 08             	sub    $0x8,%esp
-    1448:	8d 55 0c             	lea    0xc(%ebp),%edx
-    144b:	52                   	push   %edx
-    144c:	50                   	push   %eax
-    144d:	e8 45 ef ff ff       	call   397 <sendMessage>
-    1452:	83 c4 10             	add    $0x10,%esp
+    13f0:	8b 45 08             	mov    0x8(%ebp),%eax
+    13f3:	8b 00                	mov    (%eax),%eax
+    13f5:	83 ec 08             	sub    $0x8,%esp
+    13f8:	8d 55 0c             	lea    0xc(%ebp),%edx
+    13fb:	52                   	push   %edx
+    13fc:	50                   	push   %eax
+    13fd:	e8 95 ef ff ff       	call   397 <sendMessage>
+    1402:	83 c4 10             	add    $0x10,%esp
 }
-    1455:	90                   	nop
-    1456:	c9                   	leave  
-    1457:	c3                   	ret    
+    1405:	90                   	nop
+    1406:	c9                   	leave  
+    1407:	c3                   	ret    
 
-00001458 <APCreateWindow>:
+00001408 <APCreateWindow>:
 
 
 
 AHwnd APCreateWindow(char * title,int is_map,int page)
 {
-    1458:	55                   	push   %ebp
-    1459:	89 e5                	mov    %esp,%ebp
-    145b:	83 ec 18             	sub    $0x18,%esp
+    1408:	55                   	push   %ebp
+    1409:	89 e5                	mov    %esp,%ebp
+    140b:	83 ec 18             	sub    $0x18,%esp
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
-    145e:	83 ec 0c             	sub    $0xc,%esp
-    1461:	68 90 00 00 00       	push   $0x90
-    1466:	e8 ee f2 ff ff       	call   759 <malloc>
-    146b:	83 c4 10             	add    $0x10,%esp
-    146e:	89 45 f4             	mov    %eax,-0xc(%ebp)
+    140e:	83 ec 0c             	sub    $0xc,%esp
+    1411:	68 90 00 00 00       	push   $0x90
+    1416:	e8 3e f3 ff ff       	call   759 <malloc>
+    141b:	83 c4 10             	add    $0x10,%esp
+    141e:	89 45 f4             	mov    %eax,-0xc(%ebp)
     if (r == 0)
-    1471:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
-    1475:	75 15                	jne    148c <APCreateWindow+0x34>
+    1421:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
+    1425:	75 15                	jne    143c <APCreateWindow+0x34>
         printf(1,"%s - window creation failed!\n",title);
-    1477:	83 ec 04             	sub    $0x4,%esp
-    147a:	ff 75 08             	pushl  0x8(%ebp)
-    147d:	68 48 1f 00 00       	push   $0x1f48
-    1482:	6a 01                	push   $0x1
-    1484:	e8 fd ef ff ff       	call   486 <printf>
-    1489:	83 c4 10             	add    $0x10,%esp
+    1427:	83 ec 04             	sub    $0x4,%esp
+    142a:	ff 75 08             	pushl  0x8(%ebp)
+    142d:	68 18 21 00 00       	push   $0x2118
+    1432:	6a 01                	push   $0x1
+    1434:	e8 4d f0 ff ff       	call   486 <printf>
+    1439:	83 c4 10             	add    $0x10,%esp
     
     //title init
     strcpy(r->title, title);
-    148c:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    148f:	83 c0 7c             	add    $0x7c,%eax
-    1492:	83 ec 08             	sub    $0x8,%esp
-    1495:	ff 75 08             	pushl  0x8(%ebp)
-    1498:	50                   	push   %eax
-    1499:	e8 18 ec ff ff       	call   b6 <strcpy>
-    149e:	83 c4 10             	add    $0x10,%esp
+    143c:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    143f:	83 c0 7c             	add    $0x7c,%eax
+    1442:	83 ec 08             	sub    $0x8,%esp
+    1445:	ff 75 08             	pushl  0x8(%ebp)
+    1448:	50                   	push   %eax
+    1449:	e8 68 ec ff ff       	call   b6 <strcpy>
+    144e:	83 c4 10             	add    $0x10,%esp
     
     //DC innit
     r->Dc.size.cx = SCREEN_WIDTH;
-    14a1:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    14a4:	c7 40 34 20 03 00 00 	movl   $0x320,0x34(%eax)
+    1451:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1454:	c7 40 34 20 03 00 00 	movl   $0x320,0x34(%eax)
     r->Dc.size.cy = SCREEN_HEIGHT - WND_TITLE_HEIGHT;
-    14ab:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    14ae:	c7 40 38 26 02 00 00 	movl   $0x226,0x38(%eax)
+    145b:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    145e:	c7 40 38 26 02 00 00 	movl   $0x226,0x38(%eax)
     r->Dc.content = (AColor *)malloc(sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
-    14b5:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    14b8:	8b 40 34             	mov    0x34(%eax),%eax
-    14bb:	89 c2                	mov    %eax,%edx
-    14bd:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    14c0:	8b 40 38             	mov    0x38(%eax),%eax
-    14c3:	0f af d0             	imul   %eax,%edx
-    14c6:	89 d0                	mov    %edx,%eax
-    14c8:	01 c0                	add    %eax,%eax
-    14ca:	01 d0                	add    %edx,%eax
-    14cc:	83 ec 0c             	sub    $0xc,%esp
-    14cf:	50                   	push   %eax
-    14d0:	e8 84 f2 ff ff       	call   759 <malloc>
-    14d5:	83 c4 10             	add    $0x10,%esp
-    14d8:	89 c2                	mov    %eax,%edx
-    14da:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    14dd:	89 50 4c             	mov    %edx,0x4c(%eax)
+    1465:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1468:	8b 40 34             	mov    0x34(%eax),%eax
+    146b:	89 c2                	mov    %eax,%edx
+    146d:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1470:	8b 40 38             	mov    0x38(%eax),%eax
+    1473:	0f af d0             	imul   %eax,%edx
+    1476:	89 d0                	mov    %edx,%eax
+    1478:	01 c0                	add    %eax,%eax
+    147a:	01 d0                	add    %edx,%eax
+    147c:	83 ec 0c             	sub    $0xc,%esp
+    147f:	50                   	push   %eax
+    1480:	e8 d4 f2 ff ff       	call   759 <malloc>
+    1485:	83 c4 10             	add    $0x10,%esp
+    1488:	89 c2                	mov    %eax,%edx
+    148a:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    148d:	89 50 4c             	mov    %edx,0x4c(%eax)
     if (r->Dc.content == 0)
-    14e0:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    14e3:	8b 40 4c             	mov    0x4c(%eax),%eax
-    14e6:	85 c0                	test   %eax,%eax
-    14e8:	75 15                	jne    14ff <APCreateWindow+0xa7>
+    1490:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1493:	8b 40 4c             	mov    0x4c(%eax),%eax
+    1496:	85 c0                	test   %eax,%eax
+    1498:	75 15                	jne    14af <APCreateWindow+0xa7>
         printf(1,"$s window - Dc creation failed!\n",title);
-    14ea:	83 ec 04             	sub    $0x4,%esp
-    14ed:	ff 75 08             	pushl  0x8(%ebp)
-    14f0:	68 68 1f 00 00       	push   $0x1f68
-    14f5:	6a 01                	push   $0x1
-    14f7:	e8 8a ef ff ff       	call   486 <printf>
-    14fc:	83 c4 10             	add    $0x10,%esp
+    149a:	83 ec 04             	sub    $0x4,%esp
+    149d:	ff 75 08             	pushl  0x8(%ebp)
+    14a0:	68 38 21 00 00       	push   $0x2138
+    14a5:	6a 01                	push   $0x1
+    14a7:	e8 da ef ff ff       	call   486 <printf>
+    14ac:	83 c4 10             	add    $0x10,%esp
     memset(r->Dc.content, DEFAULT_WINDOW_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
-    14ff:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1502:	8b 40 34             	mov    0x34(%eax),%eax
-    1505:	89 c2                	mov    %eax,%edx
-    1507:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    150a:	8b 40 38             	mov    0x38(%eax),%eax
-    150d:	0f af d0             	imul   %eax,%edx
-    1510:	89 d0                	mov    %edx,%eax
-    1512:	01 c0                	add    %eax,%eax
-    1514:	01 c2                	add    %eax,%edx
-    1516:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1519:	8b 40 4c             	mov    0x4c(%eax),%eax
-    151c:	83 ec 04             	sub    $0x4,%esp
-    151f:	52                   	push   %edx
-    1520:	68 ff ff ff 00       	push   $0xffffff
-    1525:	50                   	push   %eax
-    1526:	e8 21 ec ff ff       	call   14c <memset>
-    152b:	83 c4 10             	add    $0x10,%esp
+    14af:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    14b2:	8b 40 34             	mov    0x34(%eax),%eax
+    14b5:	89 c2                	mov    %eax,%edx
+    14b7:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    14ba:	8b 40 38             	mov    0x38(%eax),%eax
+    14bd:	0f af d0             	imul   %eax,%edx
+    14c0:	89 d0                	mov    %edx,%eax
+    14c2:	01 c0                	add    %eax,%eax
+    14c4:	01 c2                	add    %eax,%edx
+    14c6:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    14c9:	8b 40 4c             	mov    0x4c(%eax),%eax
+    14cc:	83 ec 04             	sub    $0x4,%esp
+    14cf:	52                   	push   %edx
+    14d0:	68 ff ff ff 00       	push   $0xffffff
+    14d5:	50                   	push   %eax
+    14d6:	e8 71 ec ff ff       	call   14c <memset>
+    14db:	83 c4 10             	add    $0x10,%esp
     
     r->msg.type = MSG_NULL;
-    152e:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1531:	c7 40 6c 00 00 00 00 	movl   $0x0,0x6c(%eax)
+    14de:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    14e1:	c7 40 6c 00 00 00 00 	movl   $0x0,0x6c(%eax)
     r->pid = getpid();
-    1538:	e8 2a ee ff ff       	call   367 <getpid>
-    153d:	89 c2                	mov    %eax,%edx
-    153f:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1542:	89 50 04             	mov    %edx,0x4(%eax)
+    14e8:	e8 7a ee ff ff       	call   367 <getpid>
+    14ed:	89 c2                	mov    %eax,%edx
+    14ef:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    14f2:	89 50 04             	mov    %edx,0x4(%eax)
     
     //Window Title init
     r->TitleDc.size.cx = SCREEN_WIDTH;
-    1545:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1548:	c7 40 50 20 03 00 00 	movl   $0x320,0x50(%eax)
+    14f5:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    14f8:	c7 40 50 20 03 00 00 	movl   $0x320,0x50(%eax)
     r->TitleDc.size.cy = WND_TITLE_HEIGHT;
-    154f:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1552:	c7 40 54 32 00 00 00 	movl   $0x32,0x54(%eax)
+    14ff:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1502:	c7 40 54 32 00 00 00 	movl   $0x32,0x54(%eax)
     r->TitleDc.content = (AColor *)malloc(sizeof(AColor) * r->TitleDc.size.cx * r->TitleDc.size.cy);
-    1559:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    155c:	8b 40 50             	mov    0x50(%eax),%eax
-    155f:	89 c2                	mov    %eax,%edx
-    1561:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1564:	8b 40 54             	mov    0x54(%eax),%eax
-    1567:	0f af d0             	imul   %eax,%edx
-    156a:	89 d0                	mov    %edx,%eax
-    156c:	01 c0                	add    %eax,%eax
-    156e:	01 d0                	add    %edx,%eax
-    1570:	83 ec 0c             	sub    $0xc,%esp
-    1573:	50                   	push   %eax
-    1574:	e8 e0 f1 ff ff       	call   759 <malloc>
-    1579:	83 c4 10             	add    $0x10,%esp
-    157c:	89 c2                	mov    %eax,%edx
-    157e:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1581:	89 50 68             	mov    %edx,0x68(%eax)
+    1509:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    150c:	8b 40 50             	mov    0x50(%eax),%eax
+    150f:	89 c2                	mov    %eax,%edx
+    1511:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1514:	8b 40 54             	mov    0x54(%eax),%eax
+    1517:	0f af d0             	imul   %eax,%edx
+    151a:	89 d0                	mov    %edx,%eax
+    151c:	01 c0                	add    %eax,%eax
+    151e:	01 d0                	add    %edx,%eax
+    1520:	83 ec 0c             	sub    $0xc,%esp
+    1523:	50                   	push   %eax
+    1524:	e8 30 f2 ff ff       	call   759 <malloc>
+    1529:	83 c4 10             	add    $0x10,%esp
+    152c:	89 c2                	mov    %eax,%edx
+    152e:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1531:	89 50 68             	mov    %edx,0x68(%eax)
     if (r->TitleDc.content == 0)
-    1584:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1587:	8b 40 68             	mov    0x68(%eax),%eax
-    158a:	85 c0                	test   %eax,%eax
-    158c:	75 15                	jne    15a3 <APCreateWindow+0x14b>
+    1534:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1537:	8b 40 68             	mov    0x68(%eax),%eax
+    153a:	85 c0                	test   %eax,%eax
+    153c:	75 15                	jne    1553 <APCreateWindow+0x14b>
         printf(1,"%s window - Title DC creation failed!\n",title);
-    158e:	83 ec 04             	sub    $0x4,%esp
-    1591:	ff 75 08             	pushl  0x8(%ebp)
-    1594:	68 8c 1f 00 00       	push   $0x1f8c
-    1599:	6a 01                	push   $0x1
-    159b:	e8 e6 ee ff ff       	call   486 <printf>
-    15a0:	83 c4 10             	add    $0x10,%esp
+    153e:	83 ec 04             	sub    $0x4,%esp
+    1541:	ff 75 08             	pushl  0x8(%ebp)
+    1544:	68 5c 21 00 00       	push   $0x215c
+    1549:	6a 01                	push   $0x1
+    154b:	e8 36 ef ff ff       	call   486 <printf>
+    1550:	83 c4 10             	add    $0x10,%esp
     memset(r->Dc.content, DEFAULT_TITLE_COLOR, sizeof(AColor) * r->Dc.size.cx * r->Dc.size.cy);
-    15a3:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    15a6:	8b 40 34             	mov    0x34(%eax),%eax
-    15a9:	89 c2                	mov    %eax,%edx
-    15ab:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    15ae:	8b 40 38             	mov    0x38(%eax),%eax
-    15b1:	0f af d0             	imul   %eax,%edx
-    15b4:	89 d0                	mov    %edx,%eax
-    15b6:	01 c0                	add    %eax,%eax
-    15b8:	01 c2                	add    %eax,%edx
-    15ba:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    15bd:	8b 40 4c             	mov    0x4c(%eax),%eax
-    15c0:	83 ec 04             	sub    $0x4,%esp
-    15c3:	52                   	push   %edx
-    15c4:	68 ff 00 00 00       	push   $0xff
-    15c9:	50                   	push   %eax
-    15ca:	e8 7d eb ff ff       	call   14c <memset>
-    15cf:	83 c4 10             	add    $0x10,%esp
+    1553:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1556:	8b 40 34             	mov    0x34(%eax),%eax
+    1559:	89 c2                	mov    %eax,%edx
+    155b:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    155e:	8b 40 38             	mov    0x38(%eax),%eax
+    1561:	0f af d0             	imul   %eax,%edx
+    1564:	89 d0                	mov    %edx,%eax
+    1566:	01 c0                	add    %eax,%eax
+    1568:	01 c2                	add    %eax,%edx
+    156a:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    156d:	8b 40 4c             	mov    0x4c(%eax),%eax
+    1570:	83 ec 04             	sub    $0x4,%esp
+    1573:	52                   	push   %edx
+    1574:	68 ff 00 00 00       	push   $0xff
+    1579:	50                   	push   %eax
+    157a:	e8 cd eb ff ff       	call   14c <memset>
+    157f:	83 c4 10             	add    $0x10,%esp
     
     r->is_grid = is_map;
-    15d2:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    15d5:	8b 55 0c             	mov    0xc(%ebp),%edx
-    15d8:	89 50 08             	mov    %edx,0x8(%eax)
+    1582:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1585:	8b 55 0c             	mov    0xc(%ebp),%edx
+    1588:	89 50 08             	mov    %edx,0x8(%eax)
     //if is Grid Mode
     if (is_map)
-    15db:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
-    15df:	74 35                	je     1616 <APCreateWindow+0x1be>
+    158b:	83 7d 0c 00          	cmpl   $0x0,0xc(%ebp)
+    158f:	74 35                	je     15c6 <APCreateWindow+0x1be>
     {
         //Grid_Mode activate
         r->Grid = (int*)malloc(sizeof(int) * GRID_W_NUMBER * GRID_H_NUMBER * page);
-    15e1:	8b 45 10             	mov    0x10(%ebp),%eax
-    15e4:	69 c0 c0 02 00 00    	imul   $0x2c0,%eax,%eax
-    15ea:	83 ec 0c             	sub    $0xc,%esp
-    15ed:	50                   	push   %eax
-    15ee:	e8 66 f1 ff ff       	call   759 <malloc>
-    15f3:	83 c4 10             	add    $0x10,%esp
-    15f6:	89 c2                	mov    %eax,%edx
-    15f8:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    15fb:	89 50 0c             	mov    %edx,0xc(%eax)
+    1591:	8b 45 10             	mov    0x10(%ebp),%eax
+    1594:	69 c0 c0 02 00 00    	imul   $0x2c0,%eax,%eax
+    159a:	83 ec 0c             	sub    $0xc,%esp
+    159d:	50                   	push   %eax
+    159e:	e8 b6 f1 ff ff       	call   759 <malloc>
+    15a3:	83 c4 10             	add    $0x10,%esp
+    15a6:	89 c2                	mov    %eax,%edx
+    15a8:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15ab:	89 50 0c             	mov    %edx,0xc(%eax)
         r->total_page = page;
-    15fe:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1601:	8b 55 10             	mov    0x10(%ebp),%edx
-    1604:	89 50 10             	mov    %edx,0x10(%eax)
+    15ae:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15b1:	8b 55 10             	mov    0x10(%ebp),%edx
+    15b4:	89 50 10             	mov    %edx,0x10(%eax)
         r->cur_page = 0;
-    1607:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    160a:	c7 40 14 00 00 00 00 	movl   $0x0,0x14(%eax)
-    1611:	e9 8d 00 00 00       	jmp    16a3 <APCreateWindow+0x24b>
+    15b7:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15ba:	c7 40 14 00 00 00 00 	movl   $0x0,0x14(%eax)
+    15c1:	e9 8d 00 00 00       	jmp    1653 <APCreateWindow+0x24b>
     }
     else
     {
         //non Grid_Mode activate
         r->wholeDc.size.cx = SCREEN_WIDTH;
-    1616:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1619:	c7 40 18 20 03 00 00 	movl   $0x320,0x18(%eax)
+    15c6:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15c9:	c7 40 18 20 03 00 00 	movl   $0x320,0x18(%eax)
         r->wholeDc.size.cy = MAX_DC_HEIGHT;
-    1620:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1623:	c7 40 1c 40 06 00 00 	movl   $0x640,0x1c(%eax)
+    15d0:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15d3:	c7 40 1c 40 06 00 00 	movl   $0x640,0x1c(%eax)
         r->wholeDc.content = (AColor *)malloc(sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
-    162a:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    162d:	8b 40 18             	mov    0x18(%eax),%eax
-    1630:	89 c2                	mov    %eax,%edx
-    1632:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1635:	8b 40 1c             	mov    0x1c(%eax),%eax
-    1638:	0f af d0             	imul   %eax,%edx
-    163b:	89 d0                	mov    %edx,%eax
-    163d:	01 c0                	add    %eax,%eax
-    163f:	01 d0                	add    %edx,%eax
-    1641:	83 ec 0c             	sub    $0xc,%esp
-    1644:	50                   	push   %eax
-    1645:	e8 0f f1 ff ff       	call   759 <malloc>
-    164a:	83 c4 10             	add    $0x10,%esp
-    164d:	89 c2                	mov    %eax,%edx
-    164f:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1652:	89 50 30             	mov    %edx,0x30(%eax)
+    15da:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15dd:	8b 40 18             	mov    0x18(%eax),%eax
+    15e0:	89 c2                	mov    %eax,%edx
+    15e2:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    15e5:	8b 40 1c             	mov    0x1c(%eax),%eax
+    15e8:	0f af d0             	imul   %eax,%edx
+    15eb:	89 d0                	mov    %edx,%eax
+    15ed:	01 c0                	add    %eax,%eax
+    15ef:	01 d0                	add    %edx,%eax
+    15f1:	83 ec 0c             	sub    $0xc,%esp
+    15f4:	50                   	push   %eax
+    15f5:	e8 5f f1 ff ff       	call   759 <malloc>
+    15fa:	83 c4 10             	add    $0x10,%esp
+    15fd:	89 c2                	mov    %eax,%edx
+    15ff:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1602:	89 50 30             	mov    %edx,0x30(%eax)
         if (r->wholeDc.content == 0)
-    1655:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1658:	8b 40 30             	mov    0x30(%eax),%eax
-    165b:	85 c0                	test   %eax,%eax
-    165d:	75 15                	jne    1674 <APCreateWindow+0x21c>
+    1605:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1608:	8b 40 30             	mov    0x30(%eax),%eax
+    160b:	85 c0                	test   %eax,%eax
+    160d:	75 15                	jne    1624 <APCreateWindow+0x21c>
             printf(1,"%s window - whole DC creation failed!\n",title);
-    165f:	83 ec 04             	sub    $0x4,%esp
-    1662:	ff 75 08             	pushl  0x8(%ebp)
-    1665:	68 b4 1f 00 00       	push   $0x1fb4
-    166a:	6a 01                	push   $0x1
-    166c:	e8 15 ee ff ff       	call   486 <printf>
-    1671:	83 c4 10             	add    $0x10,%esp
+    160f:	83 ec 04             	sub    $0x4,%esp
+    1612:	ff 75 08             	pushl  0x8(%ebp)
+    1615:	68 84 21 00 00       	push   $0x2184
+    161a:	6a 01                	push   $0x1
+    161c:	e8 65 ee ff ff       	call   486 <printf>
+    1621:	83 c4 10             	add    $0x10,%esp
         memset(r->wholeDc.content, DEFAULT_WINDOW_COLOR, sizeof(AColor) * r->wholeDc.size.cx * r->wholeDc.size.cy);
-    1674:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1677:	8b 40 18             	mov    0x18(%eax),%eax
-    167a:	89 c2                	mov    %eax,%edx
-    167c:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    167f:	8b 40 1c             	mov    0x1c(%eax),%eax
-    1682:	0f af d0             	imul   %eax,%edx
-    1685:	89 d0                	mov    %edx,%eax
-    1687:	01 c0                	add    %eax,%eax
-    1689:	01 c2                	add    %eax,%edx
-    168b:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    168e:	8b 40 30             	mov    0x30(%eax),%eax
-    1691:	83 ec 04             	sub    $0x4,%esp
-    1694:	52                   	push   %edx
-    1695:	68 ff ff ff 00       	push   $0xffffff
-    169a:	50                   	push   %eax
-    169b:	e8 ac ea ff ff       	call   14c <memset>
-    16a0:	83 c4 10             	add    $0x10,%esp
+    1624:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1627:	8b 40 18             	mov    0x18(%eax),%eax
+    162a:	89 c2                	mov    %eax,%edx
+    162c:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    162f:	8b 40 1c             	mov    0x1c(%eax),%eax
+    1632:	0f af d0             	imul   %eax,%edx
+    1635:	89 d0                	mov    %edx,%eax
+    1637:	01 c0                	add    %eax,%eax
+    1639:	01 c2                	add    %eax,%edx
+    163b:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    163e:	8b 40 30             	mov    0x30(%eax),%eax
+    1641:	83 ec 04             	sub    $0x4,%esp
+    1644:	52                   	push   %edx
+    1645:	68 ff ff ff 00       	push   $0xffffff
+    164a:	50                   	push   %eax
+    164b:	e8 fc ea ff ff       	call   14c <memset>
+    1650:	83 c4 10             	add    $0x10,%esp
     }
     return r;
-    16a3:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1653:	8b 45 f4             	mov    -0xc(%ebp),%eax
 }
-    16a6:	c9                   	leave  
-    16a7:	c3                   	ret    
+    1656:	c9                   	leave  
+    1657:	c3                   	ret    
 
-000016a8 <APWndProc>:
+00001658 <APWndProc>:
 
 bool APWndProc(AHwnd hwnd, AMessage msg)
 {
-    16a8:	55                   	push   %ebp
-    16a9:	89 e5                	mov    %esp,%ebp
-    16ab:	53                   	push   %ebx
-    16ac:	83 ec 04             	sub    $0x4,%esp
+    1658:	55                   	push   %ebp
+    1659:	89 e5                	mov    %esp,%ebp
+    165b:	53                   	push   %ebx
+    165c:	83 ec 04             	sub    $0x4,%esp
     //printf(1,"start window processing!\n");
     switch (msg.type)
-    16af:	8b 45 0c             	mov    0xc(%ebp),%eax
-    16b2:	83 f8 03             	cmp    $0x3,%eax
-    16b5:	74 02                	je     16b9 <APWndProc+0x11>
+    165f:	8b 45 0c             	mov    0xc(%ebp),%eax
+    1662:	83 f8 03             	cmp    $0x3,%eax
+    1665:	74 02                	je     1669 <APWndProc+0x11>
         case MSG_PAINT:
             //printf(1,"paint!\n");
             paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
             //printf(1,"paint finished!\n");
             break;
         default: break;
-    16b7:	eb 33                	jmp    16ec <APWndProc+0x44>
+    1667:	eb 33                	jmp    169c <APWndProc+0x44>
     //printf(1,"start window processing!\n");
     switch (msg.type)
     {
         case MSG_PAINT:
             //printf(1,"paint!\n");
             paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
-    16b9:	8b 45 08             	mov    0x8(%ebp),%eax
-    16bc:	8b 48 08             	mov    0x8(%eax),%ecx
-    16bf:	8b 45 08             	mov    0x8(%ebp),%eax
-    16c2:	8b 50 38             	mov    0x38(%eax),%edx
-    16c5:	8b 45 08             	mov    0x8(%ebp),%eax
-    16c8:	8b 40 34             	mov    0x34(%eax),%eax
-    16cb:	8b 5d 08             	mov    0x8(%ebp),%ebx
-    16ce:	83 c3 34             	add    $0x34,%ebx
-    16d1:	83 ec 0c             	sub    $0xc,%esp
-    16d4:	51                   	push   %ecx
-    16d5:	52                   	push   %edx
-    16d6:	50                   	push   %eax
-    16d7:	6a 00                	push   $0x0
-    16d9:	6a 00                	push   $0x0
-    16db:	53                   	push   %ebx
-    16dc:	6a 32                	push   $0x32
-    16de:	6a 00                	push   $0x0
-    16e0:	ff 75 08             	pushl  0x8(%ebp)
-    16e3:	e8 9f ec ff ff       	call   387 <paintWindow>
-    16e8:	83 c4 30             	add    $0x30,%esp
+    1669:	8b 45 08             	mov    0x8(%ebp),%eax
+    166c:	8b 48 08             	mov    0x8(%eax),%ecx
+    166f:	8b 45 08             	mov    0x8(%ebp),%eax
+    1672:	8b 50 38             	mov    0x38(%eax),%edx
+    1675:	8b 45 08             	mov    0x8(%ebp),%eax
+    1678:	8b 40 34             	mov    0x34(%eax),%eax
+    167b:	8b 5d 08             	mov    0x8(%ebp),%ebx
+    167e:	83 c3 34             	add    $0x34,%ebx
+    1681:	83 ec 0c             	sub    $0xc,%esp
+    1684:	51                   	push   %ecx
+    1685:	52                   	push   %edx
+    1686:	50                   	push   %eax
+    1687:	6a 00                	push   $0x0
+    1689:	6a 00                	push   $0x0
+    168b:	53                   	push   %ebx
+    168c:	6a 32                	push   $0x32
+    168e:	6a 00                	push   $0x0
+    1690:	ff 75 08             	pushl  0x8(%ebp)
+    1693:	e8 ef ec ff ff       	call   387 <paintWindow>
+    1698:	83 c4 30             	add    $0x30,%esp
             //printf(1,"paint finished!\n");
             break;
-    16eb:	90                   	nop
+    169b:	90                   	nop
         default: break;
             
             
     }
     return False;
-    16ec:	b8 00 00 00 00       	mov    $0x0,%eax
+    169c:	b8 00 00 00 00       	mov    $0x0,%eax
 }
-    16f1:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-    16f4:	c9                   	leave  
-    16f5:	c3                   	ret    
+    16a1:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+    16a4:	c9                   	leave  
+    16a5:	c3                   	ret    
 
-000016f6 <APPreJudge>:
+000016a6 <APPreJudge>:
 
 bool APPreJudge(AHwnd hwnd, AMessage * msg)
 {
-    16f6:	55                   	push   %ebp
-    16f7:	89 e5                	mov    %esp,%ebp
+    16a6:	55                   	push   %ebp
+    16a7:	89 e5                	mov    %esp,%ebp
     if (msg->wndID != hwnd->id)
-    16f9:	8b 45 0c             	mov    0xc(%ebp),%eax
-    16fc:	8b 50 08             	mov    0x8(%eax),%edx
-    16ff:	8b 45 08             	mov    0x8(%ebp),%eax
-    1702:	8b 00                	mov    (%eax),%eax
-    1704:	39 c2                	cmp    %eax,%edx
-    1706:	74 07                	je     170f <APPreJudge+0x19>
+    16a9:	8b 45 0c             	mov    0xc(%ebp),%eax
+    16ac:	8b 50 08             	mov    0x8(%eax),%edx
+    16af:	8b 45 08             	mov    0x8(%ebp),%eax
+    16b2:	8b 00                	mov    (%eax),%eax
+    16b4:	39 c2                	cmp    %eax,%edx
+    16b6:	74 07                	je     16bf <APPreJudge+0x19>
         return False;
-    1708:	b8 00 00 00 00       	mov    $0x0,%eax
-    170d:	eb 05                	jmp    1714 <APPreJudge+0x1e>
+    16b8:	b8 00 00 00 00       	mov    $0x0,%eax
+    16bd:	eb 05                	jmp    16c4 <APPreJudge+0x1e>
     return True;
-    170f:	b8 01 00 00 00       	mov    $0x1,%eax
+    16bf:	b8 01 00 00 00       	mov    $0x1,%eax
 }
-    1714:	5d                   	pop    %ebp
-    1715:	c3                   	ret    
+    16c4:	5d                   	pop    %ebp
+    16c5:	c3                   	ret    
 
-00001716 <APWndExec>:
+000016c6 <APWndExec>:
 
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 {
-    1716:	55                   	push   %ebp
-    1717:	89 e5                	mov    %esp,%ebp
-    1719:	83 ec 18             	sub    $0x18,%esp
+    16c6:	55                   	push   %ebp
+    16c7:	89 e5                	mov    %esp,%ebp
+    16c9:	83 ec 18             	sub    $0x18,%esp
     hwnd->wndProc = wndProc;
-    171c:	8b 45 08             	mov    0x8(%ebp),%eax
-    171f:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1722:	89 50 78             	mov    %edx,0x78(%eax)
+    16cc:	8b 45 08             	mov    0x8(%ebp),%eax
+    16cf:	8b 55 0c             	mov    0xc(%ebp),%edx
+    16d2:	89 50 78             	mov    %edx,0x78(%eax)
     //--------add window to list
     registWindow(hwnd);
-    1725:	83 ec 0c             	sub    $0xc,%esp
-    1728:	ff 75 08             	pushl  0x8(%ebp)
-    172b:	e8 77 ec ff ff       	call   3a7 <registWindow>
-    1730:	83 c4 10             	add    $0x10,%esp
+    16d5:	83 ec 0c             	sub    $0xc,%esp
+    16d8:	ff 75 08             	pushl  0x8(%ebp)
+    16db:	e8 c7 ec ff ff       	call   3a7 <registWindow>
+    16e0:	83 c4 10             	add    $0x10,%esp
     //--------draw window
     AMessage msg;
     msg.type = MSG_INIT;
-    1733:	c7 45 ec 02 00 00 00 	movl   $0x2,-0x14(%ebp)
+    16e3:	c7 45 ec 02 00 00 00 	movl   $0x2,-0x14(%ebp)
     msg.wndID = hwnd->id;
-    173a:	8b 45 08             	mov    0x8(%ebp),%eax
-    173d:	8b 00                	mov    (%eax),%eax
-    173f:	89 45 f4             	mov    %eax,-0xc(%ebp)
+    16ea:	8b 45 08             	mov    0x8(%ebp),%eax
+    16ed:	8b 00                	mov    (%eax),%eax
+    16ef:	89 45 f4             	mov    %eax,-0xc(%ebp)
     APSendMessage(hwnd,msg);
-    1742:	ff 75 f4             	pushl  -0xc(%ebp)
-    1745:	ff 75 f0             	pushl  -0x10(%ebp)
-    1748:	ff 75 ec             	pushl  -0x14(%ebp)
-    174b:	ff 75 08             	pushl  0x8(%ebp)
-    174e:	e8 e7 fc ff ff       	call   143a <APSendMessage>
-    1753:	83 c4 10             	add    $0x10,%esp
+    16f2:	ff 75 f4             	pushl  -0xc(%ebp)
+    16f5:	ff 75 f0             	pushl  -0x10(%ebp)
+    16f8:	ff 75 ec             	pushl  -0x14(%ebp)
+    16fb:	ff 75 08             	pushl  0x8(%ebp)
+    16fe:	e8 e7 fc ff ff       	call   13ea <APSendMessage>
+    1703:	83 c4 10             	add    $0x10,%esp
     //--------process window
     //printf(1,"start getting message!\n");
     while (1)
     {
         getMessage(hwnd);
-    1756:	83 ec 0c             	sub    $0xc,%esp
-    1759:	ff 75 08             	pushl  0x8(%ebp)
-    175c:	e8 3e ec ff ff       	call   39f <getMessage>
-    1761:	83 c4 10             	add    $0x10,%esp
+    1706:	83 ec 0c             	sub    $0xc,%esp
+    1709:	ff 75 08             	pushl  0x8(%ebp)
+    170c:	e8 8e ec ff ff       	call   39f <getMessage>
+    1711:	83 c4 10             	add    $0x10,%esp
         if (APPreJudge(hwnd,&hwnd->msg))
-    1764:	8b 45 08             	mov    0x8(%ebp),%eax
-    1767:	83 c0 6c             	add    $0x6c,%eax
-    176a:	83 ec 08             	sub    $0x8,%esp
-    176d:	50                   	push   %eax
-    176e:	ff 75 08             	pushl  0x8(%ebp)
-    1771:	e8 80 ff ff ff       	call   16f6 <APPreJudge>
-    1776:	83 c4 10             	add    $0x10,%esp
-    1779:	84 c0                	test   %al,%al
-    177b:	74 1b                	je     1798 <APWndExec+0x82>
+    1714:	8b 45 08             	mov    0x8(%ebp),%eax
+    1717:	83 c0 6c             	add    $0x6c,%eax
+    171a:	83 ec 08             	sub    $0x8,%esp
+    171d:	50                   	push   %eax
+    171e:	ff 75 08             	pushl  0x8(%ebp)
+    1721:	e8 80 ff ff ff       	call   16a6 <APPreJudge>
+    1726:	83 c4 10             	add    $0x10,%esp
+    1729:	84 c0                	test   %al,%al
+    172b:	74 1b                	je     1748 <APWndExec+0x82>
             if (wndProc(hwnd, hwnd->msg))
-    177d:	8b 45 08             	mov    0x8(%ebp),%eax
-    1780:	ff 70 74             	pushl  0x74(%eax)
-    1783:	ff 70 70             	pushl  0x70(%eax)
-    1786:	ff 70 6c             	pushl  0x6c(%eax)
-    1789:	ff 75 08             	pushl  0x8(%ebp)
-    178c:	8b 45 0c             	mov    0xc(%ebp),%eax
-    178f:	ff d0                	call   *%eax
-    1791:	83 c4 10             	add    $0x10,%esp
-    1794:	84 c0                	test   %al,%al
-    1796:	75 0c                	jne    17a4 <APWndExec+0x8e>
+    172d:	8b 45 08             	mov    0x8(%ebp),%eax
+    1730:	ff 70 74             	pushl  0x74(%eax)
+    1733:	ff 70 70             	pushl  0x70(%eax)
+    1736:	ff 70 6c             	pushl  0x6c(%eax)
+    1739:	ff 75 08             	pushl  0x8(%ebp)
+    173c:	8b 45 0c             	mov    0xc(%ebp),%eax
+    173f:	ff d0                	call   *%eax
+    1741:	83 c4 10             	add    $0x10,%esp
+    1744:	84 c0                	test   %al,%al
+    1746:	75 0c                	jne    1754 <APWndExec+0x8e>
                 break;
         hwnd->msg.type = MSG_NULL;
-    1798:	8b 45 08             	mov    0x8(%ebp),%eax
-    179b:	c7 40 6c 00 00 00 00 	movl   $0x0,0x6c(%eax)
+    1748:	8b 45 08             	mov    0x8(%ebp),%eax
+    174b:	c7 40 6c 00 00 00 00 	movl   $0x0,0x6c(%eax)
     }
-    17a2:	eb b2                	jmp    1756 <APWndExec+0x40>
+    1752:	eb b2                	jmp    1706 <APWndExec+0x40>
     while (1)
     {
         getMessage(hwnd);
         if (APPreJudge(hwnd,&hwnd->msg))
             if (wndProc(hwnd, hwnd->msg))
                 break;
-    17a4:	90                   	nop
+    1754:	90                   	nop
         hwnd->msg.type = MSG_NULL;
     }
 }
-    17a5:	90                   	nop
-    17a6:	c9                   	leave  
-    17a7:	c3                   	ret    
+    1755:	90                   	nop
+    1756:	c9                   	leave  
+    1757:	c3                   	ret    
 
-000017a8 <APGridPaint>:
+00001758 <APGridPaint>:
 
 //---------------------------------------------------
 //Grid_mode paint
 void APGridPaint(AHwnd wnd)
 {
-    17a8:	55                   	push   %ebp
-    17a9:	89 e5                	mov    %esp,%ebp
-    17ab:	57                   	push   %edi
-    17ac:	56                   	push   %esi
-    17ad:	53                   	push   %ebx
-    17ae:	83 ec 4c             	sub    $0x4c,%esp
+    1758:	55                   	push   %ebp
+    1759:	89 e5                	mov    %esp,%ebp
+    175b:	57                   	push   %edi
+    175c:	56                   	push   %esi
+    175d:	53                   	push   %ebx
+    175e:	83 ec 6c             	sub    $0x6c,%esp
     if (!iconReady)
-    17b1:	a1 a0 25 00 00       	mov    0x25a0,%eax
-    17b6:	85 c0                	test   %eax,%eax
-    17b8:	75 7c                	jne    1836 <APGridPaint+0x8e>
+    1761:	a1 c0 27 00 00       	mov    0x27c0,%eax
+    1766:	85 c0                	test   %eax,%eax
+    1768:	0f 85 2c 02 00 00    	jne    199a <APGridPaint+0x242>
     {
         iconReady = 1;
-    17ba:	c7 05 a0 25 00 00 01 	movl   $0x1,0x25a0
-    17c1:	00 00 00 
+    176e:	c7 05 c0 27 00 00 01 	movl   $0x1,0x27c0
+    1775:	00 00 00 
         //load icon bitmap
-        grid_wall = APLoadBitmap ("Snake.bmp");
-    17c4:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    17c7:	83 ec 08             	sub    $0x8,%esp
-    17ca:	68 db 1f 00 00       	push   $0x1fdb
-    17cf:	50                   	push   %eax
-    17d0:	e8 37 f1 ff ff       	call   90c <APLoadBitmap>
-    17d5:	83 c4 0c             	add    $0xc,%esp
-    17d8:	8b 45 b8             	mov    -0x48(%ebp),%eax
-    17db:	a3 a4 25 00 00       	mov    %eax,0x25a4
-    17e0:	8b 45 bc             	mov    -0x44(%ebp),%eax
-    17e3:	a3 a8 25 00 00       	mov    %eax,0x25a8
-    17e8:	8b 45 c0             	mov    -0x40(%ebp),%eax
-    17eb:	a3 ac 25 00 00       	mov    %eax,0x25ac
-        printf(1,"bitmap loaded!\n");
-    17f0:	83 ec 08             	sub    $0x8,%esp
-    17f3:	68 e5 1f 00 00       	push   $0x1fe5
-    17f8:	6a 01                	push   $0x1
-    17fa:	e8 87 ec ff ff       	call   486 <printf>
-    17ff:	83 c4 10             	add    $0x10,%esp
+        grid_wall = APLoadBitmap ("grid_wall.bmp");
+    1778:	8d 45 98             	lea    -0x68(%ebp),%eax
+    177b:	83 ec 08             	sub    $0x8,%esp
+    177e:	68 ab 21 00 00       	push   $0x21ab
+    1783:	50                   	push   %eax
+    1784:	e8 83 f1 ff ff       	call   90c <APLoadBitmap>
+    1789:	83 c4 0c             	add    $0xc,%esp
+    178c:	8b 45 98             	mov    -0x68(%ebp),%eax
+    178f:	a3 e4 27 00 00       	mov    %eax,0x27e4
+    1794:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    1797:	a3 e8 27 00 00       	mov    %eax,0x27e8
+    179c:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    179f:	a3 ec 27 00 00       	mov    %eax,0x27ec
         g_wall = APCreateCompatibleDCFromBitmap(grid_wall);
-    1802:	83 ec 04             	sub    $0x4,%esp
-    1805:	ff 35 ac 25 00 00    	pushl  0x25ac
-    180b:	ff 35 a8 25 00 00    	pushl  0x25a8
-    1811:	ff 35 a4 25 00 00    	pushl  0x25a4
-    1817:	e8 7a f3 ff ff       	call   b96 <APCreateCompatibleDCFromBitmap>
-    181c:	83 c4 10             	add    $0x10,%esp
-    181f:	a3 b0 25 00 00       	mov    %eax,0x25b0
-        printf(1,"bitmap DC created!\n");
-    1824:	83 ec 08             	sub    $0x8,%esp
-    1827:	68 f5 1f 00 00       	push   $0x1ff5
-    182c:	6a 01                	push   $0x1
-    182e:	e8 53 ec ff ff       	call   486 <printf>
-    1833:	83 c4 10             	add    $0x10,%esp
+    17a4:	83 ec 04             	sub    $0x4,%esp
+    17a7:	ff 35 ec 27 00 00    	pushl  0x27ec
+    17ad:	ff 35 e8 27 00 00    	pushl  0x27e8
+    17b3:	ff 35 e4 27 00 00    	pushl  0x27e4
+    17b9:	e8 88 f3 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    17be:	83 c4 10             	add    $0x10,%esp
+    17c1:	a3 f0 27 00 00       	mov    %eax,0x27f0
+        grid_river = APLoadBitmap ("grid_river.bmp");
+    17c6:	8d 45 98             	lea    -0x68(%ebp),%eax
+    17c9:	83 ec 08             	sub    $0x8,%esp
+    17cc:	68 b9 21 00 00       	push   $0x21b9
+    17d1:	50                   	push   %eax
+    17d2:	e8 35 f1 ff ff       	call   90c <APLoadBitmap>
+    17d7:	83 c4 0c             	add    $0xc,%esp
+    17da:	8b 45 98             	mov    -0x68(%ebp),%eax
+    17dd:	a3 20 28 00 00       	mov    %eax,0x2820
+    17e2:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    17e5:	a3 24 28 00 00       	mov    %eax,0x2824
+    17ea:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    17ed:	a3 28 28 00 00       	mov    %eax,0x2828
+        g_river = APCreateCompatibleDCFromBitmap(grid_river);
+    17f2:	83 ec 04             	sub    $0x4,%esp
+    17f5:	ff 35 28 28 00 00    	pushl  0x2828
+    17fb:	ff 35 24 28 00 00    	pushl  0x2824
+    1801:	ff 35 20 28 00 00    	pushl  0x2820
+    1807:	e8 3a f3 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    180c:	83 c4 10             	add    $0x10,%esp
+    180f:	a3 10 28 00 00       	mov    %eax,0x2810
+        grid_stone = APLoadBitmap ("grid_stone.bmp");
+    1814:	8d 45 98             	lea    -0x68(%ebp),%eax
+    1817:	83 ec 08             	sub    $0x8,%esp
+    181a:	68 c8 21 00 00       	push   $0x21c8
+    181f:	50                   	push   %eax
+    1820:	e8 e7 f0 ff ff       	call   90c <APLoadBitmap>
+    1825:	83 c4 0c             	add    $0xc,%esp
+    1828:	8b 45 98             	mov    -0x68(%ebp),%eax
+    182b:	a3 14 28 00 00       	mov    %eax,0x2814
+    1830:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    1833:	a3 18 28 00 00       	mov    %eax,0x2818
+    1838:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    183b:	a3 1c 28 00 00       	mov    %eax,0x281c
+        g_stone = APCreateCompatibleDCFromBitmap(grid_stone);
+    1840:	83 ec 04             	sub    $0x4,%esp
+    1843:	ff 35 1c 28 00 00    	pushl  0x281c
+    1849:	ff 35 18 28 00 00    	pushl  0x2818
+    184f:	ff 35 14 28 00 00    	pushl  0x2814
+    1855:	e8 ec f2 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    185a:	83 c4 10             	add    $0x10,%esp
+    185d:	a3 c4 27 00 00       	mov    %eax,0x27c4
+        grid_lake = APLoadBitmap ("grid_lake.bmp");
+    1862:	8d 45 98             	lea    -0x68(%ebp),%eax
+    1865:	83 ec 08             	sub    $0x8,%esp
+    1868:	68 d7 21 00 00       	push   $0x21d7
+    186d:	50                   	push   %eax
+    186e:	e8 99 f0 ff ff       	call   90c <APLoadBitmap>
+    1873:	83 c4 0c             	add    $0xc,%esp
+    1876:	8b 45 98             	mov    -0x68(%ebp),%eax
+    1879:	a3 f8 27 00 00       	mov    %eax,0x27f8
+    187e:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    1881:	a3 fc 27 00 00       	mov    %eax,0x27fc
+    1886:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    1889:	a3 00 28 00 00       	mov    %eax,0x2800
+        g_lake = APCreateCompatibleDCFromBitmap(grid_lake);
+    188e:	83 ec 04             	sub    $0x4,%esp
+    1891:	ff 35 00 28 00 00    	pushl  0x2800
+    1897:	ff 35 fc 27 00 00    	pushl  0x27fc
+    189d:	ff 35 f8 27 00 00    	pushl  0x27f8
+    18a3:	e8 9e f2 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    18a8:	83 c4 10             	add    $0x10,%esp
+    18ab:	a3 2c 28 00 00       	mov    %eax,0x282c
+        grid_forest = APLoadBitmap ("grid_forest.bmp");
+    18b0:	8d 45 98             	lea    -0x68(%ebp),%eax
+    18b3:	83 ec 08             	sub    $0x8,%esp
+    18b6:	68 e5 21 00 00       	push   $0x21e5
+    18bb:	50                   	push   %eax
+    18bc:	e8 4b f0 ff ff       	call   90c <APLoadBitmap>
+    18c1:	83 c4 0c             	add    $0xc,%esp
+    18c4:	8b 45 98             	mov    -0x68(%ebp),%eax
+    18c7:	a3 d4 27 00 00       	mov    %eax,0x27d4
+    18cc:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    18cf:	a3 d8 27 00 00       	mov    %eax,0x27d8
+    18d4:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    18d7:	a3 dc 27 00 00       	mov    %eax,0x27dc
+        g_forest = APCreateCompatibleDCFromBitmap(grid_forest);
+    18dc:	83 ec 04             	sub    $0x4,%esp
+    18df:	ff 35 dc 27 00 00    	pushl  0x27dc
+    18e5:	ff 35 d8 27 00 00    	pushl  0x27d8
+    18eb:	ff 35 d4 27 00 00    	pushl  0x27d4
+    18f1:	e8 50 f2 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    18f6:	83 c4 10             	add    $0x10,%esp
+    18f9:	a3 f4 27 00 00       	mov    %eax,0x27f4
+        grid_mountain = APLoadBitmap ("grid_mountain.bmp");
+    18fe:	8d 45 98             	lea    -0x68(%ebp),%eax
+    1901:	83 ec 08             	sub    $0x8,%esp
+    1904:	68 f5 21 00 00       	push   $0x21f5
+    1909:	50                   	push   %eax
+    190a:	e8 fd ef ff ff       	call   90c <APLoadBitmap>
+    190f:	83 c4 0c             	add    $0xc,%esp
+    1912:	8b 45 98             	mov    -0x68(%ebp),%eax
+    1915:	a3 c8 27 00 00       	mov    %eax,0x27c8
+    191a:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    191d:	a3 cc 27 00 00       	mov    %eax,0x27cc
+    1922:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    1925:	a3 d0 27 00 00       	mov    %eax,0x27d0
+        g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
+    192a:	83 ec 04             	sub    $0x4,%esp
+    192d:	ff 35 d0 27 00 00    	pushl  0x27d0
+    1933:	ff 35 cc 27 00 00    	pushl  0x27cc
+    1939:	ff 35 c8 27 00 00    	pushl  0x27c8
+    193f:	e8 02 f2 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    1944:	83 c4 10             	add    $0x10,%esp
+    1947:	a3 e0 27 00 00       	mov    %eax,0x27e0
+        grid_grass = APLoadBitmap ("grid_grass.bmp");
+    194c:	8d 45 98             	lea    -0x68(%ebp),%eax
+    194f:	83 ec 08             	sub    $0x8,%esp
+    1952:	68 07 22 00 00       	push   $0x2207
+    1957:	50                   	push   %eax
+    1958:	e8 af ef ff ff       	call   90c <APLoadBitmap>
+    195d:	83 c4 0c             	add    $0xc,%esp
+    1960:	8b 45 98             	mov    -0x68(%ebp),%eax
+    1963:	a3 04 28 00 00       	mov    %eax,0x2804
+    1968:	8b 45 9c             	mov    -0x64(%ebp),%eax
+    196b:	a3 08 28 00 00       	mov    %eax,0x2808
+    1970:	8b 45 a0             	mov    -0x60(%ebp),%eax
+    1973:	a3 0c 28 00 00       	mov    %eax,0x280c
+        g_grass = APCreateCompatibleDCFromBitmap(grid_grass);
+    1978:	83 ec 04             	sub    $0x4,%esp
+    197b:	ff 35 0c 28 00 00    	pushl  0x280c
+    1981:	ff 35 08 28 00 00    	pushl  0x2808
+    1987:	ff 35 04 28 00 00    	pushl  0x2804
+    198d:	e8 b4 f1 ff ff       	call   b46 <APCreateCompatibleDCFromBitmap>
+    1992:	83 c4 10             	add    $0x10,%esp
+    1995:	a3 30 28 00 00       	mov    %eax,0x2830
+        //printf(1,"bitmap DC created!\n");
     }
     
     if (!wnd->is_grid)
-    1836:	8b 45 08             	mov    0x8(%ebp),%eax
-    1839:	8b 40 08             	mov    0x8(%eax),%eax
-    183c:	85 c0                	test   %eax,%eax
-    183e:	75 17                	jne    1857 <APGridPaint+0xaf>
+    199a:	8b 45 08             	mov    0x8(%ebp),%eax
+    199d:	8b 40 08             	mov    0x8(%eax),%eax
+    19a0:	85 c0                	test   %eax,%eax
+    19a2:	75 17                	jne    19bb <APGridPaint+0x263>
     {
         printf(1,"error! paint non-Grid Mode program! \n");
-    1840:	83 ec 08             	sub    $0x8,%esp
-    1843:	68 0c 20 00 00       	push   $0x200c
-    1848:	6a 01                	push   $0x1
-    184a:	e8 37 ec ff ff       	call   486 <printf>
-    184f:	83 c4 10             	add    $0x10,%esp
+    19a4:	83 ec 08             	sub    $0x8,%esp
+    19a7:	68 18 22 00 00       	push   $0x2218
+    19ac:	6a 01                	push   $0x1
+    19ae:	e8 d3 ea ff ff       	call   486 <printf>
+    19b3:	83 c4 10             	add    $0x10,%esp
         return;
-    1852:	e9 55 03 00 00       	jmp    1bac <APGridPaint+0x404>
+    19b6:	e9 f2 03 00 00       	jmp    1dad <APGridPaint+0x655>
     }
     if (wnd->total_page <= 0 || wnd->cur_page >= wnd->total_page)
-    1857:	8b 45 08             	mov    0x8(%ebp),%eax
-    185a:	8b 40 10             	mov    0x10(%eax),%eax
-    185d:	85 c0                	test   %eax,%eax
-    185f:	7e 10                	jle    1871 <APGridPaint+0xc9>
-    1861:	8b 45 08             	mov    0x8(%ebp),%eax
-    1864:	8b 50 14             	mov    0x14(%eax),%edx
-    1867:	8b 45 08             	mov    0x8(%ebp),%eax
-    186a:	8b 40 10             	mov    0x10(%eax),%eax
-    186d:	39 c2                	cmp    %eax,%edx
-    186f:	7c 17                	jl     1888 <APGridPaint+0xe0>
+    19bb:	8b 45 08             	mov    0x8(%ebp),%eax
+    19be:	8b 40 10             	mov    0x10(%eax),%eax
+    19c1:	85 c0                	test   %eax,%eax
+    19c3:	7e 10                	jle    19d5 <APGridPaint+0x27d>
+    19c5:	8b 45 08             	mov    0x8(%ebp),%eax
+    19c8:	8b 50 14             	mov    0x14(%eax),%edx
+    19cb:	8b 45 08             	mov    0x8(%ebp),%eax
+    19ce:	8b 40 10             	mov    0x10(%eax),%eax
+    19d1:	39 c2                	cmp    %eax,%edx
+    19d3:	7c 17                	jl     19ec <APGridPaint+0x294>
     {
         printf(1,"Grid mode page error!");
-    1871:	83 ec 08             	sub    $0x8,%esp
-    1874:	68 32 20 00 00       	push   $0x2032
-    1879:	6a 01                	push   $0x1
-    187b:	e8 06 ec ff ff       	call   486 <printf>
-    1880:	83 c4 10             	add    $0x10,%esp
+    19d5:	83 ec 08             	sub    $0x8,%esp
+    19d8:	68 3e 22 00 00       	push   $0x223e
+    19dd:	6a 01                	push   $0x1
+    19df:	e8 a2 ea ff ff       	call   486 <printf>
+    19e4:	83 c4 10             	add    $0x10,%esp
         return;
-    1883:	e9 24 03 00 00       	jmp    1bac <APGridPaint+0x404>
+    19e7:	e9 c1 03 00 00       	jmp    1dad <APGridPaint+0x655>
     }
     
     int index = wnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER,start = index;
-    1888:	8b 45 08             	mov    0x8(%ebp),%eax
-    188b:	8b 40 14             	mov    0x14(%eax),%eax
-    188e:	69 c0 b0 00 00 00    	imul   $0xb0,%eax,%eax
-    1894:	89 45 dc             	mov    %eax,-0x24(%ebp)
-    1897:	8b 45 dc             	mov    -0x24(%ebp),%eax
-    189a:	89 45 d8             	mov    %eax,-0x28(%ebp)
+    19ec:	8b 45 08             	mov    0x8(%ebp),%eax
+    19ef:	8b 40 14             	mov    0x14(%eax),%eax
+    19f2:	69 c0 b0 00 00 00    	imul   $0xb0,%eax,%eax
+    19f8:	89 45 dc             	mov    %eax,-0x24(%ebp)
+    19fb:	8b 45 dc             	mov    -0x24(%ebp),%eax
+    19fe:	89 45 d8             	mov    %eax,-0x28(%ebp)
     
     for (int j = 0; j < GRID_H_NUMBER; j++)
-    189d:	c7 45 e4 00 00 00 00 	movl   $0x0,-0x1c(%ebp)
-    18a4:	e9 f9 02 00 00       	jmp    1ba2 <APGridPaint+0x3fa>
+    1a01:	c7 45 e4 00 00 00 00 	movl   $0x0,-0x1c(%ebp)
+    1a08:	e9 96 03 00 00       	jmp    1da3 <APGridPaint+0x64b>
     {
         for (int i = 0; i < GRID_W_NUMBER;i++)
-    18a9:	c7 45 e0 00 00 00 00 	movl   $0x0,-0x20(%ebp)
-    18b0:	e9 df 02 00 00       	jmp    1b94 <APGridPaint+0x3ec>
+    1a0d:	c7 45 e0 00 00 00 00 	movl   $0x0,-0x20(%ebp)
+    1a14:	e9 7c 03 00 00       	jmp    1d95 <APGridPaint+0x63d>
         {
             index = start + GRID_W_NUMBER * j + i;
-    18b5:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    18b8:	c1 e0 04             	shl    $0x4,%eax
-    18bb:	89 c2                	mov    %eax,%edx
-    18bd:	8b 45 d8             	mov    -0x28(%ebp),%eax
-    18c0:	01 c2                	add    %eax,%edx
-    18c2:	8b 45 e0             	mov    -0x20(%ebp),%eax
-    18c5:	01 d0                	add    %edx,%eax
-    18c7:	89 45 dc             	mov    %eax,-0x24(%ebp)
+    1a19:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1a1c:	c1 e0 04             	shl    $0x4,%eax
+    1a1f:	89 c2                	mov    %eax,%edx
+    1a21:	8b 45 d8             	mov    -0x28(%ebp),%eax
+    1a24:	01 c2                	add    %eax,%edx
+    1a26:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1a29:	01 d0                	add    %edx,%eax
+    1a2b:	89 45 dc             	mov    %eax,-0x24(%ebp)
             APen pen;
             ABrush brush;
             switch (wnd->Grid[index])
-    18ca:	8b 45 08             	mov    0x8(%ebp),%eax
-    18cd:	8b 40 0c             	mov    0xc(%eax),%eax
-    18d0:	8b 55 dc             	mov    -0x24(%ebp),%edx
-    18d3:	c1 e2 02             	shl    $0x2,%edx
-    18d6:	01 d0                	add    %edx,%eax
-    18d8:	8b 00                	mov    (%eax),%eax
-    18da:	83 f8 01             	cmp    $0x1,%eax
-    18dd:	0f 84 83 00 00 00    	je     1966 <APGridPaint+0x1be>
-    18e3:	83 f8 01             	cmp    $0x1,%eax
-    18e6:	7f 09                	jg     18f1 <APGridPaint+0x149>
-    18e8:	85 c0                	test   %eax,%eax
-    18ea:	74 1c                	je     1908 <APGridPaint+0x160>
-                    brush.color = RGB(0x00,0xbf,0xff);
-                    APSetPen(&wnd->Dc,pen);
-                    APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH ,GRID_WIDTH,GRID_WIDTH);
-                    break;
-                default: break;
-    18ec:	e9 9f 02 00 00       	jmp    1b90 <APGridPaint+0x3e8>
-        for (int i = 0; i < GRID_W_NUMBER;i++)
-        {
-            index = start + GRID_W_NUMBER * j + i;
-            APen pen;
-            ABrush brush;
-            switch (wnd->Grid[index])
-    18f1:	83 f8 02             	cmp    $0x2,%eax
-    18f4:	0f 84 20 01 00 00    	je     1a1a <APGridPaint+0x272>
-    18fa:	83 f8 03             	cmp    $0x3,%eax
-    18fd:	0f 84 d1 01 00 00    	je     1ad4 <APGridPaint+0x32c>
-                    brush.color = RGB(0x00,0xbf,0xff);
-                    APSetPen(&wnd->Dc,pen);
-                    APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH ,GRID_WIDTH,GRID_WIDTH);
-                    break;
-                default: break;
-    1903:	e9 88 02 00 00       	jmp    1b90 <APGridPaint+0x3e8>
-                    pen.size = 1;
-                    brush.color = RGB(0xd2,0x69,0x1e);
-                    APSetPen(&wnd->Dc,pen);
-                    APSetBrush(&wnd->Dc,brush);
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);*/
+    1a2e:	8b 45 08             	mov    0x8(%ebp),%eax
+    1a31:	8b 40 0c             	mov    0xc(%eax),%eax
+    1a34:	8b 55 dc             	mov    -0x24(%ebp),%edx
+    1a37:	c1 e2 02             	shl    $0x2,%edx
+    1a3a:	01 d0                	add    %edx,%eax
+    1a3c:	8b 00                	mov    (%eax),%eax
+    1a3e:	83 f8 07             	cmp    $0x7,%eax
+    1a41:	0f 87 49 03 00 00    	ja     1d90 <APGridPaint+0x638>
+    1a47:	8b 04 85 54 22 00 00 	mov    0x2254(,%eax,4),%eax
+    1a4e:	ff e0                	jmp    *%eax
+            {
+                case GRID_WALL:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_wall,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
-    1908:	8d 45 d5             	lea    -0x2b(%ebp),%eax
-    190b:	6a 0c                	push   $0xc
-    190d:	6a 0c                	push   $0xc
-    190f:	6a 0c                	push   $0xc
-    1911:	50                   	push   %eax
-    1912:	e8 de fa ff ff       	call   13f5 <RGB>
-    1917:	83 c4 0c             	add    $0xc,%esp
-    191a:	8b 1d b0 25 00 00    	mov    0x25b0,%ebx
-    1920:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1923:	6b c8 32             	imul   $0x32,%eax,%ecx
-    1926:	8b 45 e0             	mov    -0x20(%ebp),%eax
-    1929:	6b c0 32             	imul   $0x32,%eax,%eax
-    192c:	89 45 b4             	mov    %eax,-0x4c(%ebp)
-    192f:	8b 45 08             	mov    0x8(%ebp),%eax
-    1932:	8d 78 34             	lea    0x34(%eax),%edi
-    1935:	83 ec 0c             	sub    $0xc,%esp
-    1938:	83 ec 04             	sub    $0x4,%esp
-    193b:	89 e0                	mov    %esp,%eax
-    193d:	0f b7 75 d5          	movzwl -0x2b(%ebp),%esi
-    1941:	66 89 30             	mov    %si,(%eax)
-    1944:	0f b6 55 d7          	movzbl -0x29(%ebp),%edx
-    1948:	88 50 02             	mov    %dl,0x2(%eax)
-    194b:	6a 32                	push   $0x32
-    194d:	6a 32                	push   $0x32
-    194f:	6a 00                	push   $0x0
-    1951:	6a 00                	push   $0x0
-    1953:	53                   	push   %ebx
-    1954:	51                   	push   %ecx
-    1955:	ff 75 b4             	pushl  -0x4c(%ebp)
-    1958:	57                   	push   %edi
-    1959:	e8 f3 f8 ff ff       	call   1251 <APDcCopy>
-    195e:	83 c4 30             	add    $0x30,%esp
+    1a50:	8d 45 c3             	lea    -0x3d(%ebp),%eax
+    1a53:	6a 0c                	push   $0xc
+    1a55:	6a 0c                	push   $0xc
+    1a57:	6a 0c                	push   $0xc
+    1a59:	50                   	push   %eax
+    1a5a:	e8 46 f9 ff ff       	call   13a5 <RGB>
+    1a5f:	83 c4 0c             	add    $0xc,%esp
+    1a62:	8b 1d f0 27 00 00    	mov    0x27f0,%ebx
+    1a68:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1a6b:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1a6e:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1a71:	6b c0 32             	imul   $0x32,%eax,%eax
+    1a74:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1a77:	8b 45 08             	mov    0x8(%ebp),%eax
+    1a7a:	8d 78 34             	lea    0x34(%eax),%edi
+    1a7d:	83 ec 0c             	sub    $0xc,%esp
+    1a80:	83 ec 04             	sub    $0x4,%esp
+    1a83:	89 e0                	mov    %esp,%eax
+    1a85:	0f b7 75 c3          	movzwl -0x3d(%ebp),%esi
+    1a89:	66 89 30             	mov    %si,(%eax)
+    1a8c:	0f b6 55 c5          	movzbl -0x3b(%ebp),%edx
+    1a90:	88 50 02             	mov    %dl,0x2(%eax)
+    1a93:	6a 32                	push   $0x32
+    1a95:	6a 32                	push   $0x32
+    1a97:	6a 00                	push   $0x0
+    1a99:	6a 00                	push   $0x0
+    1a9b:	53                   	push   %ebx
+    1a9c:	51                   	push   %ecx
+    1a9d:	ff 75 94             	pushl  -0x6c(%ebp)
+    1aa0:	57                   	push   %edi
+    1aa1:	e8 5b f7 ff ff       	call   1201 <APDcCopy>
+    1aa6:	83 c4 30             	add    $0x30,%esp
                     break;
-    1961:	e9 2a 02 00 00       	jmp    1b90 <APGridPaint+0x3e8>
+    1aa9:	e9 e3 02 00 00       	jmp    1d91 <APGridPaint+0x639>
                 case GRID_ROAD:
                     //printf(1,"Grid_Road");
                     pen.color = RGB(0x69,0x69,0x69);
-    1966:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1969:	6a 69                	push   $0x69
-    196b:	6a 69                	push   $0x69
-    196d:	6a 69                	push   $0x69
-    196f:	50                   	push   %eax
-    1970:	e8 80 fa ff ff       	call   13f5 <RGB>
-    1975:	83 c4 0c             	add    $0xc,%esp
-    1978:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-    197c:	66 89 45 cc          	mov    %ax,-0x34(%ebp)
-    1980:	0f b6 45 ba          	movzbl -0x46(%ebp),%eax
-    1984:	88 45 ce             	mov    %al,-0x32(%ebp)
+    1aae:	8d 45 98             	lea    -0x68(%ebp),%eax
+    1ab1:	6a 69                	push   $0x69
+    1ab3:	6a 69                	push   $0x69
+    1ab5:	6a 69                	push   $0x69
+    1ab7:	50                   	push   %eax
+    1ab8:	e8 e8 f8 ff ff       	call   13a5 <RGB>
+    1abd:	83 c4 0c             	add    $0xc,%esp
+    1ac0:	0f b7 45 98          	movzwl -0x68(%ebp),%eax
+    1ac4:	66 89 45 b8          	mov    %ax,-0x48(%ebp)
+    1ac8:	0f b6 45 9a          	movzbl -0x66(%ebp),%eax
+    1acc:	88 45 ba             	mov    %al,-0x46(%ebp)
                     pen.size = 1;
-    1987:	c7 45 d0 01 00 00 00 	movl   $0x1,-0x30(%ebp)
+    1acf:	c7 45 bc 01 00 00 00 	movl   $0x1,-0x44(%ebp)
                     brush.color = RGB(0x69,0x69,0x69);
-    198e:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1991:	6a 69                	push   $0x69
-    1993:	6a 69                	push   $0x69
-    1995:	6a 69                	push   $0x69
-    1997:	50                   	push   %eax
-    1998:	e8 58 fa ff ff       	call   13f5 <RGB>
-    199d:	83 c4 0c             	add    $0xc,%esp
-    19a0:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-    19a4:	66 89 45 c9          	mov    %ax,-0x37(%ebp)
-    19a8:	0f b6 45 ba          	movzbl -0x46(%ebp),%eax
-    19ac:	88 45 cb             	mov    %al,-0x35(%ebp)
+    1ad6:	8d 45 98             	lea    -0x68(%ebp),%eax
+    1ad9:	6a 69                	push   $0x69
+    1adb:	6a 69                	push   $0x69
+    1add:	6a 69                	push   $0x69
+    1adf:	50                   	push   %eax
+    1ae0:	e8 c0 f8 ff ff       	call   13a5 <RGB>
+    1ae5:	83 c4 0c             	add    $0xc,%esp
+    1ae8:	0f b7 45 98          	movzwl -0x68(%ebp),%eax
+    1aec:	66 89 45 b5          	mov    %ax,-0x4b(%ebp)
+    1af0:	0f b6 45 9a          	movzbl -0x66(%ebp),%eax
+    1af4:	88 45 b7             	mov    %al,-0x49(%ebp)
                     APSetPen(&wnd->Dc,pen);
-    19af:	8b 45 08             	mov    0x8(%ebp),%eax
-    19b2:	8d 50 34             	lea    0x34(%eax),%edx
-    19b5:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    19b8:	ff 75 d0             	pushl  -0x30(%ebp)
-    19bb:	ff 75 cc             	pushl  -0x34(%ebp)
-    19be:	52                   	push   %edx
-    19bf:	50                   	push   %eax
-    19c0:	e8 66 f2 ff ff       	call   c2b <APSetPen>
-    19c5:	83 c4 0c             	add    $0xc,%esp
+    1af7:	8b 45 08             	mov    0x8(%ebp),%eax
+    1afa:	8d 50 34             	lea    0x34(%eax),%edx
+    1afd:	8d 45 98             	lea    -0x68(%ebp),%eax
+    1b00:	ff 75 bc             	pushl  -0x44(%ebp)
+    1b03:	ff 75 b8             	pushl  -0x48(%ebp)
+    1b06:	52                   	push   %edx
+    1b07:	50                   	push   %eax
+    1b08:	e8 ce f0 ff ff       	call   bdb <APSetPen>
+    1b0d:	83 c4 0c             	add    $0xc,%esp
                     APSetBrush(&wnd->Dc,brush);
-    19c8:	8b 45 08             	mov    0x8(%ebp),%eax
-    19cb:	8d 58 34             	lea    0x34(%eax),%ebx
-    19ce:	8d 55 b8             	lea    -0x48(%ebp),%edx
-    19d1:	83 ec 04             	sub    $0x4,%esp
-    19d4:	83 ec 04             	sub    $0x4,%esp
-    19d7:	89 e0                	mov    %esp,%eax
-    19d9:	0f b7 4d c9          	movzwl -0x37(%ebp),%ecx
-    19dd:	66 89 08             	mov    %cx,(%eax)
-    19e0:	0f b6 4d cb          	movzbl -0x35(%ebp),%ecx
-    19e4:	88 48 02             	mov    %cl,0x2(%eax)
-    19e7:	53                   	push   %ebx
-    19e8:	52                   	push   %edx
-    19e9:	e8 76 f2 ff ff       	call   c64 <APSetBrush>
-    19ee:	83 c4 0c             	add    $0xc,%esp
+    1b10:	8b 45 08             	mov    0x8(%ebp),%eax
+    1b13:	8d 58 34             	lea    0x34(%eax),%ebx
+    1b16:	8d 55 98             	lea    -0x68(%ebp),%edx
+    1b19:	83 ec 04             	sub    $0x4,%esp
+    1b1c:	83 ec 04             	sub    $0x4,%esp
+    1b1f:	89 e0                	mov    %esp,%eax
+    1b21:	0f b7 4d b5          	movzwl -0x4b(%ebp),%ecx
+    1b25:	66 89 08             	mov    %cx,(%eax)
+    1b28:	0f b6 4d b7          	movzbl -0x49(%ebp),%ecx
+    1b2c:	88 48 02             	mov    %cl,0x2(%eax)
+    1b2f:	53                   	push   %ebx
+    1b30:	52                   	push   %edx
+    1b31:	e8 de f0 ff ff       	call   c14 <APSetBrush>
+    1b36:	83 c4 0c             	add    $0xc,%esp
                     APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
-    19f1:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    19f4:	6b d0 32             	imul   $0x32,%eax,%edx
-    19f7:	8b 45 e0             	mov    -0x20(%ebp),%eax
-    19fa:	6b c0 32             	imul   $0x32,%eax,%eax
-    19fd:	8b 4d 08             	mov    0x8(%ebp),%ecx
-    1a00:	83 c1 34             	add    $0x34,%ecx
-    1a03:	83 ec 0c             	sub    $0xc,%esp
-    1a06:	6a 32                	push   $0x32
-    1a08:	6a 32                	push   $0x32
-    1a0a:	52                   	push   %edx
-    1a0b:	50                   	push   %eax
-    1a0c:	51                   	push   %ecx
-    1a0d:	e8 3a f6 ff ff       	call   104c <APDrawRect>
-    1a12:	83 c4 20             	add    $0x20,%esp
+    1b39:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1b3c:	6b d0 32             	imul   $0x32,%eax,%edx
+    1b3f:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1b42:	6b c0 32             	imul   $0x32,%eax,%eax
+    1b45:	8b 4d 08             	mov    0x8(%ebp),%ecx
+    1b48:	83 c1 34             	add    $0x34,%ecx
+    1b4b:	83 ec 0c             	sub    $0xc,%esp
+    1b4e:	6a 32                	push   $0x32
+    1b50:	6a 32                	push   $0x32
+    1b52:	52                   	push   %edx
+    1b53:	50                   	push   %eax
+    1b54:	51                   	push   %ecx
+    1b55:	e8 a2 f4 ff ff       	call   ffc <APDrawRect>
+    1b5a:	83 c4 20             	add    $0x20,%esp
                     break;
-    1a15:	e9 76 01 00 00       	jmp    1b90 <APGridPaint+0x3e8>
+    1b5d:	e9 2f 02 00 00       	jmp    1d91 <APGridPaint+0x639>
                 case GRID_GRASS:
                     //printf(1,"Grid_Grass");
-                    pen.color = RGB(0x00,0x80,0x00);
-    1a1a:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1a1d:	6a 00                	push   $0x0
-    1a1f:	68 80 00 00 00       	push   $0x80
-    1a24:	6a 00                	push   $0x0
-    1a26:	50                   	push   %eax
-    1a27:	e8 c9 f9 ff ff       	call   13f5 <RGB>
-    1a2c:	83 c4 0c             	add    $0xc,%esp
-    1a2f:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-    1a33:	66 89 45 cc          	mov    %ax,-0x34(%ebp)
-    1a37:	0f b6 45 ba          	movzbl -0x46(%ebp),%eax
-    1a3b:	88 45 ce             	mov    %al,-0x32(%ebp)
-                    pen.size = 1;
-    1a3e:	c7 45 d0 01 00 00 00 	movl   $0x1,-0x30(%ebp)
-                    brush.color = RGB(0x00,0x80,0x00);
-    1a45:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1a48:	6a 00                	push   $0x0
-    1a4a:	68 80 00 00 00       	push   $0x80
-    1a4f:	6a 00                	push   $0x0
-    1a51:	50                   	push   %eax
-    1a52:	e8 9e f9 ff ff       	call   13f5 <RGB>
-    1a57:	83 c4 0c             	add    $0xc,%esp
-    1a5a:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-    1a5e:	66 89 45 c9          	mov    %ax,-0x37(%ebp)
-    1a62:	0f b6 45 ba          	movzbl -0x46(%ebp),%eax
-    1a66:	88 45 cb             	mov    %al,-0x35(%ebp)
-                    APSetPen(&wnd->Dc,pen);
-    1a69:	8b 45 08             	mov    0x8(%ebp),%eax
-    1a6c:	8d 50 34             	lea    0x34(%eax),%edx
-    1a6f:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1a72:	ff 75 d0             	pushl  -0x30(%ebp)
-    1a75:	ff 75 cc             	pushl  -0x34(%ebp)
-    1a78:	52                   	push   %edx
-    1a79:	50                   	push   %eax
-    1a7a:	e8 ac f1 ff ff       	call   c2b <APSetPen>
-    1a7f:	83 c4 0c             	add    $0xc,%esp
-                    APSetBrush(&wnd->Dc,brush);
-    1a82:	8b 45 08             	mov    0x8(%ebp),%eax
-    1a85:	8d 58 34             	lea    0x34(%eax),%ebx
-    1a88:	8d 55 b8             	lea    -0x48(%ebp),%edx
-    1a8b:	83 ec 04             	sub    $0x4,%esp
-    1a8e:	83 ec 04             	sub    $0x4,%esp
-    1a91:	89 e0                	mov    %esp,%eax
-    1a93:	0f b7 4d c9          	movzwl -0x37(%ebp),%ecx
-    1a97:	66 89 08             	mov    %cx,(%eax)
-    1a9a:	0f b6 4d cb          	movzbl -0x35(%ebp),%ecx
-    1a9e:	88 48 02             	mov    %cl,0x2(%eax)
-    1aa1:	53                   	push   %ebx
-    1aa2:	52                   	push   %edx
-    1aa3:	e8 bc f1 ff ff       	call   c64 <APSetBrush>
-    1aa8:	83 c4 0c             	add    $0xc,%esp
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH,GRID_WIDTH,GRID_WIDTH);
-    1aab:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1aae:	6b d0 32             	imul   $0x32,%eax,%edx
-    1ab1:	8b 45 e0             	mov    -0x20(%ebp),%eax
-    1ab4:	6b c0 32             	imul   $0x32,%eax,%eax
-    1ab7:	8b 4d 08             	mov    0x8(%ebp),%ecx
-    1aba:	83 c1 34             	add    $0x34,%ecx
-    1abd:	83 ec 0c             	sub    $0xc,%esp
-    1ac0:	6a 32                	push   $0x32
-    1ac2:	6a 32                	push   $0x32
-    1ac4:	52                   	push   %edx
-    1ac5:	50                   	push   %eax
-    1ac6:	51                   	push   %ecx
-    1ac7:	e8 80 f5 ff ff       	call   104c <APDrawRect>
-    1acc:	83 c4 20             	add    $0x20,%esp
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_grass,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+    1b62:	8d 45 c6             	lea    -0x3a(%ebp),%eax
+    1b65:	6a 0c                	push   $0xc
+    1b67:	6a 0c                	push   $0xc
+    1b69:	6a 0c                	push   $0xc
+    1b6b:	50                   	push   %eax
+    1b6c:	e8 34 f8 ff ff       	call   13a5 <RGB>
+    1b71:	83 c4 0c             	add    $0xc,%esp
+    1b74:	8b 1d 30 28 00 00    	mov    0x2830,%ebx
+    1b7a:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1b7d:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1b80:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1b83:	6b c0 32             	imul   $0x32,%eax,%eax
+    1b86:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1b89:	8b 45 08             	mov    0x8(%ebp),%eax
+    1b8c:	8d 78 34             	lea    0x34(%eax),%edi
+    1b8f:	83 ec 0c             	sub    $0xc,%esp
+    1b92:	83 ec 04             	sub    $0x4,%esp
+    1b95:	89 e0                	mov    %esp,%eax
+    1b97:	0f b7 75 c6          	movzwl -0x3a(%ebp),%esi
+    1b9b:	66 89 30             	mov    %si,(%eax)
+    1b9e:	0f b6 55 c8          	movzbl -0x38(%ebp),%edx
+    1ba2:	88 50 02             	mov    %dl,0x2(%eax)
+    1ba5:	6a 32                	push   $0x32
+    1ba7:	6a 32                	push   $0x32
+    1ba9:	6a 00                	push   $0x0
+    1bab:	6a 00                	push   $0x0
+    1bad:	53                   	push   %ebx
+    1bae:	51                   	push   %ecx
+    1baf:	ff 75 94             	pushl  -0x6c(%ebp)
+    1bb2:	57                   	push   %edi
+    1bb3:	e8 49 f6 ff ff       	call   1201 <APDcCopy>
+    1bb8:	83 c4 30             	add    $0x30,%esp
                     break;
-    1acf:	e9 bc 00 00 00       	jmp    1b90 <APGridPaint+0x3e8>
+    1bbb:	e9 d1 01 00 00       	jmp    1d91 <APGridPaint+0x639>
                 case GRID_RIVER:
-                    //printf(1,"Grid_River");
-                    pen.color = RGB(0x00,0xbf,0xff);
-    1ad4:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1ad7:	68 ff 00 00 00       	push   $0xff
-    1adc:	68 bf 00 00 00       	push   $0xbf
-    1ae1:	6a 00                	push   $0x0
-    1ae3:	50                   	push   %eax
-    1ae4:	e8 0c f9 ff ff       	call   13f5 <RGB>
-    1ae9:	83 c4 0c             	add    $0xc,%esp
-    1aec:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-    1af0:	66 89 45 cc          	mov    %ax,-0x34(%ebp)
-    1af4:	0f b6 45 ba          	movzbl -0x46(%ebp),%eax
-    1af8:	88 45 ce             	mov    %al,-0x32(%ebp)
-                    pen.size = 1;
-    1afb:	c7 45 d0 01 00 00 00 	movl   $0x1,-0x30(%ebp)
-                    brush.color = RGB(0x00,0xbf,0xff);
-    1b02:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1b05:	68 ff 00 00 00       	push   $0xff
-    1b0a:	68 bf 00 00 00       	push   $0xbf
-    1b0f:	6a 00                	push   $0x0
-    1b11:	50                   	push   %eax
-    1b12:	e8 de f8 ff ff       	call   13f5 <RGB>
-    1b17:	83 c4 0c             	add    $0xc,%esp
-    1b1a:	0f b7 45 b8          	movzwl -0x48(%ebp),%eax
-    1b1e:	66 89 45 c9          	mov    %ax,-0x37(%ebp)
-    1b22:	0f b6 45 ba          	movzbl -0x46(%ebp),%eax
-    1b26:	88 45 cb             	mov    %al,-0x35(%ebp)
-                    APSetPen(&wnd->Dc,pen);
-    1b29:	8b 45 08             	mov    0x8(%ebp),%eax
-    1b2c:	8d 50 34             	lea    0x34(%eax),%edx
-    1b2f:	8d 45 b8             	lea    -0x48(%ebp),%eax
-    1b32:	ff 75 d0             	pushl  -0x30(%ebp)
-    1b35:	ff 75 cc             	pushl  -0x34(%ebp)
-    1b38:	52                   	push   %edx
-    1b39:	50                   	push   %eax
-    1b3a:	e8 ec f0 ff ff       	call   c2b <APSetPen>
-    1b3f:	83 c4 0c             	add    $0xc,%esp
-                    APSetBrush(&wnd->Dc,brush);
-    1b42:	8b 45 08             	mov    0x8(%ebp),%eax
-    1b45:	8d 58 34             	lea    0x34(%eax),%ebx
-    1b48:	8d 55 b8             	lea    -0x48(%ebp),%edx
-    1b4b:	83 ec 04             	sub    $0x4,%esp
-    1b4e:	83 ec 04             	sub    $0x4,%esp
-    1b51:	89 e0                	mov    %esp,%eax
-    1b53:	0f b7 4d c9          	movzwl -0x37(%ebp),%ecx
-    1b57:	66 89 08             	mov    %cx,(%eax)
-    1b5a:	0f b6 4d cb          	movzbl -0x35(%ebp),%ecx
-    1b5e:	88 48 02             	mov    %cl,0x2(%eax)
-    1b61:	53                   	push   %ebx
-    1b62:	52                   	push   %edx
-    1b63:	e8 fc f0 ff ff       	call   c64 <APSetBrush>
-    1b68:	83 c4 0c             	add    $0xc,%esp
-                    APDrawRect(&wnd->Dc,i * GRID_WIDTH,j * GRID_WIDTH ,GRID_WIDTH,GRID_WIDTH);
-    1b6b:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1b6e:	6b d0 32             	imul   $0x32,%eax,%edx
-    1b71:	8b 45 e0             	mov    -0x20(%ebp),%eax
-    1b74:	6b c0 32             	imul   $0x32,%eax,%eax
-    1b77:	8b 4d 08             	mov    0x8(%ebp),%ecx
-    1b7a:	83 c1 34             	add    $0x34,%ecx
-    1b7d:	83 ec 0c             	sub    $0xc,%esp
-    1b80:	6a 32                	push   $0x32
-    1b82:	6a 32                	push   $0x32
-    1b84:	52                   	push   %edx
-    1b85:	50                   	push   %eax
-    1b86:	51                   	push   %ecx
-    1b87:	e8 c0 f4 ff ff       	call   104c <APDrawRect>
-    1b8c:	83 c4 20             	add    $0x20,%esp
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_river,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+    1bc0:	8d 45 c9             	lea    -0x37(%ebp),%eax
+    1bc3:	6a 0c                	push   $0xc
+    1bc5:	6a 0c                	push   $0xc
+    1bc7:	6a 0c                	push   $0xc
+    1bc9:	50                   	push   %eax
+    1bca:	e8 d6 f7 ff ff       	call   13a5 <RGB>
+    1bcf:	83 c4 0c             	add    $0xc,%esp
+    1bd2:	8b 1d 10 28 00 00    	mov    0x2810,%ebx
+    1bd8:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1bdb:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1bde:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1be1:	6b c0 32             	imul   $0x32,%eax,%eax
+    1be4:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1be7:	8b 45 08             	mov    0x8(%ebp),%eax
+    1bea:	8d 78 34             	lea    0x34(%eax),%edi
+    1bed:	83 ec 0c             	sub    $0xc,%esp
+    1bf0:	83 ec 04             	sub    $0x4,%esp
+    1bf3:	89 e0                	mov    %esp,%eax
+    1bf5:	0f b7 75 c9          	movzwl -0x37(%ebp),%esi
+    1bf9:	66 89 30             	mov    %si,(%eax)
+    1bfc:	0f b6 55 cb          	movzbl -0x35(%ebp),%edx
+    1c00:	88 50 02             	mov    %dl,0x2(%eax)
+    1c03:	6a 32                	push   $0x32
+    1c05:	6a 32                	push   $0x32
+    1c07:	6a 00                	push   $0x0
+    1c09:	6a 00                	push   $0x0
+    1c0b:	53                   	push   %ebx
+    1c0c:	51                   	push   %ecx
+    1c0d:	ff 75 94             	pushl  -0x6c(%ebp)
+    1c10:	57                   	push   %edi
+    1c11:	e8 eb f5 ff ff       	call   1201 <APDcCopy>
+    1c16:	83 c4 30             	add    $0x30,%esp
                     break;
-    1b8f:	90                   	nop
+    1c19:	e9 73 01 00 00       	jmp    1d91 <APGridPaint+0x639>
+                case GRID_FOREST:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_forest,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+    1c1e:	8d 45 cc             	lea    -0x34(%ebp),%eax
+    1c21:	6a 0c                	push   $0xc
+    1c23:	6a 0c                	push   $0xc
+    1c25:	6a 0c                	push   $0xc
+    1c27:	50                   	push   %eax
+    1c28:	e8 78 f7 ff ff       	call   13a5 <RGB>
+    1c2d:	83 c4 0c             	add    $0xc,%esp
+    1c30:	8b 1d f4 27 00 00    	mov    0x27f4,%ebx
+    1c36:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1c39:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1c3c:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1c3f:	6b c0 32             	imul   $0x32,%eax,%eax
+    1c42:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1c45:	8b 45 08             	mov    0x8(%ebp),%eax
+    1c48:	8d 78 34             	lea    0x34(%eax),%edi
+    1c4b:	83 ec 0c             	sub    $0xc,%esp
+    1c4e:	83 ec 04             	sub    $0x4,%esp
+    1c51:	89 e0                	mov    %esp,%eax
+    1c53:	0f b7 75 cc          	movzwl -0x34(%ebp),%esi
+    1c57:	66 89 30             	mov    %si,(%eax)
+    1c5a:	0f b6 55 ce          	movzbl -0x32(%ebp),%edx
+    1c5e:	88 50 02             	mov    %dl,0x2(%eax)
+    1c61:	6a 32                	push   $0x32
+    1c63:	6a 32                	push   $0x32
+    1c65:	6a 00                	push   $0x0
+    1c67:	6a 00                	push   $0x0
+    1c69:	53                   	push   %ebx
+    1c6a:	51                   	push   %ecx
+    1c6b:	ff 75 94             	pushl  -0x6c(%ebp)
+    1c6e:	57                   	push   %edi
+    1c6f:	e8 8d f5 ff ff       	call   1201 <APDcCopy>
+    1c74:	83 c4 30             	add    $0x30,%esp
+                    break;
+    1c77:	e9 15 01 00 00       	jmp    1d91 <APGridPaint+0x639>
+                case GRID_LAKE:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_lake,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+    1c7c:	8d 45 cf             	lea    -0x31(%ebp),%eax
+    1c7f:	6a 0c                	push   $0xc
+    1c81:	6a 0c                	push   $0xc
+    1c83:	6a 0c                	push   $0xc
+    1c85:	50                   	push   %eax
+    1c86:	e8 1a f7 ff ff       	call   13a5 <RGB>
+    1c8b:	83 c4 0c             	add    $0xc,%esp
+    1c8e:	8b 1d 2c 28 00 00    	mov    0x282c,%ebx
+    1c94:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1c97:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1c9a:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1c9d:	6b c0 32             	imul   $0x32,%eax,%eax
+    1ca0:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1ca3:	8b 45 08             	mov    0x8(%ebp),%eax
+    1ca6:	8d 78 34             	lea    0x34(%eax),%edi
+    1ca9:	83 ec 0c             	sub    $0xc,%esp
+    1cac:	83 ec 04             	sub    $0x4,%esp
+    1caf:	89 e0                	mov    %esp,%eax
+    1cb1:	0f b7 75 cf          	movzwl -0x31(%ebp),%esi
+    1cb5:	66 89 30             	mov    %si,(%eax)
+    1cb8:	0f b6 55 d1          	movzbl -0x2f(%ebp),%edx
+    1cbc:	88 50 02             	mov    %dl,0x2(%eax)
+    1cbf:	6a 32                	push   $0x32
+    1cc1:	6a 32                	push   $0x32
+    1cc3:	6a 00                	push   $0x0
+    1cc5:	6a 00                	push   $0x0
+    1cc7:	53                   	push   %ebx
+    1cc8:	51                   	push   %ecx
+    1cc9:	ff 75 94             	pushl  -0x6c(%ebp)
+    1ccc:	57                   	push   %edi
+    1ccd:	e8 2f f5 ff ff       	call   1201 <APDcCopy>
+    1cd2:	83 c4 30             	add    $0x30,%esp
+                    break;
+    1cd5:	e9 b7 00 00 00       	jmp    1d91 <APGridPaint+0x639>
+                case GRID_STONE:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_stone,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+    1cda:	8d 45 d2             	lea    -0x2e(%ebp),%eax
+    1cdd:	6a 0c                	push   $0xc
+    1cdf:	6a 0c                	push   $0xc
+    1ce1:	6a 0c                	push   $0xc
+    1ce3:	50                   	push   %eax
+    1ce4:	e8 bc f6 ff ff       	call   13a5 <RGB>
+    1ce9:	83 c4 0c             	add    $0xc,%esp
+    1cec:	8b 1d c4 27 00 00    	mov    0x27c4,%ebx
+    1cf2:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1cf5:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1cf8:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1cfb:	6b c0 32             	imul   $0x32,%eax,%eax
+    1cfe:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1d01:	8b 45 08             	mov    0x8(%ebp),%eax
+    1d04:	8d 78 34             	lea    0x34(%eax),%edi
+    1d07:	83 ec 0c             	sub    $0xc,%esp
+    1d0a:	83 ec 04             	sub    $0x4,%esp
+    1d0d:	89 e0                	mov    %esp,%eax
+    1d0f:	0f b7 75 d2          	movzwl -0x2e(%ebp),%esi
+    1d13:	66 89 30             	mov    %si,(%eax)
+    1d16:	0f b6 55 d4          	movzbl -0x2c(%ebp),%edx
+    1d1a:	88 50 02             	mov    %dl,0x2(%eax)
+    1d1d:	6a 32                	push   $0x32
+    1d1f:	6a 32                	push   $0x32
+    1d21:	6a 00                	push   $0x0
+    1d23:	6a 00                	push   $0x0
+    1d25:	53                   	push   %ebx
+    1d26:	51                   	push   %ecx
+    1d27:	ff 75 94             	pushl  -0x6c(%ebp)
+    1d2a:	57                   	push   %edi
+    1d2b:	e8 d1 f4 ff ff       	call   1201 <APDcCopy>
+    1d30:	83 c4 30             	add    $0x30,%esp
+                    break;
+    1d33:	eb 5c                	jmp    1d91 <APGridPaint+0x639>
+                case GRID_MOUNTAIN:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_mountain,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+    1d35:	8d 45 d5             	lea    -0x2b(%ebp),%eax
+    1d38:	6a 0c                	push   $0xc
+    1d3a:	6a 0c                	push   $0xc
+    1d3c:	6a 0c                	push   $0xc
+    1d3e:	50                   	push   %eax
+    1d3f:	e8 61 f6 ff ff       	call   13a5 <RGB>
+    1d44:	83 c4 0c             	add    $0xc,%esp
+    1d47:	8b 1d e0 27 00 00    	mov    0x27e0,%ebx
+    1d4d:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1d50:	6b c8 32             	imul   $0x32,%eax,%ecx
+    1d53:	8b 45 e0             	mov    -0x20(%ebp),%eax
+    1d56:	6b c0 32             	imul   $0x32,%eax,%eax
+    1d59:	89 45 94             	mov    %eax,-0x6c(%ebp)
+    1d5c:	8b 45 08             	mov    0x8(%ebp),%eax
+    1d5f:	8d 78 34             	lea    0x34(%eax),%edi
+    1d62:	83 ec 0c             	sub    $0xc,%esp
+    1d65:	83 ec 04             	sub    $0x4,%esp
+    1d68:	89 e0                	mov    %esp,%eax
+    1d6a:	0f b7 75 d5          	movzwl -0x2b(%ebp),%esi
+    1d6e:	66 89 30             	mov    %si,(%eax)
+    1d71:	0f b6 55 d7          	movzbl -0x29(%ebp),%edx
+    1d75:	88 50 02             	mov    %dl,0x2(%eax)
+    1d78:	6a 32                	push   $0x32
+    1d7a:	6a 32                	push   $0x32
+    1d7c:	6a 00                	push   $0x0
+    1d7e:	6a 00                	push   $0x0
+    1d80:	53                   	push   %ebx
+    1d81:	51                   	push   %ecx
+    1d82:	ff 75 94             	pushl  -0x6c(%ebp)
+    1d85:	57                   	push   %edi
+    1d86:	e8 76 f4 ff ff       	call   1201 <APDcCopy>
+    1d8b:	83 c4 30             	add    $0x30,%esp
+                    break;
+    1d8e:	eb 01                	jmp    1d91 <APGridPaint+0x639>
+                default: break;
+    1d90:	90                   	nop
     
     int index = wnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER,start = index;
     
     for (int j = 0; j < GRID_H_NUMBER; j++)
     {
         for (int i = 0; i < GRID_W_NUMBER;i++)
-    1b90:	83 45 e0 01          	addl   $0x1,-0x20(%ebp)
-    1b94:	83 7d e0 0f          	cmpl   $0xf,-0x20(%ebp)
-    1b98:	0f 8e 17 fd ff ff    	jle    18b5 <APGridPaint+0x10d>
+    1d91:	83 45 e0 01          	addl   $0x1,-0x20(%ebp)
+    1d95:	83 7d e0 0f          	cmpl   $0xf,-0x20(%ebp)
+    1d99:	0f 8e 7a fc ff ff    	jle    1a19 <APGridPaint+0x2c1>
         return;
     }
     
     int index = wnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER,start = index;
     
     for (int j = 0; j < GRID_H_NUMBER; j++)
-    1b9e:	83 45 e4 01          	addl   $0x1,-0x1c(%ebp)
-    1ba2:	83 7d e4 0a          	cmpl   $0xa,-0x1c(%ebp)
-    1ba6:	0f 8e fd fc ff ff    	jle    18a9 <APGridPaint+0x101>
+    1d9f:	83 45 e4 01          	addl   $0x1,-0x1c(%ebp)
+    1da3:	83 7d e4 0a          	cmpl   $0xa,-0x1c(%ebp)
+    1da7:	0f 8e 60 fc ff ff    	jle    1a0d <APGridPaint+0x2b5>
                     break;
                 default: break;
             }
         }
     }
 }
-    1bac:	8d 65 f4             	lea    -0xc(%ebp),%esp
-    1baf:	5b                   	pop    %ebx
-    1bb0:	5e                   	pop    %esi
-    1bb1:	5f                   	pop    %edi
-    1bb2:	5d                   	pop    %ebp
-    1bb3:	c3                   	ret    
+    1dad:	8d 65 f4             	lea    -0xc(%ebp),%esp
+    1db0:	5b                   	pop    %ebx
+    1db1:	5e                   	pop    %esi
+    1db2:	5f                   	pop    %edi
+    1db3:	5d                   	pop    %ebp
+    1db4:	c3                   	ret    
 
-00001bb4 <sprintint>:
+00001db5 <sprintint>:
 
 #include "APLib.h"
 
 static void
 sprintint(char * dst, int * j, int xx, int base, int sgn, int size)
 {
-    1bb4:	55                   	push   %ebp
-    1bb5:	89 e5                	mov    %esp,%ebp
-    1bb7:	53                   	push   %ebx
-    1bb8:	83 ec 20             	sub    $0x20,%esp
+    1db5:	55                   	push   %ebp
+    1db6:	89 e5                	mov    %esp,%ebp
+    1db8:	53                   	push   %ebx
+    1db9:	83 ec 20             	sub    $0x20,%esp
     static char digits[] = "0123456789ABCDEF";
     char buf[16];
     int i, neg;
     uint x;
     
     neg = 0;
-    1bbb:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
+    1dbc:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
     if(sgn && xx < 0){
-    1bc2:	83 7d 18 00          	cmpl   $0x0,0x18(%ebp)
-    1bc6:	74 17                	je     1bdf <sprintint+0x2b>
-    1bc8:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
-    1bcc:	79 11                	jns    1bdf <sprintint+0x2b>
+    1dc3:	83 7d 18 00          	cmpl   $0x0,0x18(%ebp)
+    1dc7:	74 17                	je     1de0 <sprintint+0x2b>
+    1dc9:	83 7d 10 00          	cmpl   $0x0,0x10(%ebp)
+    1dcd:	79 11                	jns    1de0 <sprintint+0x2b>
         neg = 1;
-    1bce:	c7 45 f4 01 00 00 00 	movl   $0x1,-0xc(%ebp)
+    1dcf:	c7 45 f4 01 00 00 00 	movl   $0x1,-0xc(%ebp)
         x = -xx;
-    1bd5:	8b 45 10             	mov    0x10(%ebp),%eax
-    1bd8:	f7 d8                	neg    %eax
-    1bda:	89 45 f0             	mov    %eax,-0x10(%ebp)
-    1bdd:	eb 06                	jmp    1be5 <sprintint+0x31>
+    1dd6:	8b 45 10             	mov    0x10(%ebp),%eax
+    1dd9:	f7 d8                	neg    %eax
+    1ddb:	89 45 f0             	mov    %eax,-0x10(%ebp)
+    1dde:	eb 06                	jmp    1de6 <sprintint+0x31>
     } else {
         x = xx;
-    1bdf:	8b 45 10             	mov    0x10(%ebp),%eax
-    1be2:	89 45 f0             	mov    %eax,-0x10(%ebp)
+    1de0:	8b 45 10             	mov    0x10(%ebp),%eax
+    1de3:	89 45 f0             	mov    %eax,-0x10(%ebp)
     }
     
     i = 0;
-    1be5:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
+    1de6:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
     do{
         buf[i++] = digits[x % base];
-    1bec:	8b 4d f8             	mov    -0x8(%ebp),%ecx
-    1bef:	8d 41 01             	lea    0x1(%ecx),%eax
-    1bf2:	89 45 f8             	mov    %eax,-0x8(%ebp)
-    1bf5:	8b 5d 14             	mov    0x14(%ebp),%ebx
-    1bf8:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    1bfb:	ba 00 00 00 00       	mov    $0x0,%edx
-    1c00:	f7 f3                	div    %ebx
-    1c02:	89 d0                	mov    %edx,%eax
-    1c04:	0f b6 80 80 25 00 00 	movzbl 0x2580(%eax),%eax
-    1c0b:	88 44 0d e0          	mov    %al,-0x20(%ebp,%ecx,1)
+    1ded:	8b 4d f8             	mov    -0x8(%ebp),%ecx
+    1df0:	8d 41 01             	lea    0x1(%ecx),%eax
+    1df3:	89 45 f8             	mov    %eax,-0x8(%ebp)
+    1df6:	8b 5d 14             	mov    0x14(%ebp),%ebx
+    1df9:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    1dfc:	ba 00 00 00 00       	mov    $0x0,%edx
+    1e01:	f7 f3                	div    %ebx
+    1e03:	89 d0                	mov    %edx,%eax
+    1e05:	0f b6 80 a0 27 00 00 	movzbl 0x27a0(%eax),%eax
+    1e0c:	88 44 0d e0          	mov    %al,-0x20(%ebp,%ecx,1)
     }while((x /= base) != 0);
-    1c0f:	8b 5d 14             	mov    0x14(%ebp),%ebx
-    1c12:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    1c15:	ba 00 00 00 00       	mov    $0x0,%edx
-    1c1a:	f7 f3                	div    %ebx
-    1c1c:	89 45 f0             	mov    %eax,-0x10(%ebp)
-    1c1f:	83 7d f0 00          	cmpl   $0x0,-0x10(%ebp)
-    1c23:	75 c7                	jne    1bec <sprintint+0x38>
+    1e10:	8b 5d 14             	mov    0x14(%ebp),%ebx
+    1e13:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    1e16:	ba 00 00 00 00       	mov    $0x0,%edx
+    1e1b:	f7 f3                	div    %ebx
+    1e1d:	89 45 f0             	mov    %eax,-0x10(%ebp)
+    1e20:	83 7d f0 00          	cmpl   $0x0,-0x10(%ebp)
+    1e24:	75 c7                	jne    1ded <sprintint+0x38>
     if(neg)
-    1c25:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
-    1c29:	74 0e                	je     1c39 <sprintint+0x85>
+    1e26:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
+    1e2a:	74 0e                	je     1e3a <sprintint+0x85>
         buf[i++] = '-';
-    1c2b:	8b 45 f8             	mov    -0x8(%ebp),%eax
-    1c2e:	8d 50 01             	lea    0x1(%eax),%edx
-    1c31:	89 55 f8             	mov    %edx,-0x8(%ebp)
-    1c34:	c6 44 05 e0 2d       	movb   $0x2d,-0x20(%ebp,%eax,1)
+    1e2c:	8b 45 f8             	mov    -0x8(%ebp),%eax
+    1e2f:	8d 50 01             	lea    0x1(%eax),%edx
+    1e32:	89 55 f8             	mov    %edx,-0x8(%ebp)
+    1e35:	c6 44 05 e0 2d       	movb   $0x2d,-0x20(%ebp,%eax,1)
     
     size -= i;
-    1c39:	8b 45 f8             	mov    -0x8(%ebp),%eax
-    1c3c:	29 45 1c             	sub    %eax,0x1c(%ebp)
+    1e3a:	8b 45 f8             	mov    -0x8(%ebp),%eax
+    1e3d:	29 45 1c             	sub    %eax,0x1c(%ebp)
     while (size > 0)
-    1c3f:	eb 1b                	jmp    1c5c <sprintint+0xa8>
+    1e40:	eb 1b                	jmp    1e5d <sprintint+0xa8>
     {
         dst[(*j)++] = '0';
-    1c41:	8b 45 0c             	mov    0xc(%ebp),%eax
-    1c44:	8b 00                	mov    (%eax),%eax
-    1c46:	8d 48 01             	lea    0x1(%eax),%ecx
-    1c49:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1c4c:	89 0a                	mov    %ecx,(%edx)
-    1c4e:	89 c2                	mov    %eax,%edx
-    1c50:	8b 45 08             	mov    0x8(%ebp),%eax
-    1c53:	01 d0                	add    %edx,%eax
-    1c55:	c6 00 30             	movb   $0x30,(%eax)
+    1e42:	8b 45 0c             	mov    0xc(%ebp),%eax
+    1e45:	8b 00                	mov    (%eax),%eax
+    1e47:	8d 48 01             	lea    0x1(%eax),%ecx
+    1e4a:	8b 55 0c             	mov    0xc(%ebp),%edx
+    1e4d:	89 0a                	mov    %ecx,(%edx)
+    1e4f:	89 c2                	mov    %eax,%edx
+    1e51:	8b 45 08             	mov    0x8(%ebp),%eax
+    1e54:	01 d0                	add    %edx,%eax
+    1e56:	c6 00 30             	movb   $0x30,(%eax)
         --size;
-    1c58:	83 6d 1c 01          	subl   $0x1,0x1c(%ebp)
+    1e59:	83 6d 1c 01          	subl   $0x1,0x1c(%ebp)
     }while((x /= base) != 0);
     if(neg)
         buf[i++] = '-';
     
     size -= i;
     while (size > 0)
-    1c5c:	83 7d 1c 00          	cmpl   $0x0,0x1c(%ebp)
-    1c60:	7f df                	jg     1c41 <sprintint+0x8d>
+    1e5d:	83 7d 1c 00          	cmpl   $0x0,0x1c(%ebp)
+    1e61:	7f df                	jg     1e42 <sprintint+0x8d>
     {
         dst[(*j)++] = '0';
         --size;
     }
     
     while(--i >= 0)
-    1c62:	eb 21                	jmp    1c85 <sprintint+0xd1>
+    1e63:	eb 21                	jmp    1e86 <sprintint+0xd1>
         dst[(*j)++] = buf[i];
-    1c64:	8b 45 0c             	mov    0xc(%ebp),%eax
-    1c67:	8b 00                	mov    (%eax),%eax
-    1c69:	8d 48 01             	lea    0x1(%eax),%ecx
-    1c6c:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1c6f:	89 0a                	mov    %ecx,(%edx)
-    1c71:	89 c2                	mov    %eax,%edx
-    1c73:	8b 45 08             	mov    0x8(%ebp),%eax
-    1c76:	01 c2                	add    %eax,%edx
-    1c78:	8d 4d e0             	lea    -0x20(%ebp),%ecx
-    1c7b:	8b 45 f8             	mov    -0x8(%ebp),%eax
-    1c7e:	01 c8                	add    %ecx,%eax
-    1c80:	0f b6 00             	movzbl (%eax),%eax
-    1c83:	88 02                	mov    %al,(%edx)
+    1e65:	8b 45 0c             	mov    0xc(%ebp),%eax
+    1e68:	8b 00                	mov    (%eax),%eax
+    1e6a:	8d 48 01             	lea    0x1(%eax),%ecx
+    1e6d:	8b 55 0c             	mov    0xc(%ebp),%edx
+    1e70:	89 0a                	mov    %ecx,(%edx)
+    1e72:	89 c2                	mov    %eax,%edx
+    1e74:	8b 45 08             	mov    0x8(%ebp),%eax
+    1e77:	01 c2                	add    %eax,%edx
+    1e79:	8d 4d e0             	lea    -0x20(%ebp),%ecx
+    1e7c:	8b 45 f8             	mov    -0x8(%ebp),%eax
+    1e7f:	01 c8                	add    %ecx,%eax
+    1e81:	0f b6 00             	movzbl (%eax),%eax
+    1e84:	88 02                	mov    %al,(%edx)
     {
         dst[(*j)++] = '0';
         --size;
     }
     
     while(--i >= 0)
-    1c85:	83 6d f8 01          	subl   $0x1,-0x8(%ebp)
-    1c89:	83 7d f8 00          	cmpl   $0x0,-0x8(%ebp)
-    1c8d:	79 d5                	jns    1c64 <sprintint+0xb0>
+    1e86:	83 6d f8 01          	subl   $0x1,-0x8(%ebp)
+    1e8a:	83 7d f8 00          	cmpl   $0x0,-0x8(%ebp)
+    1e8e:	79 d5                	jns    1e65 <sprintint+0xb0>
         dst[(*j)++] = buf[i];
 }
-    1c8f:	90                   	nop
-    1c90:	83 c4 20             	add    $0x20,%esp
-    1c93:	5b                   	pop    %ebx
-    1c94:	5d                   	pop    %ebp
-    1c95:	c3                   	ret    
+    1e90:	90                   	nop
+    1e91:	83 c4 20             	add    $0x20,%esp
+    1e94:	5b                   	pop    %ebx
+    1e95:	5d                   	pop    %ebp
+    1e96:	c3                   	ret    
 
-00001c96 <sprintf>:
+00001e97 <sprintf>:
 
 
 void sprintf(char * dst, char * fmt, ...)
 {
-    1c96:	55                   	push   %ebp
-    1c97:	89 e5                	mov    %esp,%ebp
-    1c99:	83 ec 38             	sub    $0x38,%esp
+    1e97:	55                   	push   %ebp
+    1e98:	89 e5                	mov    %esp,%ebp
+    1e9a:	83 ec 38             	sub    $0x38,%esp
     char *s;
     char buf[10];
     int bi = 0;
-    1c9c:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+    1e9d:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
     int c, i, state, j;
     uint *ap;
     j = 0;
-    1ca3:	c7 45 c8 00 00 00 00 	movl   $0x0,-0x38(%ebp)
+    1ea4:	c7 45 c8 00 00 00 00 	movl   $0x0,-0x38(%ebp)
     
     state = 0;
-    1caa:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%ebp)
+    1eab:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%ebp)
     ap = (uint*)(void*)&fmt + 1;
-    1cb1:	8d 45 0c             	lea    0xc(%ebp),%eax
-    1cb4:	83 c0 04             	add    $0x4,%eax
-    1cb7:	89 45 e4             	mov    %eax,-0x1c(%ebp)
+    1eb2:	8d 45 0c             	lea    0xc(%ebp),%eax
+    1eb5:	83 c0 04             	add    $0x4,%eax
+    1eb8:	89 45 e4             	mov    %eax,-0x1c(%ebp)
     for(i = 0; fmt[i]; i++){
-    1cba:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
-    1cc1:	e9 d9 01 00 00       	jmp    1e9f <sprintf+0x209>
+    1ebb:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%ebp)
+    1ec2:	e9 d9 01 00 00       	jmp    20a0 <sprintf+0x209>
         c = fmt[i] & 0xff;
-    1cc6:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1cc9:	8b 45 ec             	mov    -0x14(%ebp),%eax
-    1ccc:	01 d0                	add    %edx,%eax
-    1cce:	0f b6 00             	movzbl (%eax),%eax
-    1cd1:	0f be c0             	movsbl %al,%eax
-    1cd4:	25 ff 00 00 00       	and    $0xff,%eax
-    1cd9:	89 45 e0             	mov    %eax,-0x20(%ebp)
+    1ec7:	8b 55 0c             	mov    0xc(%ebp),%edx
+    1eca:	8b 45 ec             	mov    -0x14(%ebp),%eax
+    1ecd:	01 d0                	add    %edx,%eax
+    1ecf:	0f b6 00             	movzbl (%eax),%eax
+    1ed2:	0f be c0             	movsbl %al,%eax
+    1ed5:	25 ff 00 00 00       	and    $0xff,%eax
+    1eda:	89 45 e0             	mov    %eax,-0x20(%ebp)
         if(state == 0){
-    1cdc:	83 7d e8 00          	cmpl   $0x0,-0x18(%ebp)
-    1ce0:	75 2c                	jne    1d0e <sprintf+0x78>
+    1edd:	83 7d e8 00          	cmpl   $0x0,-0x18(%ebp)
+    1ee1:	75 2c                	jne    1f0f <sprintf+0x78>
             if(c == '%'){
-    1ce2:	83 7d e0 25          	cmpl   $0x25,-0x20(%ebp)
-    1ce6:	75 0c                	jne    1cf4 <sprintf+0x5e>
+    1ee3:	83 7d e0 25          	cmpl   $0x25,-0x20(%ebp)
+    1ee7:	75 0c                	jne    1ef5 <sprintf+0x5e>
                 state = '%';
-    1ce8:	c7 45 e8 25 00 00 00 	movl   $0x25,-0x18(%ebp)
-    1cef:	e9 a7 01 00 00       	jmp    1e9b <sprintf+0x205>
+    1ee9:	c7 45 e8 25 00 00 00 	movl   $0x25,-0x18(%ebp)
+    1ef0:	e9 a7 01 00 00       	jmp    209c <sprintf+0x205>
             } else {
                 dst[j++] = c;
-    1cf4:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1cf7:	8d 50 01             	lea    0x1(%eax),%edx
-    1cfa:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1cfd:	89 c2                	mov    %eax,%edx
-    1cff:	8b 45 08             	mov    0x8(%ebp),%eax
-    1d02:	01 d0                	add    %edx,%eax
-    1d04:	8b 55 e0             	mov    -0x20(%ebp),%edx
-    1d07:	88 10                	mov    %dl,(%eax)
-    1d09:	e9 8d 01 00 00       	jmp    1e9b <sprintf+0x205>
+    1ef5:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    1ef8:	8d 50 01             	lea    0x1(%eax),%edx
+    1efb:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    1efe:	89 c2                	mov    %eax,%edx
+    1f00:	8b 45 08             	mov    0x8(%ebp),%eax
+    1f03:	01 d0                	add    %edx,%eax
+    1f05:	8b 55 e0             	mov    -0x20(%ebp),%edx
+    1f08:	88 10                	mov    %dl,(%eax)
+    1f0a:	e9 8d 01 00 00       	jmp    209c <sprintf+0x205>
             }
         } else if(state == '%'){
-    1d0e:	83 7d e8 25          	cmpl   $0x25,-0x18(%ebp)
-    1d12:	0f 85 83 01 00 00    	jne    1e9b <sprintf+0x205>
+    1f0f:	83 7d e8 25          	cmpl   $0x25,-0x18(%ebp)
+    1f13:	0f 85 83 01 00 00    	jne    209c <sprintf+0x205>
             if(c == 'd'){
-    1d18:	83 7d e0 64          	cmpl   $0x64,-0x20(%ebp)
-    1d1c:	75 4c                	jne    1d6a <sprintf+0xd4>
+    1f19:	83 7d e0 64          	cmpl   $0x64,-0x20(%ebp)
+    1f1d:	75 4c                	jne    1f6b <sprintf+0xd4>
                 buf[bi] = '\0';
-    1d1e:	8d 55 ce             	lea    -0x32(%ebp),%edx
-    1d21:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    1d24:	01 d0                	add    %edx,%eax
-    1d26:	c6 00 00             	movb   $0x0,(%eax)
+    1f1f:	8d 55 ce             	lea    -0x32(%ebp),%edx
+    1f22:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    1f25:	01 d0                	add    %edx,%eax
+    1f27:	c6 00 00             	movb   $0x0,(%eax)
                 int l = atoi(buf);
-    1d29:	83 ec 0c             	sub    $0xc,%esp
-    1d2c:	8d 45 ce             	lea    -0x32(%ebp),%eax
-    1d2f:	50                   	push   %eax
-    1d30:	e8 20 e5 ff ff       	call   255 <atoi>
-    1d35:	83 c4 10             	add    $0x10,%esp
-    1d38:	89 45 d8             	mov    %eax,-0x28(%ebp)
+    1f2a:	83 ec 0c             	sub    $0xc,%esp
+    1f2d:	8d 45 ce             	lea    -0x32(%ebp),%eax
+    1f30:	50                   	push   %eax
+    1f31:	e8 1f e3 ff ff       	call   255 <atoi>
+    1f36:	83 c4 10             	add    $0x10,%esp
+    1f39:	89 45 d8             	mov    %eax,-0x28(%ebp)
                 bi = 0;
-    1d3b:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+    1f3c:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
                 sprintint(dst, &j, *ap, 10, 1, l);
-    1d42:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1d45:	8b 00                	mov    (%eax),%eax
-    1d47:	83 ec 08             	sub    $0x8,%esp
-    1d4a:	ff 75 d8             	pushl  -0x28(%ebp)
-    1d4d:	6a 01                	push   $0x1
-    1d4f:	6a 0a                	push   $0xa
-    1d51:	50                   	push   %eax
-    1d52:	8d 45 c8             	lea    -0x38(%ebp),%eax
-    1d55:	50                   	push   %eax
-    1d56:	ff 75 08             	pushl  0x8(%ebp)
-    1d59:	e8 56 fe ff ff       	call   1bb4 <sprintint>
-    1d5e:	83 c4 20             	add    $0x20,%esp
+    1f43:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1f46:	8b 00                	mov    (%eax),%eax
+    1f48:	83 ec 08             	sub    $0x8,%esp
+    1f4b:	ff 75 d8             	pushl  -0x28(%ebp)
+    1f4e:	6a 01                	push   $0x1
+    1f50:	6a 0a                	push   $0xa
+    1f52:	50                   	push   %eax
+    1f53:	8d 45 c8             	lea    -0x38(%ebp),%eax
+    1f56:	50                   	push   %eax
+    1f57:	ff 75 08             	pushl  0x8(%ebp)
+    1f5a:	e8 56 fe ff ff       	call   1db5 <sprintint>
+    1f5f:	83 c4 20             	add    $0x20,%esp
                 ap++;
-    1d61:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
-    1d65:	e9 2a 01 00 00       	jmp    1e94 <sprintf+0x1fe>
+    1f62:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
+    1f66:	e9 2a 01 00 00       	jmp    2095 <sprintf+0x1fe>
             } else if(c == 'x' || c == 'p'){
-    1d6a:	83 7d e0 78          	cmpl   $0x78,-0x20(%ebp)
-    1d6e:	74 06                	je     1d76 <sprintf+0xe0>
-    1d70:	83 7d e0 70          	cmpl   $0x70,-0x20(%ebp)
-    1d74:	75 4c                	jne    1dc2 <sprintf+0x12c>
+    1f6b:	83 7d e0 78          	cmpl   $0x78,-0x20(%ebp)
+    1f6f:	74 06                	je     1f77 <sprintf+0xe0>
+    1f71:	83 7d e0 70          	cmpl   $0x70,-0x20(%ebp)
+    1f75:	75 4c                	jne    1fc3 <sprintf+0x12c>
                 buf[bi] = '\0';
-    1d76:	8d 55 ce             	lea    -0x32(%ebp),%edx
-    1d79:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    1d7c:	01 d0                	add    %edx,%eax
-    1d7e:	c6 00 00             	movb   $0x0,(%eax)
+    1f77:	8d 55 ce             	lea    -0x32(%ebp),%edx
+    1f7a:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    1f7d:	01 d0                	add    %edx,%eax
+    1f7f:	c6 00 00             	movb   $0x0,(%eax)
                 int l = atoi(buf);
-    1d81:	83 ec 0c             	sub    $0xc,%esp
-    1d84:	8d 45 ce             	lea    -0x32(%ebp),%eax
-    1d87:	50                   	push   %eax
-    1d88:	e8 c8 e4 ff ff       	call   255 <atoi>
-    1d8d:	83 c4 10             	add    $0x10,%esp
-    1d90:	89 45 dc             	mov    %eax,-0x24(%ebp)
+    1f82:	83 ec 0c             	sub    $0xc,%esp
+    1f85:	8d 45 ce             	lea    -0x32(%ebp),%eax
+    1f88:	50                   	push   %eax
+    1f89:	e8 c7 e2 ff ff       	call   255 <atoi>
+    1f8e:	83 c4 10             	add    $0x10,%esp
+    1f91:	89 45 dc             	mov    %eax,-0x24(%ebp)
                 bi = 0;
-    1d93:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
+    1f94:	c7 45 f0 00 00 00 00 	movl   $0x0,-0x10(%ebp)
                 sprintint(dst, &j, *ap, 16, 0, l);
-    1d9a:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1d9d:	8b 00                	mov    (%eax),%eax
-    1d9f:	83 ec 08             	sub    $0x8,%esp
-    1da2:	ff 75 dc             	pushl  -0x24(%ebp)
-    1da5:	6a 00                	push   $0x0
-    1da7:	6a 10                	push   $0x10
-    1da9:	50                   	push   %eax
-    1daa:	8d 45 c8             	lea    -0x38(%ebp),%eax
-    1dad:	50                   	push   %eax
-    1dae:	ff 75 08             	pushl  0x8(%ebp)
-    1db1:	e8 fe fd ff ff       	call   1bb4 <sprintint>
-    1db6:	83 c4 20             	add    $0x20,%esp
+    1f9b:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1f9e:	8b 00                	mov    (%eax),%eax
+    1fa0:	83 ec 08             	sub    $0x8,%esp
+    1fa3:	ff 75 dc             	pushl  -0x24(%ebp)
+    1fa6:	6a 00                	push   $0x0
+    1fa8:	6a 10                	push   $0x10
+    1faa:	50                   	push   %eax
+    1fab:	8d 45 c8             	lea    -0x38(%ebp),%eax
+    1fae:	50                   	push   %eax
+    1faf:	ff 75 08             	pushl  0x8(%ebp)
+    1fb2:	e8 fe fd ff ff       	call   1db5 <sprintint>
+    1fb7:	83 c4 20             	add    $0x20,%esp
                 ap++;
-    1db9:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
+    1fba:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
                 buf[bi] = '\0';
                 int l = atoi(buf);
                 bi = 0;
                 sprintint(dst, &j, *ap, 10, 1, l);
                 ap++;
             } else if(c == 'x' || c == 'p'){
-    1dbd:	e9 d2 00 00 00       	jmp    1e94 <sprintf+0x1fe>
+    1fbe:	e9 d2 00 00 00       	jmp    2095 <sprintf+0x1fe>
                 buf[bi] = '\0';
                 int l = atoi(buf);
                 bi = 0;
                 sprintint(dst, &j, *ap, 16, 0, l);
                 ap++;
             } else if(c == 's'){
-    1dc2:	83 7d e0 73          	cmpl   $0x73,-0x20(%ebp)
-    1dc6:	75 46                	jne    1e0e <sprintf+0x178>
+    1fc3:	83 7d e0 73          	cmpl   $0x73,-0x20(%ebp)
+    1fc7:	75 46                	jne    200f <sprintf+0x178>
                 s = (char*)*ap;
-    1dc8:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1dcb:	8b 00                	mov    (%eax),%eax
-    1dcd:	89 45 f4             	mov    %eax,-0xc(%ebp)
+    1fc9:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    1fcc:	8b 00                	mov    (%eax),%eax
+    1fce:	89 45 f4             	mov    %eax,-0xc(%ebp)
                 ap++;
-    1dd0:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
+    1fd1:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
                 if(s == 0)
-    1dd4:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
-    1dd8:	75 25                	jne    1dff <sprintf+0x169>
+    1fd5:	83 7d f4 00          	cmpl   $0x0,-0xc(%ebp)
+    1fd9:	75 25                	jne    2000 <sprintf+0x169>
                     s = "(null)";
-    1dda:	c7 45 f4 48 20 00 00 	movl   $0x2048,-0xc(%ebp)
+    1fdb:	c7 45 f4 74 22 00 00 	movl   $0x2274,-0xc(%ebp)
                 while(*s != 0){
-    1de1:	eb 1c                	jmp    1dff <sprintf+0x169>
+    1fe2:	eb 1c                	jmp    2000 <sprintf+0x169>
                     dst[j++] = *s;
-    1de3:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1de6:	8d 50 01             	lea    0x1(%eax),%edx
-    1de9:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1dec:	89 c2                	mov    %eax,%edx
-    1dee:	8b 45 08             	mov    0x8(%ebp),%eax
-    1df1:	01 c2                	add    %eax,%edx
-    1df3:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1df6:	0f b6 00             	movzbl (%eax),%eax
-    1df9:	88 02                	mov    %al,(%edx)
+    1fe4:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    1fe7:	8d 50 01             	lea    0x1(%eax),%edx
+    1fea:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    1fed:	89 c2                	mov    %eax,%edx
+    1fef:	8b 45 08             	mov    0x8(%ebp),%eax
+    1ff2:	01 c2                	add    %eax,%edx
+    1ff4:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    1ff7:	0f b6 00             	movzbl (%eax),%eax
+    1ffa:	88 02                	mov    %al,(%edx)
                     s++;
-    1dfb:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
+    1ffc:	83 45 f4 01          	addl   $0x1,-0xc(%ebp)
             } else if(c == 's'){
                 s = (char*)*ap;
                 ap++;
                 if(s == 0)
                     s = "(null)";
                 while(*s != 0){
-    1dff:	8b 45 f4             	mov    -0xc(%ebp),%eax
-    1e02:	0f b6 00             	movzbl (%eax),%eax
-    1e05:	84 c0                	test   %al,%al
-    1e07:	75 da                	jne    1de3 <sprintf+0x14d>
-    1e09:	e9 86 00 00 00       	jmp    1e94 <sprintf+0x1fe>
+    2000:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    2003:	0f b6 00             	movzbl (%eax),%eax
+    2006:	84 c0                	test   %al,%al
+    2008:	75 da                	jne    1fe4 <sprintf+0x14d>
+    200a:	e9 86 00 00 00       	jmp    2095 <sprintf+0x1fe>
                     dst[j++] = *s;
                     s++;
                 }
             } else if(c == 'c'){
-    1e0e:	83 7d e0 63          	cmpl   $0x63,-0x20(%ebp)
-    1e12:	75 1d                	jne    1e31 <sprintf+0x19b>
+    200f:	83 7d e0 63          	cmpl   $0x63,-0x20(%ebp)
+    2013:	75 1d                	jne    2032 <sprintf+0x19b>
                 dst[j++] = *ap;
-    1e14:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1e17:	8d 50 01             	lea    0x1(%eax),%edx
-    1e1a:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1e1d:	89 c2                	mov    %eax,%edx
-    1e1f:	8b 45 08             	mov    0x8(%ebp),%eax
-    1e22:	01 c2                	add    %eax,%edx
-    1e24:	8b 45 e4             	mov    -0x1c(%ebp),%eax
-    1e27:	8b 00                	mov    (%eax),%eax
-    1e29:	88 02                	mov    %al,(%edx)
+    2015:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    2018:	8d 50 01             	lea    0x1(%eax),%edx
+    201b:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    201e:	89 c2                	mov    %eax,%edx
+    2020:	8b 45 08             	mov    0x8(%ebp),%eax
+    2023:	01 c2                	add    %eax,%edx
+    2025:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+    2028:	8b 00                	mov    (%eax),%eax
+    202a:	88 02                	mov    %al,(%edx)
                 ap++;
-    1e2b:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
-    1e2f:	eb 63                	jmp    1e94 <sprintf+0x1fe>
+    202c:	83 45 e4 04          	addl   $0x4,-0x1c(%ebp)
+    2030:	eb 63                	jmp    2095 <sprintf+0x1fe>
             } else if(c == '%'){
-    1e31:	83 7d e0 25          	cmpl   $0x25,-0x20(%ebp)
-    1e35:	75 17                	jne    1e4e <sprintf+0x1b8>
+    2032:	83 7d e0 25          	cmpl   $0x25,-0x20(%ebp)
+    2036:	75 17                	jne    204f <sprintf+0x1b8>
                 dst[j++] = c;
-    1e37:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1e3a:	8d 50 01             	lea    0x1(%eax),%edx
-    1e3d:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1e40:	89 c2                	mov    %eax,%edx
-    1e42:	8b 45 08             	mov    0x8(%ebp),%eax
-    1e45:	01 d0                	add    %edx,%eax
-    1e47:	8b 55 e0             	mov    -0x20(%ebp),%edx
-    1e4a:	88 10                	mov    %dl,(%eax)
-    1e4c:	eb 46                	jmp    1e94 <sprintf+0x1fe>
+    2038:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    203b:	8d 50 01             	lea    0x1(%eax),%edx
+    203e:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    2041:	89 c2                	mov    %eax,%edx
+    2043:	8b 45 08             	mov    0x8(%ebp),%eax
+    2046:	01 d0                	add    %edx,%eax
+    2048:	8b 55 e0             	mov    -0x20(%ebp),%edx
+    204b:	88 10                	mov    %dl,(%eax)
+    204d:	eb 46                	jmp    2095 <sprintf+0x1fe>
             } else if(c >= '0' && c <= '9')
-    1e4e:	83 7d e0 2f          	cmpl   $0x2f,-0x20(%ebp)
-    1e52:	7e 18                	jle    1e6c <sprintf+0x1d6>
-    1e54:	83 7d e0 39          	cmpl   $0x39,-0x20(%ebp)
-    1e58:	7f 12                	jg     1e6c <sprintf+0x1d6>
+    204f:	83 7d e0 2f          	cmpl   $0x2f,-0x20(%ebp)
+    2053:	7e 18                	jle    206d <sprintf+0x1d6>
+    2055:	83 7d e0 39          	cmpl   $0x39,-0x20(%ebp)
+    2059:	7f 12                	jg     206d <sprintf+0x1d6>
             {
                 buf[bi++] = c;
-    1e5a:	8b 45 f0             	mov    -0x10(%ebp),%eax
-    1e5d:	8d 50 01             	lea    0x1(%eax),%edx
-    1e60:	89 55 f0             	mov    %edx,-0x10(%ebp)
-    1e63:	8b 55 e0             	mov    -0x20(%ebp),%edx
-    1e66:	88 54 05 ce          	mov    %dl,-0x32(%ebp,%eax,1)
+    205b:	8b 45 f0             	mov    -0x10(%ebp),%eax
+    205e:	8d 50 01             	lea    0x1(%eax),%edx
+    2061:	89 55 f0             	mov    %edx,-0x10(%ebp)
+    2064:	8b 55 e0             	mov    -0x20(%ebp),%edx
+    2067:	88 54 05 ce          	mov    %dl,-0x32(%ebp,%eax,1)
                 continue;
-    1e6a:	eb 2f                	jmp    1e9b <sprintf+0x205>
+    206b:	eb 2f                	jmp    209c <sprintf+0x205>
             }
             else {
                 // Unknown % sequence.  Print it to draw attention.
                 dst[j++] = '%';
-    1e6c:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1e6f:	8d 50 01             	lea    0x1(%eax),%edx
-    1e72:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1e75:	89 c2                	mov    %eax,%edx
-    1e77:	8b 45 08             	mov    0x8(%ebp),%eax
-    1e7a:	01 d0                	add    %edx,%eax
-    1e7c:	c6 00 25             	movb   $0x25,(%eax)
+    206d:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    2070:	8d 50 01             	lea    0x1(%eax),%edx
+    2073:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    2076:	89 c2                	mov    %eax,%edx
+    2078:	8b 45 08             	mov    0x8(%ebp),%eax
+    207b:	01 d0                	add    %edx,%eax
+    207d:	c6 00 25             	movb   $0x25,(%eax)
                 dst[j++] = c;
-    1e7f:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1e82:	8d 50 01             	lea    0x1(%eax),%edx
-    1e85:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1e88:	89 c2                	mov    %eax,%edx
-    1e8a:	8b 45 08             	mov    0x8(%ebp),%eax
-    1e8d:	01 d0                	add    %edx,%eax
-    1e8f:	8b 55 e0             	mov    -0x20(%ebp),%edx
-    1e92:	88 10                	mov    %dl,(%eax)
+    2080:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    2083:	8d 50 01             	lea    0x1(%eax),%edx
+    2086:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    2089:	89 c2                	mov    %eax,%edx
+    208b:	8b 45 08             	mov    0x8(%ebp),%eax
+    208e:	01 d0                	add    %edx,%eax
+    2090:	8b 55 e0             	mov    -0x20(%ebp),%edx
+    2093:	88 10                	mov    %dl,(%eax)
             }
             state = 0;
-    1e94:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%ebp)
+    2095:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%ebp)
     uint *ap;
     j = 0;
     
     state = 0;
     ap = (uint*)(void*)&fmt + 1;
     for(i = 0; fmt[i]; i++){
-    1e9b:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
-    1e9f:	8b 55 0c             	mov    0xc(%ebp),%edx
-    1ea2:	8b 45 ec             	mov    -0x14(%ebp),%eax
-    1ea5:	01 d0                	add    %edx,%eax
-    1ea7:	0f b6 00             	movzbl (%eax),%eax
-    1eaa:	84 c0                	test   %al,%al
-    1eac:	0f 85 14 fe ff ff    	jne    1cc6 <sprintf+0x30>
+    209c:	83 45 ec 01          	addl   $0x1,-0x14(%ebp)
+    20a0:	8b 55 0c             	mov    0xc(%ebp),%edx
+    20a3:	8b 45 ec             	mov    -0x14(%ebp),%eax
+    20a6:	01 d0                	add    %edx,%eax
+    20a8:	0f b6 00             	movzbl (%eax),%eax
+    20ab:	84 c0                	test   %al,%al
+    20ad:	0f 85 14 fe ff ff    	jne    1ec7 <sprintf+0x30>
                 dst[j++] = c;
             }
             state = 0;
         }
     }
     dst[j++] = '\0';
-    1eb2:	8b 45 c8             	mov    -0x38(%ebp),%eax
-    1eb5:	8d 50 01             	lea    0x1(%eax),%edx
-    1eb8:	89 55 c8             	mov    %edx,-0x38(%ebp)
-    1ebb:	89 c2                	mov    %eax,%edx
-    1ebd:	8b 45 08             	mov    0x8(%ebp),%eax
-    1ec0:	01 d0                	add    %edx,%eax
-    1ec2:	c6 00 00             	movb   $0x0,(%eax)
+    20b3:	8b 45 c8             	mov    -0x38(%ebp),%eax
+    20b6:	8d 50 01             	lea    0x1(%eax),%edx
+    20b9:	89 55 c8             	mov    %edx,-0x38(%ebp)
+    20bc:	89 c2                	mov    %eax,%edx
+    20be:	8b 45 08             	mov    0x8(%ebp),%eax
+    20c1:	01 d0                	add    %edx,%eax
+    20c3:	c6 00 00             	movb   $0x0,(%eax)
 }
-    1ec5:	90                   	nop
-    1ec6:	c9                   	leave  
-    1ec7:	c3                   	ret    
+    20c6:	90                   	nop
+    20c7:	c9                   	leave  
+    20c8:	c3                   	ret    

@@ -20,9 +20,10 @@ void kbdInterupt()
 	data = inb(KBDATAP);
 	cprintf("state : %d\n", st);
 	cprintf("data  : %d\n", data);
+
 	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
 	{
-		//cprintf("kbdInterupt return : %d\n", st);
+		cprintf("kbdInterupt return : %d\n", st);
 		return;
 	}
 
@@ -31,6 +32,7 @@ void kbdInterupt()
 		return;
 	}
 	else if (data & 0x80) {
+		cprintf("test2");
 		// Key released
 		data &= 0x7F;
 		AMessage msg;
@@ -38,6 +40,7 @@ void kbdInterupt()
 		msg.param = charcode[shift][data];
 		if (shift)
 			shift = 0;
+
 		sendMessage(wndList.entry, &msg);
 		return;
 	}

@@ -8,7 +8,6 @@ OBJS = \
 	ioapic.o\
 	kalloc.o\
 	kbd.o\
-	APHandle.o\
 	lapic.o\
 	log.o\
 	main.o\

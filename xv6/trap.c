@@ -7,7 +7,7 @@
 #include "x86.h"
 #include "traps.h"
 #include "spinlock.h"
-#include "APHandle.h"
+//#include "APHandle.h"
 
 // Interrupt descriptor table (shared by all CPUs).
 struct gatedesc idt[256];
@@ -72,10 +72,11 @@ trap(struct trapframe *tf)
     kbdintr();
     lapiceoi();
     break;
-  case T_IRQ0 + IRQ_HANDLE:
-    HandleInterupt();
-    lapiceoi();
-    break;
+//  case T_IRQ0 + IRQ_HANDLE:
+
+    //HandleInterupt();
+    //lapiceoi();
+  //  break;
   case T_IRQ0 + IRQ_COM1:
     uartintr();
     lapiceoi();
