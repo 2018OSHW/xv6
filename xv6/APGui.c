@@ -520,6 +520,7 @@ void sendMessage(int wndId, AMessage *msg)
     APMsgQueueEnQueue(queue, *msg);
     cprintf("message has entered the queue\n",wndId);
     wakeup((void *)wndList.data[wndId].hwnd->pid);
+    cprintf("has waken up!\n");
 }
 
 //------------------------------------------------------------------------------------
@@ -567,7 +568,7 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
         list->data[list->head].prev = p;
     
     list->head = p;
-    cprintf("the wndlist head is %d",p);
+    cprintf("the wndlist head is %d\n",p);
     release(&list->lock);
 }
 
