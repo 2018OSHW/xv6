@@ -25,6 +25,7 @@ int character_x = 1,character_y = 1;
 //character_move
 void APDrawCharacter(int is_grid)
 {
+    cprintf("in drawCharacter!\n");
     acquire(&screenLock);
     if (is_grid)
     {
