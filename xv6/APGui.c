@@ -19,8 +19,8 @@ AColor character_img2[GRID_WIDTH][GRID_WIDTH];
 
 
 //index of character in the grid
-int character_pre_x, character_pre_y = 1;
-int character_x,character_y = 1;
+int character_pre_x = 1, character_pre_y = 1;
+int character_x = 1,character_y = 1;
 
 //character_move
 void APDrawCharacter(int is_grid)
