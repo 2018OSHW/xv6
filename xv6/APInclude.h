@@ -59,7 +59,9 @@ typedef char bool;
 #define MAX_Y 4
 //界面中横向个数和纵向个数
 
-
+//index of character in the grid
+int character_pre_x = 1, character_pre_y = 1;
+int character_x = 1,character_y = 1;
 
 enum MSG {
     MSG_NULL,
