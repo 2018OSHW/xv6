@@ -132,7 +132,7 @@ static uchar e0Map[256] =
 {
     [0x48] VK_UP,     [0x4B] VK_LEFT,
     [0x50] VK_DOWN,   [0x4D] VK_RIGHT,
-    [0x1C] VK_RETURN
+    [0x1C] VK_ENTER,  [0x1F] VK_ESC
 };
 
 void kbdInterupt();

@@ -84,12 +84,12 @@ enum WndFocusState
     WFS_NO_FOCUS,
     WFS_CHILD_FOCUS
 };
-#define VK_UP 0xE1
-#define VK_LEFT 0xE2
-#define VK_DOWN 0xE3
-#define VK_RIGHT 0xE4
-#define VK_ESC 0xE5
-#define VK_ENTER 0xE6
+#define VK_UP 1
+#define VK_LEFT 2
+#define VK_DOWN 3
+#define VK_RIGHT 4
+#define VK_ESC 5
+#define VK_ENTER 6
 
 
 //键盘常亮
