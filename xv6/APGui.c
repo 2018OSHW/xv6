@@ -508,7 +508,7 @@ void sendMessage(int wndId, AMessage *msg)
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
     cprintf("in send Message\n");
-    //cprintf("send message: WndID:%d \n",wndId);
+    cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
 
