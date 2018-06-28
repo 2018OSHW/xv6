@@ -48,6 +48,7 @@ void kbdInterupt()
 	AMessage msg;
 	msg.type = MSG_KEY_DOWN;
 	msg.param = charcode[shift][data];
+    cprintf("%d\n",data);
 	if (shift)
 		shift = 0;
     cprintf("sending message!\n");
