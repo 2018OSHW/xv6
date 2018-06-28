@@ -36,7 +36,7 @@ void APDrawCharacter(int is_grid)
             memmove(screenAddr + off,screenContent + off,size);
             off += screenWidth;
         }
-        off = character_y * GRID_WIDTH * screenWidth + character_x * GRID_WIDTH;
+        off = (character_y * GRID_WIDTH + WND_TITLE_HEIGHT) * screenWidth + character_x * GRID_WIDTH;
         for (int j = 0; j < GRID_WIDTH; j++)
         {
             for (int i = 0; i < GRID_WIDTH; i++)
@@ -412,34 +412,20 @@ int sys_changePosition(void)
     {
         character_pre_x = character_x;
         if (x == VK_RIGHT)
-        {
             character_x++;
-            
-        }
         else
-        {
             character_x--;
-          
-        }
     }
     if (y!= VK_NULL)
     {
         character_pre_y = character_y;
         if (y == VK_UP)
-        {
             character_y--;
-        
-        }
         else
-        {
             character_y++;
-
-        }
     }
    
     APDrawCharacter(True);
-    //APBufPaint(x_min*GRID_WIDTH, y_min*GRID_WIDTH + WND_TITLE_HEIGHT,x_max*GRID_WIDTH+GRID_WIDTH, y_max*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
-    //APBufPaint(0,0,screenWidth-1,screenHeight-1,True);
     return 0;
 }
 
