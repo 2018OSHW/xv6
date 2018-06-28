@@ -1,5 +1,5 @@
-#ifndef APDESKTOP_H
-#define APDESKTOP_H
+#ifndef APSNACK_H
+#define APSNACK_H
 
 #include "APInclude.h"
 #include "APObject.h"
