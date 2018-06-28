@@ -41,7 +41,7 @@ void kbdInterupt()
 		if (shift)
 			shift = 0;
 
-		sendMessage(wndList.entry, &msg);
+		sendMessage(wndList.head, &msg);
 		return;
 	}
 	AMessage msg;
@@ -49,7 +49,7 @@ void kbdInterupt()
 	msg.param = charcode[shift][data];
 	if (shift)
 		shift = 0;
-	sendMessage(wndList.entry, &msg);
+	sendMessage(wndList.head, &msg);
 
 }
 

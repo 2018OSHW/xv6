@@ -136,7 +136,6 @@ typedef struct AWndList
     int tail;
     int space;      
     int desktop;
-    int entry;
     struct spinlock lock;
 }AWndList;
 
