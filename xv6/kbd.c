@@ -18,24 +18,24 @@ void kbdInterupt()
 
 	st = inb(KBSTATP);
 	data = inb(KBDATAP);
-	cprintf("state : %d\n", st);
-	cprintf("data  : %d\n", data);
 
+	//cprintf("state : %d\n", st);
+	//cprintf("data  : %d\n", data);
 	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
 	{
-		cprintf("kbdInterupt return : %d\n", st);
+		//cprintf("kbdInterupt return : %d\n", st);
 		return;
 	}
 
 	if (data == 0xE0) {
-		cprintf("kbd error data 0xE0\n");
+		//cprintf("kbd error data 0xE0\n");
 		shift = 1;
 		return;
 	}
 	else if (data & 0x80) {
 		cprintf("test2");
 		// Key released
-        cprintf("key released!\n");
+        //cprintf("key released!\n");
 		data &= 0x7F;
 		AMessage msg;
 		msg.type = MSG_KEY_UP;
@@ -43,19 +43,20 @@ void kbdInterupt()
 		if (shift)
 			shift = 0;
 
-        cprintf("sending message!\n");
+        //cprintf("sending message!\n");
 		sendMessage(wndList.head, &msg);
-        cprintf("kdb message sent!\n");
+        //cprintf("kdb message sent!\n");
 		return;
 	}
 	AMessage msg;
 	msg.type = MSG_KEY_DOWN;
 	msg.param = charcode[shift][data];
+    //cprintf("data: %d, value: %d\n",data,msg.param);
 	if (shift)
 		shift = 0;
-    cprintf("sending message!\n");
+    //cprintf("sending message!\n");
 	sendMessage(wndList.head, &msg);
-    cprintf("kdb message sent!\n");
+    //cprintf("kdb message sent!\n");
 
 }
 

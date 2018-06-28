@@ -130,8 +130,8 @@ static uchar normalMap[256] =
 
 static uchar e0Map[256] =
 {
-	[0x48] VK_UP,[0x4B] VK_LEFT,
-	[0x50] VK_DOWN,[0x4D] VK_RIGHT
+    [0x48] VK_UP,     [0x4B] VK_LEFT,
+    [0x50] VK_DOWN,   [0x4D] VK_RIGHT
 };
 
 void kbdInterupt();

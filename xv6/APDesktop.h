@@ -13,9 +13,8 @@
 #include "APLib.h"
 #include "APWindow.h"
 
-
-void desktopInitStringFigure();
 void runApp(void * param);
-
+//character_move
+int judgeGridWalkable(int x, int y, AHwnd hwnd);
 
 #endif

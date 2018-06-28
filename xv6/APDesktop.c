@@ -1,28 +1,5 @@
 #include "APDesktop.h"
 
-
-
-void desktopInitStringFigure()
-{
-    printf(1, "init ASCII\n");
-    int fd = open("ASCII", O_RDONLY);
-    if (fd < 0)
-    {
-        printf(1, "Cannot open file\n");
-        return;
-    }
-    char * ASCII = (char *)malloc(sizeof(char) * ASCII_SIZE);
-    read(fd, ASCII, sizeof(char) * ASCII_SIZE);
-    close(fd);
-    printf(1, "read ASCII complete\n");
-    
-    initStringFigure(0, 0, ASCII, ASCII_SIZE);
-    //free(GBK2312);
-    free(ASCII);
-    printf(1, "init string figure complete\n");
-}
-
-
 void runApp(void * param)
 {
     int pid = fork();
@@ -39,27 +16,27 @@ void runApp(void * param)
 //16x11
 int desktop_layout[GRID_H_NUMBER][GRID_W_NUMBER]=
 {
-    {GRID_RIVER,GRID_RIVER,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_FOREST,
+    {GRID_RIVER,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_FOREST,
     GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_FOREST},
     {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_FOREST,
     GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_FOREST},
-    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+    {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
     {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_LAKE,GRID_ROAD,
         GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
-    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+    {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
     {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
         GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
-    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+    {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
     {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,
         GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_MOUNTAIN,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
-    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_STONE,GRID_WALL,
+    {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_STONE,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_STONE,GRID_STONE},
     {GRID_GRASS,GRID_GRASS,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_MOUNTAIN,GRID_ROAD,GRID_ROAD,
         GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
-    {GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
+    {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL}
 };
 
@@ -70,8 +47,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     //printf(1,"desktop processing!\n");
     switch(msg.type)
     {
-	case MSG_DRAWMAINWINDOW:
-            return False;
+
         case MSG_INIT:
             //init
             for (int j = 0; j < GRID_H_NUMBER; j++)
@@ -80,6 +56,8 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                 for (int i = 0; i< GRID_W_NUMBER; i++)
                     hwnd->Grid[off + i] = desktop_layout[j][i];
             }
+            hwnd->pos_x = 3;
+            hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);
             return False;
@@ -87,11 +65,28 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             APGridPaint(hwnd);
             break;
         case MSG_KEY_DOWN:
-            printf(1,"kbd message received!\n");
+            //printf(1,"kbd message received!\n");
             switch (msg.param)
         {
             case VK_RIGHT:
-                changePosition(VK_RIGHT,0);
+                if (hwnd->pos_x < GRID_W_NUMBER - 1 && judgeGridWalkable(hwnd->pos_x + 1,hwnd->pos_y,hwnd))
+                    hwnd->pos_x++;
+                changePosition(hwnd->pos_x,hwnd->pos_y,1);
+                break;
+            case VK_LEFT:
+                if (hwnd->pos_x > 0 && judgeGridWalkable(hwnd->pos_x - 1 ,hwnd->pos_y,hwnd))
+                    hwnd->pos_x--;
+                changePosition(hwnd->pos_x,hwnd->pos_y,0);
+                break;
+            case VK_UP:
+                if (hwnd->pos_y > 0 && judgeGridWalkable(hwnd->pos_x ,hwnd->pos_y - 1,hwnd))
+                    hwnd->pos_y--;
+                changePosition(hwnd->pos_x,hwnd->pos_y,2);
+                break;
+            case VK_DOWN:
+                if (hwnd->pos_y < GRID_H_NUMBER - 1 && judgeGridWalkable(hwnd->pos_x ,hwnd->pos_y + 1,hwnd))
+                    hwnd->pos_y++;
+                changePosition(hwnd->pos_x,hwnd->pos_y,2);
                 break;
             default:break;
         }
@@ -101,15 +96,33 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     return APWndProc(hwnd, msg);
 }
 
+int judgeGridWalkable(int x,int y, AHwnd hwnd)
+{
+    if (hwnd->is_grid)
+    {
+        int index = hwnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER + y * GRID_W_NUMBER + x;
+        switch(hwnd->Grid[index])
+        {
+                
+            case GRID_WALL : return 0;
+            case GRID_ROAD : return 1;
+            case GRID_GRASS : return 1;
+            case GRID_RIVER : return 0;
+            case GRID_FOREST: return 0;
+            case GRID_STONE: return 1;
+            case GRID_MOUNTAIN: return 0;
+            case GRID_LAKE: return 0;
+            default: return 1;
+        }
+    }
+    return 0;
+}
+
 int main(void)
 {
-    desktopInitStringFigure();
-runApp("Snack ");
- printf(1,"Snack running\n");
-   // AHwnd r = APCreateWindow("desktop",True,3);
-   // AHwnd hwnd = r;
-    //printf(1,"desktop initialized!\n");
-    //APWndExec(hwnd, wndProc);
-	
+    AHwnd r = APCreateWindow("desktop",True,3);
+    AHwnd hwnd = r;
+    printf(1,"desktop initialized!\n");
+    APWndExec(hwnd, wndProc);
     exit();
 }

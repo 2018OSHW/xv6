@@ -252,6 +252,11 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
     }
 }
 
+void APDrawText(AHdc hdc, char * str, int x, int y)
+{
+}
+
+
 //--------------------------Dc operation-----------------------------------
 void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor trans)
 {

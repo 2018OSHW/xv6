@@ -69,7 +69,7 @@ trap(struct trapframe *tf)
     // Bochs generates spurious IDE1 interrupts.
     break;
   case T_IRQ0 + IRQ_KBD:
-    cprintf("kbd pressed!\n");
+    //cprintf("kbd pressed!\n");
     kbdintr();
     lapiceoi();
     break;

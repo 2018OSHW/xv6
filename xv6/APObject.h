@@ -101,6 +101,9 @@ typedef struct AWindow
     int *Grid;
     int total_page;
     int cur_page;
+    //character_position
+    int pos_x;
+    int pos_y;
     //Non-Grid mode
     ADc wholeDc;
     

@@ -16,7 +16,6 @@ void APSendMessage(AHwnd hwnd, AMessage msg)
 }
 
 
-
 AHwnd APCreateWindow(char * title,int is_map,int page)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
@@ -53,6 +52,8 @@ AHwnd APCreateWindow(char * title,int is_map,int page)
         r->Grid = (int*)malloc(sizeof(int) * GRID_W_NUMBER * GRID_H_NUMBER * page);
         r->total_page = page;
         r->cur_page = 0;
+        r->pos_x = 0;
+        r->pos_y = 0;
     }
     else
     {
@@ -74,7 +75,8 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
     {
         case MSG_PAINT:
             //printf(1,"paint!\n");
-            paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
+            paintWindow(hwnd, 0, 0, &hwnd->TitleDc, 0, 0, hwnd->TitleDc.size.cx, hwnd->TitleDc.size.cy,False,hwnd->pos_x,hwnd->pos_y);
+            paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid,hwnd->pos_x,hwnd->pos_y);
             //printf(1,"paint finished!\n");
             break;
         default: break;
@@ -149,8 +151,8 @@ void APGridPaint(AHwnd wnd)
         return;
     }
     
+    //Grid part
     int index = wnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER,start = index;
-    
     for (int j = 0; j < GRID_H_NUMBER; j++)
     {
         for (int i = 0; i < GRID_W_NUMBER;i++)
@@ -195,4 +197,13 @@ void APGridPaint(AHwnd wnd)
             }
         }
     }
+    //Title Part
+    APen pen;
+    ABrush brush;
+    pen.color = RGB(0x18,0x74,0xcd);
+    pen.size = 1;
+    brush.color = RGB(0x18,0x74,0xcd);
+    APSetPen(&wnd->TitleDc,pen);
+    APSetBrush(&wnd->TitleDc,brush);
+    APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
 }
