@@ -411,14 +411,17 @@ int sys_changePosition(void)
     //cprintf("in changePosition\n");
     if (x != VK_NULL)
     {
+        character_pre_y = character_y;
         character_pre_x = character_x;
         if (x == VK_RIGHT)
             character_x++;
         else
             character_x--;
     }
+    
     if (y!= VK_NULL)
     {
+        character_pre_x = character_x;
         character_pre_y = character_y;
         if (y == VK_UP)
             character_y--;
