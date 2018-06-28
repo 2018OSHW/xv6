@@ -414,9 +414,9 @@ int sys_changePosition(void)
         character_pre_y = character_y;
         character_pre_x = character_x;
         
-        if (x == VK_RIGHT)
+        if (x == VK_RIGHT && character_x < GRID_W_NUMBER - 1 && judgeGridWalkable(character_x+1,character_y, hwnd))
             character_x++;
-        else
+        else if (x == VK_LEFT && character_x > 0 && judgeGridWalkable(character_x-1,character_y, hwnd))
             character_x--;
     }
     
@@ -424,10 +424,10 @@ int sys_changePosition(void)
     {
         character_pre_x = character_x;
         character_pre_y = character_y;
-        if (y == VK_UP)
-            character_y--;
-        else
+        if (y == VK_DOWN && character_y < GRID_H_NUMBER - 1 && judgeGridWalkable(character_x,character_y+1,hwnd))
             character_y++;
+        else if (y == VK_UP && character_y > 0 && judgeGridWalkable(character_x,character_y-1,hwnd))
+            character_y--;
     }
    
     APDrawCharacter(True);
@@ -436,9 +436,23 @@ int sys_changePosition(void)
 
 int judgeGridWalkable(int x,int y, AHwnd hwnd)
 {
-    return 1;
-    
-    
+    if (hwnd->is_grid)
+    {
+        int index = hwnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER + y * GRID_W_NUMBER + x;
+        switch(hwnd->Grid[index])
+        {
+
+            case GRID_WALL : return 0;
+            case GRID_ROAD : return 1;
+            case GRID_GRASS : return 1;
+            case GRID_RIVER : return 0;
+            case GRID_FOREST: return 0;
+            case GRID_STONE: return 1;
+            case GRID_MOUNTAIN: return 0;
+            case GRID_LAKE: return 0;
+            default: return 1;
+        }
+    }
 }
 
 
