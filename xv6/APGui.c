@@ -409,7 +409,7 @@ int sys_changePosition(void)
     
     cprintf("in changePosition\n");
     int x_min = 0,y_min = 0,x_max = 0,y_max = 0;
-    if (x != 0)
+    if (x != VK_NULL)
     {
         character_pre_x = character_x;
         if (x == VK_RIGHT)
@@ -425,7 +425,7 @@ int sys_changePosition(void)
             x_min = character_x;
         }
     }
-    if (y!=0)
+    if (y!= VK_NULL)
     {
         character_pre_y = character_y;
         if (y == VK_UP)
