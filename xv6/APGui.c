@@ -423,7 +423,7 @@ int sys_changePosition(void)
         else
             character_y++;
     }
-    APBufPaint(character_pre_x*GRID_WIDTH, character_pre_y*GRID_WIDTH + WND_TITLE_HEIGHT,character_pre_x*GRID_WIDTH+GRID_WIDTH, character_pre_y*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
+    APBufPaint(character_x*GRID_WIDTH, character_y*GRID_WIDTH + WND_TITLE_HEIGHT,character_x*GRID_WIDTH+GRID_WIDTH, character_y*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
     return 0;
 }
 
