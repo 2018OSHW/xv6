@@ -87,6 +87,19 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         case MSG_PAINT:
             APGridPaint(hwnd);
             break;
+        case MSG_KEY_DOWN:
+            switch (msg.param)
+        {
+            case VK_RIGHT:
+                if (character_x < GRID_W_NUMBER - 1)
+                {
+                    character_pre_x = character_x;
+                    character_x++;
+                }
+                break;
+            default:break;
+        }
+            break;
         default: break;
             
             
