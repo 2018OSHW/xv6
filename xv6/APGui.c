@@ -417,7 +417,7 @@ int sys_changePosition(void)
 {
     int x,y,d;
     if (argint(0, &x) < 0 || argint(1, &y) < 0 || argint(2, &d) < 0)
-        return -1;s
+        return -1;
     
     //cprintf("in changePosition\n");
     character_pre_y = character_y;
