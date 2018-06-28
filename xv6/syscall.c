@@ -105,6 +105,7 @@ extern int sys_initStringFigure(void);
 extern int sys_sendMessage(void);
 extern int sys_getMessage(void);
 extern int sys_registWindow(void);
+extern int sys_changePosition(void);
 
 
 static int (*syscalls[])(void) = {
@@ -135,6 +136,7 @@ static int (*syscalls[])(void) = {
 [SYS_sendMessage]  sys_sendMessage,
 [SYS_registWindow] sys_registWindow,
 [SYS_getMessage] sys_getMessage,
+[SYS_changePosition] sys_changePosition,
     
 };
 

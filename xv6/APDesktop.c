@@ -87,6 +87,16 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         case MSG_PAINT:
             APGridPaint(hwnd);
             break;
+        case MSG_KEY_DOWN:
+            printf(1,"kbd message received!\n");
+            switch (msg.param)
+        {
+            case VK_RIGHT:
+                changePosition(VK_RIGHT,0);
+                break;
+            default:break;
+        }
+            break;
         default: break;
             
             

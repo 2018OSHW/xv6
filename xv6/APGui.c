@@ -19,8 +19,8 @@ AColor character_img2[GRID_WIDTH][GRID_WIDTH];
 
 
 //index of character in the grid
-int character_pre_x = 1, character_pre_y = 1;
-int character_x = 1,character_y = 1;
+int character_pre_x, character_pre_y = 1;
+int character_x,character_y = 1;
 
 
 void APCharacterMove(int direction)
@@ -412,7 +412,31 @@ int sys_paintWindow(void)
     return 0;
 }
 
+int sys_changePosition(void)
+{
+    int x,y;
+    if (argint(0, &x) < 0 || argint(1, &y) < 0)
+        return -1;
     
+    if (x != 0)
+    {
+        character_pre_x = character_x;
+        if (x == VK_RIGHT)
+            character_x++;
+        else
+            character_x--;
+    }
+    if (y!=0)
+    {
+        character_pre_y = character_y;
+        if (y == VK_UP)
+            character_y--;
+        else
+            character_y++;
+    }
+    return 0;
+}
+
 
 char GBK2312[GBK2312_SIZE];
 char ASCII[ASCII_SIZE];

@@ -30,6 +30,7 @@ void initStringFigure(void *, int, void *, int);
 void sendMessage(int, struct AMessage*);
 void getMessage(void *);
 void registWindow(void *);
+void changePosition(int, int);
 
 // ulib.c
 int stat(char*, struct stat*);

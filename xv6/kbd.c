@@ -50,6 +50,7 @@ void kbdInterupt()
 	if (shift)
 		shift = 0;
 	sendMessage(wndList.head, &msg);
+    cprintf("kdb message sent!\n");
 
 }
 
