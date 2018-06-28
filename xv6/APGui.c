@@ -415,19 +415,17 @@ int sys_paintWindow(void)
 
 int sys_changePosition(void)
 {
-    int x,y;
-    if (argint(0, &x) < 0 || argint(1, &y) < 0)
-        return -1;
+    int x,y,d;
+    if (argint(0, &x) < 0 || argint(1, &y) < 0 || argint(2, &d) < 0)
+        return -1;s
     
     //cprintf("in changePosition\n");
     character_pre_y = character_y;
     character_pre_x = character_x;
     character_x = x;
     character_y = y;
-    if (character_x > character_pre_x)
-        direction = 1;
-    else if (character_x < character_pre_x)
-        direction = 0;
+    if (d != 2)
+        direction = d;
     APDrawCharacter(True);
     return 0;
 }

@@ -30,7 +30,7 @@ void paintWindow(void *, int, int, void *, int, int, int, int ,int,int,int);
 void sendMessage(int, struct AMessage*);
 void getMessage(void *);
 void registWindow(void *);
-void changePosition(int, int);
+void changePosition(int, int, int);
 
 // ulib.c
 int stat(char*, struct stat*);
