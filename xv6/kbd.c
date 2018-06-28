@@ -27,33 +27,33 @@ void kbdInterupt()
 	}
 
 	if (data == 0xE0) {
-		cprintf("kbd error data 0xE0\n");
+		//cprintf("kbd error data 0xE0\n");
 		shift = 1;
 		return;
 	}
 	else if (data & 0x80) {
 		// Key released
-        cprintf("key released!\n");
+        //cprintf("key released!\n");
 		data &= 0x7F;
 		AMessage msg;
 		msg.type = MSG_KEY_UP;
 		msg.param = charcode[shift][data];
 		if (shift)
 			shift = 0;
-        cprintf("sending message!\n");
+        //cprintf("sending message!\n");
 		sendMessage(wndList.head, &msg);
-        cprintf("kdb message sent!\n");
+        //cprintf("kdb message sent!\n");
 		return;
 	}
 	AMessage msg;
 	msg.type = MSG_KEY_DOWN;
 	msg.param = charcode[shift][data];
-    cprintf("%d\n",msg.param);
+    cprintf("data: %d, value: %d\n",data,msg.param);
 	if (shift)
 		shift = 0;
-    cprintf("sending message!\n");
+    //cprintf("sending message!\n");
 	sendMessage(wndList.head, &msg);
-    cprintf("kdb message sent!\n");
+    //cprintf("kdb message sent!\n");
 
 }
 

@@ -457,7 +457,7 @@ int sys_sendMessage(void)
     if (argint(0, &wndId) < 0 || argstr(1, (char**)&msg) < 0)
         return -1;
     
-    cprintf("in sys_sendMessage\n");
+    //cprintf("in sys_sendMessage\n");
     
     sendMessage(wndId, msg);
     return 0;
@@ -489,8 +489,8 @@ int sys_getMessage(void)
     //cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
     if (queue->head == queue->tail)
     {
-        cprintf("WND: %d is sleeping\n",wndId);
-        sleep((void *)pid,&wndList.data[wndId].lock);
+        //cprintf("WND: %d is sleeping\n",wndId);
+        //sleep((void *)pid,&wndList.data[wndId].lock);
     }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
     {
@@ -507,8 +507,8 @@ void sendMessage(int wndId, AMessage *msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
-    cprintf("in send Message\n");
-    cprintf("send message: WndID:%d \n",wndId);
+    //cprintf("in send Message\n");
+    //cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
 
@@ -518,12 +518,12 @@ void sendMessage(int wndId, AMessage *msg)
     AMsgQueue * queue = &wndList.data[wndId].msgQueue;
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
-    cprintf("message has entered the queue\n",wndId);
+    //cprintf("message has entered the queue\n",wndId);
     acquire(&wndList.data[wndId].lock);
-    cprintf("lock has acquired!\n");
-    wakeup((void *)wndList.data[wndId].hwnd->pid);
+    //cprintf("lock has acquired!\n");
+    //wakeup((void *)wndList.data[wndId].hwnd->pid);
     release(&wndList.data[wndId].lock);
-    cprintf("Wnd %d has waken up!\n",wndId);
+    //cprintf("Wnd %d has waken up!\n",wndId);
 }
 
 //------------------------------------------------------------------------------------

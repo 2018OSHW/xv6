@@ -130,13 +130,9 @@ static uchar normalMap[256] =
 
 static uchar e0Map[256] =
 {
-    [0x9C] '\r',      // KP_Enter
-    [0xB5] C('/'),    // KP_Div
-    [0xC8] KEY_UP,    [0xD0] KEY_DN,
-    [0xC9] KEY_PGUP,  [0xD1] KEY_PGDN,
-    [0xCB] KEY_LF,    [0xCD] KEY_RT,
-    [0x97] KEY_HOME,  [0xCF] KEY_END,
-    [0xD2] KEY_INS,   [0xD3] KEY_DEL
+    [0x48] VK_UP,     [0x4B] VK_LEFT,
+    [0x50] VK_DOWN,   [0x4D] VK_RIGHT,
+    [0x1C] VK_RETURN
 };
 
 void kbdInterupt();
