@@ -453,6 +453,7 @@ int judgeGridWalkable(int x,int y, AHwnd hwnd)
             default: return 1;
         }
     }
+    return 0;
 }
 
 
