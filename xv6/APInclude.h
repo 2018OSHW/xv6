@@ -101,8 +101,11 @@ enum Direction
 #define VK_ESC 0xE5
 #define VK_ENTER 0xE6
 
+//键盘常量
 
-//键盘常亮
-
+#define COLOR_NULL RGB(0x0c,0x0c,0x0c)
+#define COLOR_HEAD (0x00,0x80,0x00)
+#define COLOR_BODY (0x00,0xff,0xff)
+//颜色常量
 
 #endif
