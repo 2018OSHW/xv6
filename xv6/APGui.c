@@ -408,19 +408,18 @@ int sys_changePosition(void)
         return -1;
     
     //cprintf("in changePosition\n");
-    int x_min = character_x,y_min = character_y,x_max = character_x,y_max = character_y;
     if (x != VK_NULL)
     {
         character_pre_x = character_x;
         if (x == VK_RIGHT)
         {
             character_x++;
-            x_max = character_x;
+            
         }
         else
         {
             character_x--;
-            x_min = character_x;
+          
         }
     }
     if (y!= VK_NULL)
@@ -429,16 +428,17 @@ int sys_changePosition(void)
         if (y == VK_UP)
         {
             character_y--;
-            y_min = character_y;
+        
         }
         else
         {
             character_y++;
-            y_max = character_y;
+
         }
     }
    
-    APBufPaint(x_min*GRID_WIDTH, y_min*GRID_WIDTH + WND_TITLE_HEIGHT,x_max*GRID_WIDTH+GRID_WIDTH, y_max*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
+    APDrawCharacter(True);
+    //APBufPaint(x_min*GRID_WIDTH, y_min*GRID_WIDTH + WND_TITLE_HEIGHT,x_max*GRID_WIDTH+GRID_WIDTH, y_max*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
     //APBufPaint(0,0,screenWidth-1,screenHeight-1,True);
     return 0;
 }
