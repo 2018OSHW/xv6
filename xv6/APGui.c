@@ -442,7 +442,8 @@ int sys_changePosition(void)
         }
     }
    
-    APBufPaint(x_min*GRID_WIDTH, y_min*GRID_WIDTH + WND_TITLE_HEIGHT,x_max*GRID_WIDTH+GRID_WIDTH, y_max*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
+   // APBufPaint(x_min*GRID_WIDTH, y_min*GRID_WIDTH + WND_TITLE_HEIGHT,x_max*GRID_WIDTH+GRID_WIDTH, y_max*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
+    APBufPaint(0,0,screenWidth-1,screenHeight-1,True);
     return 0;
 }
 

@@ -70,9 +70,6 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     //printf(1,"desktop processing!\n");
     switch(msg.type)
     {
-	case MSG_DRAWMAINWINDOW:
-
-            return False;
         case MSG_INIT:
             //init
             for (int j = 0; j < GRID_H_NUMBER; j++)
@@ -107,8 +104,6 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         }
             break;
         default: break;
-            
-            
             
     }
     return APWndProc(hwnd, msg);
