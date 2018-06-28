@@ -33,5 +33,7 @@ void APDrawPoint(AHdc hdc, int x, int y);
 void APDrawLine(AHdc hdc, int x1, int y1, int x2, int y2);
 void APDrawRect(AHdc hdc, int x, int y, int w, int h);
 
+//draw text
+void APDrawText(AHdc hdc, char * str, int x, int y);
 
 #endif /* APPaint_h */

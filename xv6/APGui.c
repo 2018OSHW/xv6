@@ -432,30 +432,6 @@ int sys_changePosition(void)
     return 0;
 }
 
-
-char GBK2312[GBK2312_SIZE];
-char ASCII[ASCII_SIZE];
-
-int sys_initStringFigure(void)
-{
-    char * gbk2312 = 0;
-    int n1;
-    char * ascii = 0;
-    int n2;
-    if (argstr(0, (char **)&gbk2312) < 0 || argint(1, &n1) < 0 || argstr(2, (char **)&ascii) < 0 || argint(3, &n2) < 0)
-        return -1;
-    for (int i = 0; i < n1; i += 32)
-    {
-        for (int j = 0; j < 16; ++j)
-        {
-            GBK2312[i + j] = gbk2312[i + 2 * j];
-            GBK2312[i + 16 + j] = gbk2312[i + 2 * j + 1];
-        }
-    }
-    memmove(ASCII, ascii, sizeof(char) * n2);
-    return 0;
-}
-
 int sys_sendMessage(void)
 {
     int wndId = 0;

@@ -101,7 +101,6 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 
 extern int sys_paintWindow(void);
-extern int sys_initStringFigure(void);
 extern int sys_sendMessage(void);
 extern int sys_getMessage(void);
 extern int sys_registWindow(void);
@@ -132,7 +131,6 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
     
 [SYS_paintWindow]   sys_paintWindow,
-[SYS_initStringFigure]  sys_initStringFigure,
 [SYS_sendMessage]  sys_sendMessage,
 [SYS_registWindow] sys_registWindow,
 [SYS_getMessage] sys_getMessage,

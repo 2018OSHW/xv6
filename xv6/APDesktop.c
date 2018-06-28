@@ -1,28 +1,5 @@
 #include "APDesktop.h"
 
-
-
-void desktopInitStringFigure()
-{
-    printf(1, "init ASCII\n");
-    int fd = open("ASCII", O_RDONLY);
-    if (fd < 0)
-    {
-        printf(1, "Cannot open file\n");
-        return;
-    }
-    char * ASCII = (char *)malloc(sizeof(char) * ASCII_SIZE);
-    read(fd, ASCII, sizeof(char) * ASCII_SIZE);
-    close(fd);
-    printf(1, "read ASCII complete\n");
-    
-    initStringFigure(0, 0, ASCII, ASCII_SIZE);
-    //free(GBK2312);
-    free(ASCII);
-    printf(1, "init string figure complete\n");
-}
-
-
 void runApp(void * param)
 {
     int pid = fork();
@@ -151,7 +128,6 @@ int judgeGridWalkable(int x,int y, AHwnd hwnd)
 
 int main(void)
 {
-    desktopInitStringFigure();
     AHwnd r = APCreateWindow("desktop",True,3);
     AHwnd hwnd = r;
     printf(1,"desktop initialized!\n");

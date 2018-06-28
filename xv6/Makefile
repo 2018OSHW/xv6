@@ -175,7 +175,6 @@ UPROGS=\
     _APDesktop\
 
 APFILES=\
-    ASCII\
     grid_wall.bmp\
     grid_forest.bmp\
     grid_grass.bmp\
