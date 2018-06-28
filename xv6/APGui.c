@@ -423,6 +423,7 @@ int sys_changePosition(void)
         else
             character_y++;
     }
+    APBufPaint(character_pre_x*GRID_WIDTH, character_pre_y*GRID_WIDTH + WND_TITLE_HEIGHT,character_pre_x*GRID_WIDTH+GRID_WIDTH, character_pre_y*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
     return 0;
 }
 
@@ -571,7 +572,7 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
         list->data[list->head].prev = p;
     
     list->head = p;
-    cprintf("the wndlist head is %d\n",p);
+    //cprintf("the wndlist head is %d\n",p);
     release(&list->lock);
 }
 
@@ -662,7 +663,7 @@ void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg)
     //cprintf("MsgQueue-En-Queue:tail %d \n",queue->tail);
     queue->data[queue->tail] = msg;
     queue->tail = (queue->tail + 1) % MESSAGE_QUEUE_SIZE;
-    cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
+    //cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
 }
 
 //弹出消息队列顶端

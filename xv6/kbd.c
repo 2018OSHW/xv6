@@ -18,8 +18,8 @@ void kbdInterupt()
 
 	st = inb(KBSTATP);
 	data = inb(KBDATAP);
-	cprintf("state : %d\n", st);
-	cprintf("data  : %d\n", data);
+	//cprintf("state : %d\n", st);
+	//cprintf("data  : %d\n", data);
 	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
 	{
 		cprintf("kbdInterupt return : %d\n", st);

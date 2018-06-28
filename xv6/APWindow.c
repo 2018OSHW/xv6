@@ -16,7 +16,6 @@ void APSendMessage(AHwnd hwnd, AMessage msg)
 }
 
 
-
 AHwnd APCreateWindow(char * title,int is_map,int page)
 {
     AHwnd r = (AHwnd)malloc(sizeof(AWindow));
