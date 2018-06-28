@@ -91,11 +91,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             switch (msg.param)
         {
             case VK_RIGHT:
-                if (character_x < GRID_W_NUMBER - 1)
-                {
-                    character_pre_x = character_x;
-                    character_x++;
-                }
+                changePosition(VK_RIGHT,0);
                 break;
             default:break;
         }
