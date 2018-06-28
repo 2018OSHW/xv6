@@ -21,14 +21,22 @@
 #define DEFAULT_TITLE_COLOR 0x0000ff
 
 enum GRID {
+   //basic element
    GRID_WALL,
    GRID_ROAD,
    GRID_GRASS,
    GRID_RIVER,
+   GRID_FOREST,
+   GRID_STONE,
+   GRID_MOUNTAIN,
+   GRID_LAKE,
+    
+   //control level icon
    GRID_UP_1,
    GRID_DOWN_1,
+    
+   //program icon
    GRID_PROGRAM_SNAKE,
-   GRID_PALACE,
 };
 
 

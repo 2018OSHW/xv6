@@ -162,7 +162,10 @@ log_write(struct buf *b)
   int i;
 
   if (log.lh.n >= LOGSIZE || log.lh.n >= log.size - 1)
-    panic("too big a transaction");
+  {
+      cprintf("%d %d\n", log.lh.n, log.size);
+      panic("too big a transaction");
+  }
   if (!log.busy)
     panic("write outside of trans");
 

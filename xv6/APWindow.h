@@ -14,6 +14,18 @@
 //Icon on the desktop
 ABitmap grid_wall;
 AHdc g_wall;
+ABitmap grid_lake;
+AHdc g_lake;
+ABitmap grid_grass;
+AHdc g_grass;
+ABitmap grid_river;
+AHdc g_river;
+ABitmap grid_forest;
+AHdc g_forest;
+ABitmap grid_stone;
+AHdc g_stone;
+ABitmap grid_mountain;
+AHdc g_mountain;
 
 //start a program
 AHwnd APCreateWindow(char * title,int is_map,int page);
