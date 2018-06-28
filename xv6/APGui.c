@@ -456,6 +456,9 @@ int sys_sendMessage(void)
     AMessage * msg = 0;
     if (argint(0, &wndId) < 0 || argstr(1, (char**)&msg) < 0)
         return -1;
+    
+    cprintf("in sys_sendMessage\n");
+    
     sendMessage(wndId, msg);
     return 0;
 }
@@ -504,6 +507,7 @@ void sendMessage(int wndId, AMessage *msg)
 {
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
+    cprintf("in send Message\n");
     //cprintf("send message: WndID:%d \n",wndId);
     switch (msg->type)
     {
