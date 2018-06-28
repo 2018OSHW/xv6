@@ -32,8 +32,7 @@ void APTimerListAddToHead(ATimerList * list, int wndId, int id, int interval);
 void APTimerListRemoveWnd(ATimerList * list, int wndId);
 void APTimerListRemoveID(ATimerList * list, int wndId, int id);
 
-//character_move
-int judgeGridWalkable(int x, int y, AHwnd hwnd);
+
 
 
 

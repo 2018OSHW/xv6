@@ -78,6 +78,8 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                 for (int i = 0; i< GRID_W_NUMBER; i++)
                     hwnd->Grid[off + i] = desktop_layout[j][i];
             }
+            hwnd->pos_x = 3;
+            hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);
             return False;
@@ -89,16 +91,32 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             switch (msg.param)
         {
             case VK_RIGHT:
-                changePosition(VK_RIGHT,VK_NULL,hwnd);
+                if (hwnd->pos_x < GRID_W_NUMBER - 1 && judgeGridWalkable(hwnd->pos_x + 1,hwnd->pos_y,hwnd))
+                {
+                    hwnd->pos_x++;
+                    changePosition(hwnd->pos_x,hwnd->pos_y);
+                }
                 break;
             case VK_LEFT:
-                changePosition(VK_LEFT,VK_NULL,hwnd);
+                if (hwnd->pos_x > 0 && judgeGridWalkable(hwnd->pos_x - 1 ,hwnd->pos_y,hwnd))
+                {
+                    hwnd->pos_x--;
+                    changePosition(hwnd->pos_x,hwnd->pos_y);
+                }
                 break;
             case VK_UP:
-                changePosition(VK_NULL,VK_UP,hwnd);
+                if (hwnd->pos_y > 0 && judgeGridWalkable(hwnd->pos_x ,hwnd->pos_y - 1,hwnd))
+                {
+                    hwnd->pos_y--;
+                    changePosition(hwnd->pos_x,hwnd->pos_y);
+                }
                 break;
             case VK_DOWN:
-                changePosition(VK_NULL,VK_DOWN,hwnd);
+                if (hwnd->pos_y < GRID_H_NUMBER - 1 && judgeGridWalkable(hwnd->pos_x ,hwnd->pos_y + 1,hwnd))
+                {
+                    hwnd->pos_y++;
+                    changePosition(hwnd->pos_x,hwnd->pos_y);
+                }
                 break;
             default:break;
         }
@@ -107,6 +125,28 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             
     }
     return APWndProc(hwnd, msg);
+}
+
+int judgeGridWalkable(int x,int y, AHwnd hwnd)
+{
+    if (hwnd->is_grid)
+    {
+        int index = hwnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER + y * GRID_W_NUMBER + x;
+        switch(hwnd->Grid[index])
+        {
+                
+            case GRID_WALL : return 0;
+            case GRID_ROAD : return 1;
+            case GRID_GRASS : return 1;
+            case GRID_RIVER : return 0;
+            case GRID_FOREST: return 0;
+            case GRID_STONE: return 1;
+            case GRID_MOUNTAIN: return 0;
+            case GRID_LAKE: return 0;
+            default: return 1;
+        }
+    }
+    return 0;
 }
 
 int main(void)

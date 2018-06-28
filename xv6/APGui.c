@@ -19,13 +19,13 @@ AColor character_img2[GRID_WIDTH][GRID_WIDTH];
 
 
 //index of character in the grid
-int character_pre_x = 1, character_pre_y = 1;
+int character_pre_x = 0, character_pre_y = 0;
 int character_x = 1,character_y = 1;
 
 //character_move
 void APDrawCharacter(int is_grid)
 {
-    cprintf("in drawCharacter!\n");
+    //cprintf("in drawCharacter!\n");
     acquire(&screenLock);
     if (is_grid)
     {
@@ -333,18 +333,18 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
     release(&screenLock);
 }
 
-//paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h,is_grid)
+//paintwindow: (hwnd,wx,wy,hdc,sx,sy,w,h,is_grid,pos_x,pos_y)
 int sys_paintWindow(void)
 {
     //cprintf("in paintWindow function:---- 1  \n");
     AHwnd hwnd = 0;
     AHdc hdc = 0;
-    int wx,wy,sx,sy,w,h,is_grid;
+    int wx,wy,sx,sy,w,h,is_grid,pos_x,pos_y;
     //从控制台获取数据，并检验值是否合法
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &wx) < 0 || argint(2, &wy) < 0
         || argstr(3, (char **)&hdc) < 0 || argint(4, &sx) < 0
         || argint(5, &sy) < 0 || argint(6, &w) < 0 || argint(7, &h) < 0
-        || argint(8, &is_grid) < 0)
+        || argint(8, &is_grid) < 0 ||argint(9, &is_grid) < 0 || argint(10, &is_grid) < 0)
         return -1;
     
     if (sx < 0 || sy < 0 || h <= 0 || w <= 0 || sx + w > hdc->size.cx || sy + h > hdc->size.cy)
@@ -353,8 +353,9 @@ int sys_paintWindow(void)
     if (wx < 0 || wy < 0 || wx + w > screenWidth || wy + h > screenHeight)
         return 0;
     
+    character_x = pos_x;
+    character_y = pos_y;
     //wx,wy是window重绘左上角坐标
-    
     //int id = hwnd ->id;
     //cprintf("in paintWindow function:-----2  \n");
     AColor *data = hdc->content;
@@ -404,57 +405,19 @@ int sys_paintWindow(void)
 int sys_changePosition(void)
 {
     int x,y;
-    AHwnd hwnd;
-    if (argint(0, &x) < 0 || argint(1, &y) < 0 || argstr(0, (char **)&hwnd) < 0 )
+    if (argint(0, &x) < 0 || argint(1, &y) < 0)
         return -1;
     
     //cprintf("in changePosition\n");
-    if (x != VK_NULL)
-    {
-        character_pre_y = character_y;
-        character_pre_x = character_x;
-        
-        if (x == VK_RIGHT && character_x < GRID_W_NUMBER - 1 && judgeGridWalkable(character_x+1,character_y, hwnd))
-            character_x++;
-        else if (x == VK_LEFT && character_x > 0 && judgeGridWalkable(character_x-1,character_y, hwnd))
-            character_x--;
-    }
-    
-    if (y!= VK_NULL)
-    {
-        character_pre_x = character_x;
-        character_pre_y = character_y;
-        if (y == VK_DOWN && character_y < GRID_H_NUMBER - 1 && judgeGridWalkable(character_x,character_y+1,hwnd))
-            character_y++;
-        else if (y == VK_UP && character_y > 0 && judgeGridWalkable(character_x,character_y-1,hwnd))
-            character_y--;
-    }
-   
+    character_pre_y = character_y;
+    character_pre_x = character_x;
+    character_x = x;
+    character_y = y;
     APDrawCharacter(True);
     return 0;
 }
 
-int judgeGridWalkable(int x,int y, AHwnd hwnd)
-{
-    if (hwnd->is_grid)
-    {
-        int index = hwnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER + y * GRID_W_NUMBER + x;
-        switch(hwnd->Grid[index])
-        {
 
-            case GRID_WALL : return 0;
-            case GRID_ROAD : return 1;
-            case GRID_GRASS : return 1;
-            case GRID_RIVER : return 0;
-            case GRID_FOREST: return 0;
-            case GRID_STONE: return 1;
-            case GRID_MOUNTAIN: return 0;
-            case GRID_LAKE: return 0;
-            default: return 1;
-        }
-    }
-    return 0;
-}
 
 
 
