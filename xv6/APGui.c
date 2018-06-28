@@ -21,6 +21,8 @@ AColor character_img2[GRID_WIDTH][GRID_WIDTH];
 //index of character in the grid
 int character_pre_x = 0, character_pre_y = 0;
 int character_x = 1,character_y = 1;
+//0 -- left 1--right
+int direction = 1;
 
 //character_move
 void APDrawCharacter(int is_grid)
@@ -38,11 +40,16 @@ void APDrawCharacter(int is_grid)
             off += screenWidth;
         }
         off = (character_y * GRID_WIDTH + WND_TITLE_HEIGHT) * screenWidth + character_x * GRID_WIDTH;
+        
+        AColor *character;
+        if (direction == 1) character = character_img;
+        else if (direction == 0) character = character_img2;
+            
         for (int j = 0; j < GRID_WIDTH; j++)
         {
             for (int i = 0; i < GRID_WIDTH; i++)
             {
-                AColor c = character_img[i][j];
+                AColor c = character[i][j];
                 if (c.r != COLOR_TRANSPARENT || c.g != COLOR_TRANSPARENT || c.b != COLOR_TRANSPARENT)
                 {
                     screenBuf[off + i] = c;
@@ -278,7 +285,6 @@ void APGuiInit(void)
     screenBuf = screenAddr + screenWidth * screenHeight;
     screenContent = screenBuf + screenWidth * screenHeight;
     
-    
     cprintf("screen addr : %x, screen width : %d, screen height : %d, bitsPerPixel: %d \n",
             screenAddr, screenWidth,screenHeight,bitsPerPixel);
     
@@ -302,6 +308,10 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
     
     if (is_grid)
     {
+        AColor *character;
+        if (direction == 1) character = character_img;
+        else if (direction == 0) character = character_img2;
+        
         if (x1 <= character_x * GRID_WIDTH + GRID_WIDTH && x2 >= character_x * GRID_WIDTH
             && y1 <= character_y * GRID_WIDTH + GRID_WIDTH + WND_TITLE_HEIGHT && y2 >= character_y * GRID_WIDTH + WND_TITLE_HEIGHT)
         {
@@ -318,7 +328,7 @@ void APBufPaint(int x1,int y1,int x2,int y2,int is_grid)
                         continue;
                     if (character_x * GRID_WIDTH + i > x2)
                         break;
-                    AColor c = character_img[i][j];
+                    AColor c = character[i][j];
                     if (c.r != COLOR_TRANSPARENT || c.g!=COLOR_TRANSPARENT || c.b !=COLOR_TRANSPARENT)
                     {
                         screenBuf [off + i] = c;
@@ -413,12 +423,13 @@ int sys_changePosition(void)
     character_pre_x = character_x;
     character_x = x;
     character_y = y;
+    if (character_x > character_pre_x)
+        direction = 1;
+    else if (character_x < character_pre_x)
+        direction = 0;
     APDrawCharacter(True);
     return 0;
 }
-
-
-
 
 
 char GBK2312[GBK2312_SIZE];
@@ -503,12 +514,6 @@ void sendMessage(int wndId, AMessage *msg)
         return;
     //cprintf("in send Message\n");
     //cprintf("send message: WndID:%d \n",wndId);
-    switch (msg->type)
-    {
-
-    }
-
-
     AMsgQueue * queue = &wndList.data[wndId].msgQueue;
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
