@@ -43,7 +43,7 @@ void HandleInterupt()
 	AMessage msg;
 	msg.type = MSG_HANDLE_DOWN;
 	msg.param = 1;
-	sendMessage(wndList.entry,&msg);
+	sendMessage(wndList.head,&msg);
 	switch (data)
 	{
 		
