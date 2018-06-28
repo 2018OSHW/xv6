@@ -83,6 +83,16 @@ enum WndFocusState
     WFS_NO_FOCUS,
     WFS_CHILD_FOCUS
 };
+
+enum Direction
+{
+	Up,
+	Down,
+	Left,
+	Rights
+
+
+};
 #define VK_UP 0xE1
 #define VK_LEFT 0xE2
 #define VK_DOWN 0xE3
