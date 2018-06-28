@@ -84,6 +84,8 @@ enum WndFocusState
     WFS_NO_FOCUS,
     WFS_CHILD_FOCUS
 };
+
+#define VK_NULL 0
 #define VK_UP 1
 #define VK_LEFT 2
 #define VK_DOWN 3

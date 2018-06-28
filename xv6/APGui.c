@@ -407,23 +407,42 @@ int sys_changePosition(void)
     if (argint(0, &x) < 0 || argint(1, &y) < 0)
         return -1;
     
+    cprintf("in changePosition\n");
+    int x_min = 0,y_min = 0,x_max = 0,y_max = 0;
     if (x != 0)
     {
         character_pre_x = character_x;
         if (x == VK_RIGHT)
+        {
+            x_min = character_x;
             character_x++;
+            x_max = character_x;
+        }
         else
+        {
+            x_max = character_x;
             character_x--;
+            x_min = character_x;
+        }
     }
     if (y!=0)
     {
         character_pre_y = character_y;
         if (y == VK_UP)
+        {
+            y_max = character_y;
             character_y--;
+            y_min = character_y;
+        }
         else
+        {
+            y_min = character_y;
             character_y++;
+            y_max = character_y;
+        }
     }
-    APBufPaint(character_pre_x*GRID_WIDTH, character_pre_y*GRID_WIDTH + WND_TITLE_HEIGHT,character_x*GRID_WIDTH+GRID_WIDTH, character_y*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
+   
+    APBufPaint(x_min*GRID_WIDTH, y_min*GRID_WIDTH + WND_TITLE_HEIGHT,x_max*GRID_WIDTH+GRID_WIDTH, y_max*GRID_WIDTH + WND_TITLE_HEIGHT+GRID_WIDTH,True);
     return 0;
 }
 
