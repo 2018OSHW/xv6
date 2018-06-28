@@ -4,11 +4,18 @@
 #include "traps.h"
 #include "memlayout.h"
 #include "APHandle.h"
-#include "APInclude.h"
 #include "APObject.h"
+
+extern void sendMessage(int wndId,AMessage *msg);
+extern AWndList wndList;
 
 void InitHandle()
 {
+	outb(0x64,0x8a);
+	outb(0x64,0xd4);
+	outb(0x60,0xf4);
+	outb(0x64,0x60);
+	outb(0x60,0x47);
 	for (int i = 0; i < BtnNum; i++)
 	{
 		my_btn[i].state = Null;
@@ -21,18 +28,22 @@ void InitHandle()
 
 void HandleInterupt()
 {
-	uint state;
-	uint data;
+	uint state, data;
 
-	state = inb(HANDLESTAP);
-	if ((state & 0x01) == 0 || (state & 0x20) != 0)
+	state = inb(HANDLESTAP);	
+	cprintf("state : %d\n", state);
+	
+	/*if ((state & 0x01) == 0 || (state & 0x20) != 0)
 	{
-		//cprintf("kbdInterupt return : %d\n", st);
+		cprintf("HandleInterupt return : %d\n", state);
 		return;
-	}
+	}*/
 	data = inb(HANDLEATAP);
-	cprintf("%d",data);
+	cprintf("data  : %d\n", data);
 	AMessage msg;
+	msg.type = MSG_HANDLE_DOWN;
+	msg.param = 1;
+	sendMessage(wndList.entry,&msg);
 	switch (data)
 	{
 		

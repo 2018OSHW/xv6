@@ -4,6 +4,7 @@
 #include "kbd.h"
 #include "APObject.h"
 
+extern void sendMessage(int wndId,AMessage *msg);
 extern AWndList wndList;
 
 void kbdInterupt()
@@ -17,6 +18,8 @@ void kbdInterupt()
 
 	st = inb(KBSTATP);
 	data = inb(KBDATAP);
+	cprintf("state : %d\n", st);
+	cprintf("data  : %d\n", data);
 	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
 	{
 		//cprintf("kbdInterupt return : %d\n", st);
@@ -30,21 +33,20 @@ void kbdInterupt()
 	else if (data & 0x80) {
 		// Key released
 		data &= 0x7F;
-
-		AMessage *msg;
-		msg->type = MSG_KEY_UP;
-		msg->param = charcode[shift][data];
+		AMessage msg;
+		msg.type = MSG_KEY_UP;
+		msg.param = charcode[shift][data];
 		if (shift)
 			shift = 0;
-		sendMessage(wndList.entry, msg);
+		sendMessage(wndList.entry, &msg);
 		return;
 	}
-	AMessage *msg;
-	msg->type = MSG_KEY_DOWN;
-	msg->param = charcode[shift][data];
+	AMessage msg;
+	msg.type = MSG_KEY_DOWN;
+	msg.param = charcode[shift][data];
 	if (shift)
 		shift = 0;
-	sendMessage(wndList.entry, msg);
+	sendMessage(wndList.entry, &msg);
 
 }
 

@@ -70,6 +70,9 @@ void            kinit2(void*, void*);
 // kbd.c
 void            kbdintr(void);
 
+//APHandle.c
+void 		HandleInterupt(void );
+
 // lapic.c
 int             cpunum(void);
 extern volatile uint*    lapic;

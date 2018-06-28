@@ -6,6 +6,8 @@
 
 #define TICKS_INTERVAL2 20
 
+#include "APInclude.h"
+
 enum BtnState
 {
 	BtnDown,
@@ -36,7 +38,7 @@ enum BtnMessage
 
 enum BtnType
 {
-	BtnD,
+	BtnW,
 	BtnA,
 	BtnS,
 	BtnD,

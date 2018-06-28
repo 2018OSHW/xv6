@@ -116,9 +116,9 @@ static uchar normalMap[256] =
 {
 	NO,   VK_ESC, NO,  NO,  NO,  NO,  NO,  NO,  // 0x00
 	NO,  NO,  NO,  NO,  NO,  NO, NO, NO,
-	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x10
-	NO,   NO, NO,  NO,  VK_ENTER, NO,  NO,  NO, 
-	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x20
+	NO,   'w', NO,  NO,  NO,  NO,  NO,  NO,   // 0x10
+	NO,   NO, NO,  NO,  VK_ENTER, NO,  'a',  's', 
+	'd',   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x20
 	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,
 	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,   // 0x30
 	NO,   NO, NO,  NO,  NO,  NO,  NO,  NO,
