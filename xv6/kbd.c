@@ -22,16 +22,18 @@ void kbdInterupt()
 	cprintf("data  : %d\n", data);
 	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
 	{
-		//cprintf("kbdInterupt return : %d\n", st);
+		cprintf("kbdInterupt return : %d\n", st);
 		return;
 	}
 
 	if (data == 0xE0) {
+		cprintf("kbd error data 0xE0\n");
 		shift = 1;
 		return;
 	}
 	else if (data & 0x80) {
 		// Key released
+                cprintf("key released!\n");
 		data &= 0x7F;
 		AMessage msg;
 		msg.type = MSG_KEY_UP;
@@ -47,7 +49,7 @@ void kbdInterupt()
 	if (shift)
 		shift = 0;
 	sendMessage(wndList.head, &msg);
-    cprintf("kdb message sent!\n");
+    	cprintf("kdb message sent!\n");
 
 }
 
