@@ -29,6 +29,7 @@ OBJS = \
 	vectors.o\
 	vm.o\
     APGui.o\
+    APGui.c\
 
 # Cross-compiling (e.g., on Mac OS X)
 #TOOLPREFIX = i386-jos-elf-
