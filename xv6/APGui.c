@@ -284,7 +284,6 @@ void APGuiInit(void)
     
     initlock(&screenLock,"sreenLock");
     APCharacterInit();
-    
 }
 
 //将左上角坐标为(x1,y1),右下角坐标为(x2,y2)的矩形区域从Buf绘制到屏幕上
@@ -405,7 +404,8 @@ int sys_paintWindow(void)
 int sys_changePosition(void)
 {
     int x,y;
-    if (argint(0, &x) < 0 || argint(1, &y) < 0)
+    AHwnd hwnd;
+    if (argint(0, &x) < 0 || argint(1, &y) < 0 || argstr(0, (char **)&hwnd) < 0 )
         return -1;
     
     //cprintf("in changePosition\n");
@@ -413,6 +413,7 @@ int sys_changePosition(void)
     {
         character_pre_y = character_y;
         character_pre_x = character_x;
+        
         if (x == VK_RIGHT)
             character_x++;
         else
@@ -432,6 +433,14 @@ int sys_changePosition(void)
     APDrawCharacter(True);
     return 0;
 }
+
+int judgeGridWalkable(int x,int y, AHwnd hwnd)
+{
+    return 1;
+    
+    
+}
+
 
 
 char GBK2312[GBK2312_SIZE];

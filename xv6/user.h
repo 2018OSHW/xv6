@@ -1,6 +1,7 @@
 
 struct stat;
 struct AMessage;
+struct AWindow;
 // system calls
 int fork(void);
 int exit(void) __attribute__((noreturn));
@@ -30,7 +31,7 @@ void initStringFigure(void *, int, void *, int);
 void sendMessage(int, struct AMessage*);
 void getMessage(void *);
 void registWindow(void *);
-void changePosition(int, int);
+void changePosition(int, int,struct AWindow*);
 
 // ulib.c
 int stat(char*, struct stat*);

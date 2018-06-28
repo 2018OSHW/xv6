@@ -89,16 +89,16 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             switch (msg.param)
         {
             case VK_RIGHT:
-                changePosition(VK_RIGHT,VK_NULL);
+                changePosition(VK_RIGHT,VK_NULL,hwnd);
                 break;
             case VK_LEFT:
-                changePosition(VK_LEFT,VK_NULL);
+                changePosition(VK_LEFT,VK_NULL,hwnd);
                 break;
             case VK_UP:
-                changePosition(VK_NULL,VK_UP);
+                changePosition(VK_NULL,VK_UP,hwnd);
                 break;
             case VK_DOWN:
-                changePosition(VK_NULL,VK_DOWN);
+                changePosition(VK_NULL,VK_DOWN,hwnd);
                 break;
             default:break;
         }
