@@ -150,8 +150,8 @@ void APGridPaint(AHwnd wnd)
         return;
     }
     
+    //Grid part
     int index = wnd->cur_page * GRID_W_NUMBER * GRID_H_NUMBER,start = index;
-    
     for (int j = 0; j < GRID_H_NUMBER; j++)
     {
         for (int i = 0; i < GRID_W_NUMBER;i++)
@@ -196,4 +196,13 @@ void APGridPaint(AHwnd wnd)
             }
         }
     }
+    //Title Part
+    APen pen;
+    ABrush brush;
+    pen.color = RGB(0x18,0x74,0xcd);
+    pen.size = 1;
+    brush.color = RGB(0x18,0x74,0xcd);
+    APSetPen(&wnd->TitleDc,pen);
+    APSetBrush(&wnd->TitleDc,brush);
+    APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
 }
