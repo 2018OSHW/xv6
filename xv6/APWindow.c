@@ -77,6 +77,20 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
             paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid);
             //printf(1,"paint finished!\n");
             break;
+        case MSG_KEYDOWN:
+            int par = msg.param;
+            switch (par)
+            {
+                case VK_RIGHT:
+                    if (character_x < GRID_W_NUMBER - 1)
+                    {
+                        character_pre_x = character_x;
+                        character_x++;
+                    }
+                    break;
+                default:break;
+            }
+            break;
         default: break;
             
             
