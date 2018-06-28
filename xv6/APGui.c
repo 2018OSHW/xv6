@@ -414,13 +414,11 @@ int sys_changePosition(void)
         character_pre_x = character_x;
         if (x == VK_RIGHT)
         {
-            x_min = character_x;
             character_x++;
             x_max = character_x;
         }
         else
         {
-            x_max = character_x;
             character_x--;
             x_min = character_x;
         }
@@ -430,13 +428,11 @@ int sys_changePosition(void)
         character_pre_y = character_y;
         if (y == VK_UP)
         {
-            y_max = character_y;
             character_y--;
             y_min = character_y;
         }
         else
         {
-            y_min = character_y;
             character_y++;
             y_max = character_y;
         }
