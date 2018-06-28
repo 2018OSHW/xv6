@@ -67,9 +67,6 @@ AHwnd APCreateWindow(char * title,int is_map,int page)
     return r;
 }
 
-extern int character_pre_x, character_pre_y;
-extern int character_x,character_y;
-
 bool APWndProc(AHwnd hwnd, AMessage msg)
 {
     //printf(1,"start window processing!\n");
