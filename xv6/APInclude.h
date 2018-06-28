@@ -85,15 +85,7 @@ enum WndFocusState
     WFS_CHILD_FOCUS
 };
 
-enum Direction
-{
-	Up,
-	Down,
-	Left,
-	Rights
 
-
-};
 
 #define VK_NULL 0
 #define VK_UP 1
@@ -105,8 +97,5 @@ enum Direction
 
 //键盘常量
 
-#define COLOR_HEAD (0x00,0x80,0x00)
-#define COLOR_BODY (0x00,0xff,0xff)
-//颜色常量
 
 #endif

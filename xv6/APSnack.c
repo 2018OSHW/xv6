@@ -5,21 +5,21 @@ APoint nextpoint(APoint p,int direction)
 APoint output;
 switch(direction)
 {
-	case UP:
+	case Up:
 		output.x = p.x;
 		output.y = p.y - 1;
 		break;
-	case DOWN:
+	case Down:
 		output.x = p.x;
 		output.y = p.y + 1;
 		break;
 
-	case LEFT:
+	case Left:
 		output.x = p.x - 1;
 		output.y = p.y;
 		break;
 
-	case RIGHT:
+	case Right:
 		output.x = p.x + 1;
 		output.y = p.y;
 		break;
@@ -38,8 +38,7 @@ void Move()
 	{
 		int tem = my_block[tail.x][tail.y];
 		my_block[tail.x][tail.y] = 0;
-		tail = nextpoint(tail,tem);
-	
+		tail = nextpoint(tail,tem);	
 	}//no food
 	else
 	{
@@ -50,80 +49,64 @@ void Move()
 //tail
 }
 
-bool wndProc(AHwnd hwnd,AMessage msg)
-{
-switch(msg.type)
-{
-case MSG_INIT:
-init(hwnd);
-AMessage ms;
-ms.type = MSG_PAINT;
-            APSendMessage(hwnd,ms);
 
-return False;
-	case MSG_TIMEOUT:
-	timerUpdate(hwnd);
-	break;
-	case MSG_KEY_DOWN:
-	keydown(hwnd);
-	break;
-	case MSG_PAINT:
-	draw(hwnd);
-	break;
-	default:
-	break;
-}
-return APWndExec(hwnd,msg);
-
-}
 
 int main(void)
 {
 	
 	AHwnd hwnd = APCreateWindow("snack",False,0);
-	printf("snack created.\n");
+	printf(1,"snack created.\n");
 	APWndExec(hwnd,wndProc);
 	exit();
 }
 
 void init(AHwnd hwnd)
 {
-	random(getTime());
+	random(10);
 	for (int i = 0;i < BLOCK_NUM_X;i++)
 	{
 		for (int j = 0;j <BLOCK_NUM_Y;j++)
 		{
 			my_block[i][j] = 0;
+			my_food[i][j] = 0;
 
 		}
 
 	}
 	for (int i = 0;i < 5;i++)
 	{
-		my_block[i][0] = RIGHT;
+		my_block[i][0] = Right;
 	}
 	head.x = 4;
 	head.y = 0;
 	tail.x = tail.y = 0;
-	current_position = current_position_copy = RIGHT;
-	updateStart();
-	APInvalidate(hwnd);
+	current_direction = current_direction_copy = Right;
+status = Run;
+	updateFood();
+	AMessage msg;
+	msg.type = MSG_PAINT;
+	msg.param = 0;
+	APSendMessage(hwnd,msg);
 
 }
 
 void timerUpdate(AHwnd hwnd)
 {
-	if (Is_Dead)
+	if (Is_Dead())
 	{
-		cprintf("Dead!");
+status = Dead;
+		printf(1,"Dead!");
 		killTimer(hwnd,2);
 
 	}
 	else
 	{
 		Move();
-		updateFood();
-
+		if (!updateFood())
+{
+printf(1,"win");
+init(hwnd);
+}
 	}
 
 
@@ -134,23 +117,37 @@ void keyDown(AHwnd hwnd,AMessage msg)
 switch (msg.param)
 {
 case VK_UP:
-if (current_direction_copy == LEFT || current_direction_copy == RIGHT)
-	current_direction = UP;
+if (current_direction_copy == Left || current_direction_copy == Right)
+	current_direction = Up;
 break;
 case VK_DOWN:
-if (current_direction_copy == LEFT || current_direction_copy == RIGHT)
-	current_direction = DOWN;
+if (current_direction_copy == Left || current_direction_copy == Right)
+	current_direction = Down;
 break;
 case VK_LEFT:
-if (current_direction_copy == UP || current_direction_copy == DOWN)
-	current_direction = LEFT;
+if (current_direction_copy == Up || current_direction_copy == Down)
+	current_direction = Left;
 break;
 case VK_RIGHT:
-if (current_direction_copy == UP || current_direction_copy == DOWN)
-	current_direction = RIGHT;
+if (current_direction_copy == Up || current_direction_copy == Down)
+	current_direction = Right;
 break;
 case VK_ESC:
+switch(status)
+{
+case Run:
+status = Pause;
+break;
+case Pause:
+status = Run;
+break;
+case Dead:
+init(hwnd);
+break;
+default:
+break;
 
+}
 break;
 default:
 break;
@@ -161,7 +158,7 @@ break;
 
 void draw(AHwnd hwnd)
 {
-	AHdc hdc = APGetDc(hwnd);
+	AHdc hdc = &(hwnd->Dc);
 	ABrush brush;
 
 	for (int i = 0;i <BLOCK_NUM_X;i++)
@@ -176,7 +173,7 @@ void draw(AHwnd hwnd)
 			}//background
 			else
 			{
-				if (head->x == i && head->y == j)
+				if (head.x == i && head.y == j)
 				{
 					brush.color = COLOR_HEAD;
 				}
@@ -195,7 +192,7 @@ void draw(AHwnd hwnd)
 
 bool Is_Dead()
 {
-	APoint p = nextpoint(head,current_position);
+	APoint p = nextpoint(head,current_direction);
 if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
 {
 return True;
@@ -206,12 +203,12 @@ return True;
 }
 else
 {
-retuirn False;
+return False;
 }
 
 }
 
-bool updateStart()
+bool updateFood()
 {
 bool sta = false;
 for (int i = 0;i < BLOCK_NUM_X;i++)
@@ -237,8 +234,40 @@ while(true)
 {
 int i = random(0) % BLOCK_NUM_X;
 int j = random(0) % BLOCK_NUM_Y;
+if (my_food[i][j] == 0)
+{
+	my_food[i][j] = 1;
+return true;
+}
 
 }
 
+
+}
+
+bool wndProc(AHwnd hwnd,AMessage msg)
+{
+switch(msg.type)
+{
+case MSG_INIT:
+init(hwnd);
+AMessage ms;
+ms.type = MSG_PAINT;
+            APSendMessage(hwnd,ms);
+
+return False;
+	case MSG_TIMEOUT:
+	timerUpdate(hwnd);
+	break;
+	case MSG_KEY_DOWN:
+	keyDown(hwnd,msg);
+	break;
+	case MSG_PAINT:
+	draw(hwnd);
+	break;
+	default:
+	break;
+}
+return APWndProc(hwnd,msg);
 
 }

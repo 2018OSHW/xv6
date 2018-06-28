@@ -9,9 +9,30 @@
 #include "APLib.h"
 #include "APWindow.h"
 
+enum Direction
+{
+	Up,
+	Down,
+	Left,
+	Right
+};
+
+enum Status
+{
+	Run,
+	Pause,
+	Dead
+};
+
+int status;
+
 #define BLOCK_WIDTH 10
 #define BLOCK_NUM_X 30
 #define BLOCK_NUM_Y 30
+
+#define COLOR_HEAD RGB(0,128,0)
+#define COLOR_BODY RGB(0,255,255)
+//颜色常量
 
 int my_block[BLOCK_NUM_X][BLOCK_NUM_Y];//0->background;UP,Down,Left,RIGHT->direction;
 bool my_food[BLOCK_NUM_X][BLOCK_NUM_Y];//0->no food
@@ -24,18 +45,19 @@ APoint nextpoint(APoint p,int direction);
 
 
 void Move();
-bool wndProc(AHwnd hwnd,AMessage msg);
 void init(AHwnd hwnd);
 void timerUpdate(AHwnd hwnd);
 
 void keyDown(AHwnd hwnd,AMessage msg);
 
 void draw(AHwnd hwnd);
+bool wndProc(AHwnd hwnd,AMessage msg);
+
 
 
 
 bool Is_Dead();
 
-void updateFood();
+bool updateFood();
 
 #endif

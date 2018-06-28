@@ -207,3 +207,4 @@ void APGridPaint(AHwnd wnd)
     APSetBrush(&wnd->TitleDc,brush);
     APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
 }
+
