@@ -34,6 +34,6 @@ void APTimerListRemoveWnd(ATimerList * list, int wndId);
 void APTimerListRemoveID(ATimerList * list, int wndId, int id);
 
 //index of character in the grid
-int character_pre_x = 1, character_pre_y = 1;
-int character_x = 1,character_y = 1;
+extern int character_pre_x, character_pre_y = 1;
+extern int character_x,character_y = 1;
 #endif

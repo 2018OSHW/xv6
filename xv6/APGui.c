@@ -18,7 +18,8 @@ AColor character_img[GRID_WIDTH][GRID_WIDTH];
 AColor character_img2[GRID_WIDTH][GRID_WIDTH];
 
 
-
+int character_pre_x = 1, character_pre_y = 1;
+int character_x = 1,character_y = 1;
 
 //character_move
 void APDrawCharacter(int is_grid)
