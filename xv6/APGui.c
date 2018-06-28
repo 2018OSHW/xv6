@@ -661,7 +661,7 @@ void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg)
     //cprintf("MsgQueue-En-Queue:tail %d \n",queue->tail);
     queue->data[queue->tail] = msg;
     queue->tail = (queue->tail + 1) % MESSAGE_QUEUE_SIZE;
-    //cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
+    cprintf("MsgQueue-En-Queue:after add tail %d \n",queue->tail);
 }
 
 //弹出消息队列顶端
