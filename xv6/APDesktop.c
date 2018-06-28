@@ -69,34 +69,23 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         {
             case VK_RIGHT:
                 if (hwnd->pos_x < GRID_W_NUMBER - 1 && judgeGridWalkable(hwnd->pos_x + 1,hwnd->pos_y,hwnd))
-                {
                     hwnd->pos_x++;
-                    changePosition(hwnd->pos_x,hwnd->pos_y,1);
-                }
                 break;
             case VK_LEFT:
                 if (hwnd->pos_x > 0 && judgeGridWalkable(hwnd->pos_x - 1 ,hwnd->pos_y,hwnd))
-                {
                     hwnd->pos_x--;
-                    changePosition(hwnd->pos_x,hwnd->pos_y,0);
-                }
                 break;
             case VK_UP:
                 if (hwnd->pos_y > 0 && judgeGridWalkable(hwnd->pos_x ,hwnd->pos_y - 1,hwnd))
-                {
                     hwnd->pos_y--;
-                    changePosition(hwnd->pos_x,hwnd->pos_y,2);
-                }
                 break;
             case VK_DOWN:
                 if (hwnd->pos_y < GRID_H_NUMBER - 1 && judgeGridWalkable(hwnd->pos_x ,hwnd->pos_y + 1,hwnd))
-                {
                     hwnd->pos_y++;
-                    changePosition(hwnd->pos_x,hwnd->pos_y,2);
-                }
                 break;
             default:break;
         }
+            changePosition(hwnd->pos_x,hwnd->pos_y,0);
             break;
         default: break;
             
