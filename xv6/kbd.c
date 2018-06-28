@@ -40,7 +40,9 @@ void kbdInterupt()
 		msg.param = charcode[shift][data];
 		if (shift)
 			shift = 0;
+        cprintf("sending message!\n");
 		sendMessage(wndList.head, &msg);
+        cprintf("kdb message sent!\n");
 		return;
 	}
 	AMessage msg;
@@ -48,8 +50,9 @@ void kbdInterupt()
 	msg.param = charcode[shift][data];
 	if (shift)
 		shift = 0;
+    cprintf("sending message!\n");
 	sendMessage(wndList.head, &msg);
-    	cprintf("kdb message sent!\n");
+    cprintf("kdb message sent!\n");
 
 }
 
