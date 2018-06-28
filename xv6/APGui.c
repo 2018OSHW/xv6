@@ -423,6 +423,7 @@ int sys_changePosition(void)
         else
             character_y++;
     }
+    return 0;
 }
 
 
