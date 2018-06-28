@@ -72,10 +72,10 @@ trap(struct trapframe *tf)
     kbdintr();
     lapiceoi();
     break;
-  case T_IRQ0 + IRQ_HANDLE:
+  //case T_IRQ0 + IRQ_HANDLE:
     //HandleInterupt();
     //lapiceoi();
-    break;
+   // break;
   case T_IRQ0 + IRQ_COM1:
     uartintr();
     lapiceoi();
