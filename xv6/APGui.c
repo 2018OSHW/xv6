@@ -519,7 +519,9 @@ void sendMessage(int wndId, AMessage *msg)
     msg->wndID = wndId;
     APMsgQueueEnQueue(queue, *msg);
     cprintf("message has entered the queue\n",wndId);
+    acquire(&wndList.data[wndId].lock);
     wakeup((void *)wndList.data[wndId].hwnd->pid);
+    release(&wndList.data[wndId].lock);
     cprintf("Wnd %d has waken up!\n",wndId);
 }
 
