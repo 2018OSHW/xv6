@@ -42,11 +42,8 @@ void kbdInterupt()
 		msg.param = charcode[shift][data];
 		if (shift)
 			shift = 0;
-<<<<<<< HEAD
 
-=======
         cprintf("sending message!\n");
->>>>>>> 03b83f342a0109f3803f85ce808689003b44bec5
 		sendMessage(wndList.head, &msg);
         cprintf("kdb message sent!\n");
 		return;

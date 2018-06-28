@@ -73,19 +73,17 @@ trap(struct trapframe *tf)
     kbdintr();
     lapiceoi();
     break;
-<<<<<<< HEAD
 //  case T_IRQ0 + IRQ_HANDLE:
 
     //HandleInterupt();
     //lapiceoi();
   //  break;
-=======
+
   case T_IRQ0 + IRQ_MOUSE:
     //HandleInterupt();
     //lapiceoi();
      cprintf("mouse clicked!\n");
      break;
->>>>>>> 03b83f342a0109f3803f85ce808689003b44bec5
   case T_IRQ0 + IRQ_COM1:
     uartintr();
     lapiceoi();

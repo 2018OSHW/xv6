@@ -20,4 +20,6 @@
 
 void sprintf(char * dst, char * fmt, ...);
 
+int random(int);
+
 #endif /* APLib_h */

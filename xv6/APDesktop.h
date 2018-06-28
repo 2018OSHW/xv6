@@ -14,7 +14,6 @@
 #include "APWindow.h"
 
 
-
 void desktopInitStringFigure();
 void runApp(void * param);
 

@@ -7,6 +7,21 @@
 
 #include "APLib.h"
 
+int random(int seed)
+{
+static int rand_num = 3;
+if (seed > 0)
+{
+rand_num = seed;
+}
+rand_num *= 3;
+if (rand_num < 0)
+{
+rand_num *= (-1);
+}
+return rand_num % 997;
+}
+
 static void
 sprintint(char * dst, int * j, int xx, int base, int sgn, int size)
 {

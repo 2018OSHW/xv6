@@ -172,6 +172,8 @@ UPROGS=\
 	_wc\
 	_zombie\
     _APDesktop\
+	_APSnack\
+	
 
 APFILES=\
     ASCII\

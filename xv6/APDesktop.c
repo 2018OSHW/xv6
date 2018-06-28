@@ -71,7 +71,6 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     switch(msg.type)
     {
 	case MSG_DRAWMAINWINDOW:
-
             return False;
         case MSG_INIT:
             //init
@@ -98,9 +97,6 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         }
             break;
         default: break;
-            
-            
-            
     }
     return APWndProc(hwnd, msg);
 }
@@ -108,9 +104,12 @@ bool wndProc(AHwnd hwnd, AMessage msg)
 int main(void)
 {
     desktopInitStringFigure();
-    AHwnd r = APCreateWindow("desktop",True,3);
-    AHwnd hwnd = r;
-    printf(1,"desktop initialized!\n");
-    APWndExec(hwnd, wndProc);
+runApp("Snack ");
+ printf(1,"Snack running\n");
+   // AHwnd r = APCreateWindow("desktop",True,3);
+   // AHwnd hwnd = r;
+    //printf(1,"desktop initialized!\n");
+    //APWndExec(hwnd, wndProc);
+	
     exit();
 }

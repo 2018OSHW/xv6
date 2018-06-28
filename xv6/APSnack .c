@@ -26,8 +26,6 @@ switch(direction)
 	default:
 		output = p;
 		break;
-
-
 }
 return output;
 }
@@ -47,6 +45,7 @@ void Move()
 	{
 		my_food[head.x][head.y] = False;
 	}
+	current_direction_copy = current_direction;
 
 //tail
 }
@@ -55,20 +54,24 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 {
 switch(msg.type)
 {
-case MSG_TIMEOUT:
-timeUpdate(hwnd);
-break;
-case MSG_KEY_DOWN:
-keydown(hwnd);
-break;
-case MSG_PAINT:
-draw(hwnd);
-break;
-case MSG_CREATE:
+case MSG_INIT:
 init(hwnd);
-break;
-default:
-break;
+AMessage ms;
+ms.type = MSG_PAINT;
+            APSendMessage(hwnd,ms);
+
+return False;
+	case MSG_TIMEOUT:
+	timerUpdate(hwnd);
+	break;
+	case MSG_KEY_DOWN:
+	keydown(hwnd);
+	break;
+	case MSG_PAINT:
+	draw(hwnd);
+	break;
+	default:
+	break;
 }
 return APWndExec(hwnd,msg);
 
@@ -76,11 +79,16 @@ return APWndExec(hwnd,msg);
 
 int main(void)
 {
-	if (my_snack != NULL)
-	{
-		free my_snack;
+	
+	AHwnd hwnd = APCreateWindow("snack",False,0);
+	printf("snack created.\n");
+	APWndExec(hwnd,wndProc);
+	exit();
+}
 
-	}
+void init(AHwnd hwnd)
+{
+	random(getTime());
 	for (int i = 0;i < BLOCK_NUM_X;i++)
 	{
 		for (int j = 0;j <BLOCK_NUM_Y;j++)
@@ -96,21 +104,58 @@ int main(void)
 	}
 	head.x = 4;
 	head.y = 0;
-	tail.x = tail.y = 0; 
-	AHwnd hwnd = APCreateWindow("snack",false,3);
-	printf("snack created.\n");
-	APWndExec(hwnd,wndProc);
-	exit();
+	tail.x = tail.y = 0;
+	current_position = current_position_copy = RIGHT;
+	updateStart();
+	APInvalidate(hwnd);
+
+}
+
+void timerUpdate(AHwnd hwnd)
+{
+	if (Is_Dead)
+	{
+		cprintf("Dead!");
+		killTimer(hwnd,2);
+
+	}
+	else
+	{
+		Move();
+		updateFood();
+
+	}
 
 
 }
 
-void init(AHwnd hwnd)
+void keyDown(AHwnd hwnd,AMessage msg)
 {
-	
+switch (msg.param)
+{
+case VK_UP:
+if (current_direction_copy == LEFT || current_direction_copy == RIGHT)
+	current_direction = UP;
+break;
+case VK_DOWN:
+if (current_direction_copy == LEFT || current_direction_copy == RIGHT)
+	current_direction = DOWN;
+break;
+case VK_LEFT:
+if (current_direction_copy == UP || current_direction_copy == DOWN)
+	current_direction = LEFT;
+break;
+case VK_RIGHT:
+if (current_direction_copy == UP || current_direction_copy == DOWN)
+	current_direction = RIGHT;
+break;
+case VK_ESC:
 
-//AP
+break;
+default:
+break;
 
+}
 
 }
 
@@ -151,13 +196,49 @@ void draw(AHwnd hwnd)
 bool Is_Dead()
 {
 	APoint p = nextpoint(head,current_position);
+if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
+{
+return True;
+}
 	if (my_block[p.x][p.y] != 0)
 {
-return true;
+return True;
 }
 else
 {
-retuirn false;
+retuirn False;
 }
+
+}
+
+bool updateStart()
+{
+bool sta = false;
+for (int i = 0;i < BLOCK_NUM_X;i++)
+{
+	for (int j = 0;j < BLOCK_NUM_Y;j++)
+	{
+		if (my_block[i][j] == 0 && my_food[i][j] == 0)
+		{
+			sta = true;
+			break;
+		}
+	}
+	if (sta == true)
+	{
+		break;
+	}
+}
+if (sta == false)
+{
+return sta;
+}
+while(true)
+{
+int i = random(0) % BLOCK_NUM_X;
+int j = random(0) % BLOCK_NUM_Y;
+
+}
+
 
 }
