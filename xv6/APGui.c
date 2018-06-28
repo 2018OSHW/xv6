@@ -489,7 +489,7 @@ int sys_getMessage(void)
     //cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
     if (queue->head == queue->tail)
     {
-        cprintf("sleeping\n");
+        cprintf("WND: %d is sleeping\n",wndId);
         sleep((void *)pid,&wndList.data[wndId].lock);
     }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
@@ -520,7 +520,7 @@ void sendMessage(int wndId, AMessage *msg)
     APMsgQueueEnQueue(queue, *msg);
     cprintf("message has entered the queue\n",wndId);
     wakeup((void *)wndList.data[wndId].hwnd->pid);
-    cprintf("has waken up!\n");
+    cprintf("Wnd %d has waken up!\n",wndId);
 }
 
 //------------------------------------------------------------------------------------
