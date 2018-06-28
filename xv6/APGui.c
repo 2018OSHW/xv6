@@ -489,7 +489,7 @@ int sys_getMessage(void)
     //cprintf("head:%d,tail:%d \n",queue->head,queue->tail);
     if (queue->head == queue->tail)
     {
-       // cprintf("sleeping\n");
+        cprintf("sleeping\n");
         sleep((void *)pid,&wndList.data[wndId].lock);
     }
     if (wndList.data[wndId].hwnd->msg.type == MSG_NULL)
