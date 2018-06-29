@@ -56,7 +56,6 @@ void Move()
 
 int main(void)
 {
-	
 	AHwnd hwnd = APCreateWindow("snack",False,0);
 	printf(1,"snack created.\n");
 	APWndExec(hwnd,wndProc);
@@ -152,9 +151,8 @@ break;
 }
 break;
 case VK_ESC:
-        
-        
-break;
+        removeWindow(hwnd->id);
+        return True;
 default:
 break;
 
