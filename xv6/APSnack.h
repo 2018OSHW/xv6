@@ -11,6 +11,7 @@
 
 enum Direction
 {
+	NoDir,
 	Up,
 	Down,
 	Left,
@@ -27,11 +28,13 @@ enum Status
 int status;
 
 #define BLOCK_WIDTH 10
-#define BLOCK_NUM_X 30
-#define BLOCK_NUM_Y 30
+#define BLOCK_NUM_X 80
+#define BLOCK_NUM_Y 55
 
+#define COLOR_BACK RGB(0,255,0)
 #define COLOR_HEAD RGB(0,128,0)
 #define COLOR_BODY RGB(0,255,255)
+#define COLOR_FOOD RGB(255,0,0)
 //颜色常量
 
 int my_block[BLOCK_NUM_X][BLOCK_NUM_Y];//0->background;UP,Down,Left,RIGHT->direction;
