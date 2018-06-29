@@ -89,7 +89,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                 changePosition(hwnd->pos_x,hwnd->pos_y,2);
                 break;
             case VK_ENTER:
-                if (hwnd->Grid[pos_x][pos_y] == GRID_PROGRAM_SNAKE)
+                if (hwnd->Grid[hwnd->pos_x][hwnd->pos_y] == GRID_PROGRAM_SNAKE)
                     runApp("Snack");
                 break;
             default:break;
