@@ -1,5 +1,6 @@
 #include "APMagicTower.h"
 
+int FirstTime = 1;
 
 APoint nextpoint(APoint p,int direction)
 {
@@ -55,7 +56,7 @@ switch(msg.param)
 		temp = nextpoint(position,Right);
 		break;
 	case VK_ESC:
-
+        removeWindow(hwnd->id);
 		return ;
 	default:
 		break;
@@ -203,7 +204,6 @@ void init(AHwnd hwnd)
 
  background = APLoadBitmap ("background.bmp");
  wall = APLoadBitmap ("wall.bmp");
- monster1 = APLoadBitmap ("monster1.bmp");
  monster2 = APLoadBitmap ("monster2.bmp");
  monster3 = APLoadBitmap ("monster3.bmp");
  valiant = APLoadBitmap ("valiant.bmp");
@@ -219,11 +219,30 @@ void init(AHwnd hwnd)
  lblood = APLoadBitmap ("lblood.bmp");
  attack = APLoadBitmap ("attack.bmp");
  defend = APLoadBitmap ("defend.bmp");
+ monster1 = APLoadBitmap ("monster1.bmp");
+
 	//bitmap init	
 	AMessage msg;
 	msg.type = MSG_PAINT;
 	msg.param = 0;
 	APSendMessage(hwnd,msg);
+    
+   if (FirstTime)
+   {
+       FirstTime = 0;
+       APen pen;
+       ABrush brush;
+       pen.color = RGB(0x18,0x74,0xcd);
+       pen.size = 1;
+       brush.color = RGB(0x18,0x74,0xcd);
+       APSetPen(&hwnd->TitleDc,pen);
+       APSetBrush(&hwnd->TitleDc,brush);
+       APDrawRect(&hwnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+       AFont font;
+       font.color = RGB(0x08,0x08,0x08);
+       APSetFont(&hwnd->TitleDc,font);
+       APDrawText(&hwnd->TitleDc,hwnd->title,20,20);
+   }
 
 }
 
@@ -286,12 +305,13 @@ for (int j = 0;j < BLOCK_NUM_Y;j++)
 drawone(hwnd,i,j);
 }
 }
+    
 
 }
 
 void drawone(AHwnd hwnd,int i,int j)
 {
-printf(1,"draw one:%d\n",++con);
+//printf(1,"draw one:%d\n",++con);
 ABitmap temp;
 switch(my_tower[floor][i][j])
 {
@@ -394,7 +414,9 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 {
 	switch(msg.type)
 	{
-		    case MSG_INIT:
+        case MSG_ESC:
+            return True;
+        case MSG_INIT:
 			
 		    init(hwnd);
 			printf(1,"init finished");
