@@ -145,18 +145,16 @@ case VK_ENTER:
     {
         case Run:
             status = Pause;
-            AMessage msg_word;
-            msg_word.type = MSG_WORD;
-            msg_word.word = "Pause! Press ENTER to continue";
-            APSendMessage(hwnd,msg_word);
+            msg.type = MSG_WORD;
+            msg.word = "Pause! Press ENTER to continue";
+            APSendMessage(hwnd,msg);
             deleteTimer(hwnd,1);
             break;
         case Pause:
             status = Run;
-            AMessage msg_word;
-            msg_word.type = MSG_WORD;
-            msg_word.word = "Running! Press ENTER to pause";
-            APSendMessage(hwnd,msg_word);
+            msg.type = MSG_WORD;
+            msg.word = "Running! Press ENTER to pause";
+            APSendMessage(hwnd,msg);
             break;
         case Dead:
             init(hwnd);
