@@ -184,24 +184,24 @@ APFILES=\
     grid_stone.bmp\
     grid_lake.bmp\
     grid_mountain.bmp\
-background.bmp\
- wall.bmp\
-monster1.bmp\
- monster2.bmp\
-monster3.bmp\
- valiant.bmp\
-yellowdoor.bmp\
-bluedoor.bmp\
- reddoor.bmp\
-upstair.bmp\
-downstair.bmp\
-yellowkey.bmp\
-bluekey.bmp\
-redkey.bmp\
- sblood.bmp\
- lblood.bmp\
- attack1.bmp\
- defend.bmp\	
+    background.bmp\
+    wall.bmp\
+    monster1.bmp\
+    monster2.bmp\
+    monster3.bmp\
+    valiant.bmp\
+    yellowdoor.bmp\
+    bluedoor.bmp\
+    reddoor.bmp\
+    upstair.bmp\
+    downstair.bmp\
+    yellowkey.bmp\
+    bluekey.bmp\
+    redkey.bmp\
+    sblood.bmp\
+    lblood.bmp\
+    attack1.bmp\
+    defend.bmp\	
 
 
 fs.img: mkfs README $(APFILES) $(UPROGS)
