@@ -32,17 +32,20 @@ return output;
 
 void Move()
 {
+printf(1,"current_direction:%d\n",current_direction);
+	my_block[head.x][head.y] = current_direction;//head
 	head  = nextpoint(head,current_direction);
 	my_block[head.x][head.y] = current_direction;//head
 	if (my_food[head.x][head.y] == 0)
 	{
 		int tem = my_block[tail.x][tail.y];
-		my_block[tail.x][tail.y] = 0;
+		my_block[tail.x][tail.y] = NoDir;
 		tail = nextpoint(tail,tem);	
 	}//no food
 	else
 	{
-		my_food[head.x][head.y] = False;
+		my_food[head.x][head.y] = 0;
+		updateFood();
 	}
 	current_direction_copy = current_direction;
 
@@ -67,7 +70,7 @@ void init(AHwnd hwnd)
 	{
 		for (int j = 0;j <BLOCK_NUM_Y;j++)
 		{
-			my_block[i][j] = 0;
+			my_block[i][j] = NoDir;
 			my_food[i][j] = 0;
 
 		}
@@ -77,15 +80,17 @@ void init(AHwnd hwnd)
 	{
 		my_block[i][0] = Right;
 	}
+	updateFood();updateFood();updateFood();updateFood();updateFood();
 	head.x = 4;
 	head.y = 0;
 	tail.x = tail.y = 0;
 	current_direction = current_direction_copy = Right;
-    status = Run;
+    	status = Run;
 	updateFood();
 	AMessage msg;
 	msg.type = MSG_PAINT;
 	msg.param = 0;
+	setupTimer(hwnd,1,800);
 	APSendMessage(hwnd,msg);
 
 }
@@ -94,40 +99,39 @@ void timerUpdate(AHwnd hwnd)
 {
 	if (Is_Dead())
 	{
-status = Dead;
+		status = Dead;
 		printf(1,"Dead!");
 		deleteTimer(hwnd,1);
 	}
 	else
 	{
 		Move();
-		if (!updateFood())
-{
-printf(1,"win");
-init(hwnd);
-}
 	}
-
 
 }
 
 void keyDown(AHwnd hwnd,AMessage msg)
 {
+printf(1,"msg.param received:%d\n",msg.param);
 switch (msg.param)
 {
 case VK_UP:
+printf(1,"Up Key pressed");
 if (current_direction_copy == Left || current_direction_copy == Right)
 	current_direction = Up;
 break;
 case VK_DOWN:
+printf(1,"Down Key pressed");
 if (current_direction_copy == Left || current_direction_copy == Right)
 	current_direction = Down;
 break;
 case VK_LEFT:
+printf(1,"Left Key pressed");
 if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Left;
 break;
 case VK_RIGHT:
+printf(1,"Right Key pressed");
 if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Right;
 break;
@@ -165,9 +169,9 @@ void draw(AHwnd hwnd)
 
 		for (int j = 0;j < BLOCK_NUM_Y;j++)
 		{
-			if (my_block[i][j] == 0)
+			if (my_block[i][j] == NoDir)
 			{
-				brush.color = COLOR_NULL;
+				brush.color = COLOR_BACK;
 
 			}//background
 			else
@@ -176,6 +180,10 @@ void draw(AHwnd hwnd)
 					brush.color = COLOR_HEAD;
 				else
 					brush.color = COLOR_BODY;
+			}
+			if (my_food[i][j] == 1)
+			{
+				brush.color = COLOR_FOOD;
 			}
 			APSetBrush(hdc,brush);
 			APDrawRect(hdc,i * BLOCK_WIDTH,j*BLOCK_WIDTH,BLOCK_WIDTH,BLOCK_WIDTH);
@@ -188,7 +196,7 @@ bool Is_Dead()
 	APoint p = nextpoint(head,current_direction);
     if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
         return True;
-	if (my_block[p.x][p.y] != 0)
+	if (my_block[p.x][p.y] != NoDir)
         return True;
     else
         return False;
@@ -201,7 +209,7 @@ for (int i = 0;i < BLOCK_NUM_X;i++)
 {
 	for (int j = 0;j < BLOCK_NUM_Y;j++)
 	{
-		if (my_block[i][j] == 0 && my_food[i][j] == 0)
+		if (my_block[i][j] == NoDir && my_food[i][j] == NoDir)
 		{
 			sta = true;
 			break;
@@ -240,10 +248,16 @@ switch(msg.type)
     AMessage ms;
     ms.type = MSG_PAINT;
     APSendMessage(hwnd,ms);
-    setupTimer(hwnd,1,100);
+    
     return False;
 	case MSG_TIMEOUT:
+if (status != Run)
+	break;
 	timerUpdate(hwnd);
+	AMessage msg1;
+	msg1.type = MSG_PAINT;
+	msg1.param = 0;
+	APSendMessage(hwnd,msg1);
 	break;
 	case MSG_KEY_DOWN:
 	keyDown(hwnd,msg);

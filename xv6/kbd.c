@@ -20,7 +20,7 @@ void kbdInterupt()
 	data = inb(KBDATAP);
 
 	//cprintf("state : %d\n", st);
-	//cprintf("data  : %d\n", data);
+	cprintf("data  : %d\n", data);
 	if ((st & KBS_DIB) == 0 || (st & 0x20) != 0)
 	{
 		//cprintf("kbdInterupt return : %d\n", st);
@@ -51,7 +51,7 @@ void kbdInterupt()
 	AMessage msg;
 	msg.type = MSG_KEY_DOWN;
 	msg.param = charcode[shift][data];
-    //cprintf("data: %d, value: %d\n",data,msg.param);
+	cprintf("msg.param send:%d\n",msg.param);
 	if (shift)
 		shift = 0;
     //cprintf("sending message!\n");
