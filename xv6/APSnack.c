@@ -247,6 +247,7 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 switch(msg.type)
 {
     case MSG_ESC:
+        removeWindow(hwnd->id);
         return True;
     case MSG_INIT:
     init(hwnd);
