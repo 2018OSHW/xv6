@@ -107,6 +107,7 @@ extern int sys_registWindow(void);
 extern int sys_changePosition(void);
 extern int sys_setupTimer(void);
 extern int sys_deleteTimer(void);
+extern int sys_getTime(void);
 
 
 static int (*syscalls[])(void) = {
@@ -139,6 +140,7 @@ static int (*syscalls[])(void) = {
 [SYS_changePosition] sys_changePosition,
 [SYS_setupTimer] sys_setupTimer,
 [SYS_deleteTimer] sys_deleteTimer,
+[SYS_getTime] sys_getTime,
     
 };
 

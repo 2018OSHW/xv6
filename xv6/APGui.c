@@ -681,7 +681,10 @@ void TimerCount()
         {
             timerList.data[p].count = 0;
             AMessage msg;
-            msg.type = MSG_TIMEOUT;
+            if (timerList.data[p].id == 0)
+                msg.type = MSG_TIME_SECOND;
+            else
+                msg.type = MSG_TIMEOUT;
             sendMessage(timerList.data[p].wndId,&msg);
         }
         p = timerList.data[p].next;
@@ -805,6 +808,25 @@ void sys_deleteTimer(void)
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &id) < 0)
         return ;
     APTimerListRemoveID(&timerList,hwnd->id,id);
+}
+
+int sys_getTime(void)
+{
+    uint t = 0;
+    outb(0x70, 0x00);
+    uchar d = inb(0x71);
+    uchar n = (d >> 4) * 10 + (d & 0xf);
+    t |= (n & 0xff);
+    outb(0x70, 0x02);
+    d = inb(0x71);
+    n = (d >> 4) * 10 + (d & 0xf);
+    t |= ((n & 0xff) << 8);
+    outb(0x70, 0x04);
+    d = inb(0x71);
+    n = (d >> 4) * 10 + (d & 0xf);
+    n = (n + 8) % 24;
+    t |= (n << 16);
+    return t;
 }
 
 

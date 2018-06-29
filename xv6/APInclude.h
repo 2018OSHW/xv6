@@ -63,6 +63,7 @@ enum MSG {
     MSG_INIT,
     MSG_PAINT,
     MSG_TIMEOUT,
+    MSG_TIME_SECOND,
 
 	MSG_KEY_UP,
 	MSG_KEY_DOWN,

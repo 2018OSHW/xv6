@@ -47,7 +47,6 @@ bool wndProc(AHwnd hwnd, AMessage msg)
     //printf(1,"desktop processing!\n");
     switch(msg.type)
     {
-
         case MSG_INIT:
             //init
             for (int j = 0; j < GRID_H_NUMBER; j++)
@@ -60,6 +59,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);
+            setupTimer(hwnd,0,1000);
             return False;
         case MSG_PAINT:
             APGridPaint(hwnd);
@@ -91,6 +91,10 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             default:break;
         }
             break;
+        case MSG_TIME_SECOND:
+            uint t = getTime();
+            printf(1,"time is %d\n",t);
+            
         default: break;
     }
     return APWndProc(hwnd, msg);
