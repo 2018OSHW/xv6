@@ -9,7 +9,7 @@
 #include "APLib.h"
 #include "APWindow.h"
 
-#define BLOCK_WIDTH 40
+#define BLOCK_WIDTH 32
 #define BLOCK_NUM_X 20
 #define BLOCK_NUM_Y 12
 
@@ -23,7 +23,7 @@
 #define FLOOR_NUM 3
 enum Bmp
 {
-	Backgroud,
+	Background,
 	Wall,
 	Monster1,
 	Monster2,
@@ -36,23 +36,33 @@ enum Bmp
 	DownStair,
 	YellowKey,
 	BlueKey,
-	RedKey
+	RedKey,
+	SBlood,
+	LBlood,
+	Attack,
+	Defend
 };
 
-ABitmap background = APLoadBitmap ("background.bmp");
-ABitmap wall = APLoadBitmap ("wall.bmp");
-ABitmap monster1 = APLoadBitmap ("monster1.bmp");
-ABitmap monster2 = APLoadBitmap ("monster2.bmp");
-ABitmap monster3 = APLoadBitmap ("monster3.bmp");
-ABitmap valiant = APLoadBitmap ("valiant.bmp");
-ABitmap yellowdoor = APLoadBitmap ("yellowdoor.bmp");
-ABitmap bluedoor = APLoadBitmap ("bluedoor.bmp");
-ABitmap reddoor = APLoadBitmap ("reddoor.bmp");
-ABitmap upstair = APLoadBitmap ("upstair.bmp");
-ABitmap downstair = APLoadBitmap ("downstair.bmp");
-ABitmap yellowkey = APLoadBitmap ("yellowkey.bmp");
-ABitmap bluekey = APLoadBitmap ("bluekey.bmp");
-ABitmap redkey = APLoadBitmap ("redkey.bmp");
+ABitmap background;
+ABitmap wall ;
+ABitmap monster1;
+ABitmap monster2;
+ABitmap monster3 ;
+ABitmap valiant;
+ABitmap yellowdoor;
+ABitmap bluedoor;
+ABitmap reddoor;
+ABitmap upstair;
+ABitmap downstair;
+ABitmap yellowkey;
+ABitmap bluekey;
+ABitmap redkey ;
+ABitmap sblood;
+ABitmap lblood ;
+ABitmap attack;
+ABitmap defend ;
+
+
 
 enum Direction
 {
@@ -82,12 +92,17 @@ int my_tower[FLOOR_NUM][BLOCK_NUM_X][BLOCK_NUM_Y];
 
 
 //颜色常量	
-
+void KeyDown(AHwnd hwnd,AMessage msg);
 
 APoint nextpoint(APoint p,int direction);
 void TowerInit();
 void init(AHwnd hwnd);
-bool fight()
+bool fight();
 
 
+
+void draw(AHwnd hwnd);
+
+
+bool wndProc(AHwnd hwnd,AMessage msg);
 #endif

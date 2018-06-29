@@ -32,9 +32,145 @@ return output;
 }
 
 
+void keyDown(AHwnd hwnd,AMessage msg)
+{
+APoint temp;
+switch(msg.param)
+{
+	case VK_UP:
+		temp = nextpoint(position,Up);
+		break;
+	case VK_DOWN:
+
+		temp = nextpoint(position,Down);
+		break;
+
+	case VK_LEFT:
+
+		temp = nextpoint(position,Left);
+		break;
+
+	case VK_RIGHT:
+
+		temp = nextpoint(position,Right);
+		break;
+	case VK_ESC:
+
+		return ;
+	default:
+		break;
+}
+switch(my_tower[floor][temp.x][temp.y])
+{
+	case Background:
+
+		position = temp;
+		break;
+	case Wall:
+		break;
+	case Monster1:
+	case Monster2:
+	case Monster3:
+		position = temp;
+		if(!fight())
+		{
+		printf(1,"Dead");
+		}
+		break;
+	case YellowDoor:
+		if (my_key[0] > 0)
+		{
+		my_key[0]--;
+		position = temp;
+		my_tower[floor][temp.x][temp.y] = Background;
+		}
+		else
+		{
+		printf(1,"No Yellow Key");
+		}
+		break;
+	case BlueDoor:
+		if (my_key[1] > 0)
+		{
+		my_key[1]--;
+		position = temp;
+		my_tower[floor][temp.x][temp.y] = Background;
+		}
+		else
+		{
+		printf(1,"No Blue Key");
+		}
+		break;
+	case RedDoor:
+		if (my_key[1] > 0)
+		{
+		my_key[1]--;
+		position = temp;
+		my_tower[floor][temp.x][temp.y] = Background;
+		}
+		else
+		{
+		printf(1,"No red Key");
+		}
+		break;
+	case UpStair:
+		floor++;
+		position = temp;
+		break;
+	case DownStair:
+		floor--;
+		position = temp;
+		break;
+	case YellowKey:
+		my_key[0]++;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;
+	case BlueKey:
+		my_key[1]++;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;
+	case RedKey:
+		my_key[2]++;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;
+	case SBlood:
+		hp += 100;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;
+	case LBlood:
+		hp += 500;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;
+	case Attack:
+		atk += 1;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;
+	case Defend:
+		def += 1;
+		my_tower[floor][temp.x][temp.y] = Background;
+		position = temp;
+		break;	
+	default:
+		break;
+}
+
+}
+
 void TowerInit()
 {
-
+for (int i = 0;i < BLOCK_NUM_X;i++)
+{
+for (int j = 0;j < BLOCK_NUM_Y;j++)
+{
+my_tower[0][i][j] = Background;
+}
+}
 //init my_tower
 
 
@@ -51,9 +187,34 @@ void init(AHwnd hwnd)
 
 	floor = 0;
 	position.x = position.y = 0;
-	my_key = {3,0,0};
+	my_key[0] = 3;
+	my_key[1] = my_key[2] = 0;
+
+
+ background = APLoadBitmap ("background.bmp");
+ wall = APLoadBitmap ("wall.bmp");
+ monster1 = APLoadBitmap ("monster1.bmp");
+ monster2 = APLoadBitmap ("monster2.bmp");
+ monster3 = APLoadBitmap ("monster3.bmp");
+ valiant = APLoadBitmap ("valiant.bmp");
+ yellowdoor = APLoadBitmap ("yellowdoor.bmp");
+ bluedoor = APLoadBitmap ("bluedoor.bmp");
+ reddoor = APLoadBitmap ("reddoor.bmp");
+ upstair = APLoadBitmap ("upstair.bmp");
+ downstair = APLoadBitmap ("downstair.bmp");
+ yellowkey = APLoadBitmap ("yellowkey.bmp");
+ bluekey = APLoadBitmap ("bluekey.bmp");
+ redkey = APLoadBitmap ("redkey.bmp");
+ sblood = APLoadBitmap ("sblood.bmp");
+ lblood = APLoadBitmap ("lblood.bmp");
+ attack = APLoadBitmap ("attack1.bmp");
+ defend = APLoadBitmap ("defend.bmp");
+	//bitmap init
 	
-	
+	AMessage msg;
+	msg.type = MSG_PAINT;
+	msg.param = 0;
+	APSendMessage(hwnd,msg);
 
 }
 
@@ -63,13 +224,13 @@ bool fight()
 int mhp,matk,mdef,mid;
 switch(my_tower[floor][position.x][position.y])
 {
-	case MONSTER1:
+	case Monster1:
 	mid = 0;
 	break;
-	case MONSTER2:
+	case Monster2:
 	mid = 1;
 	break;
-	case MONSTER3:
+	case Monster3:
 	mid = 2;
 	break;
 	default:
@@ -105,112 +266,6 @@ while(true)
 }
 
 
-void KeyDown(AHwnd hwnd,AMessage msg)
-{
-APoint temp;
-switch(msg.param)
-{
-case VK_UP:
-temp = nextpoint(position,Up);
-break;
-case VK_DOWN:
-
-temp = nextpoint(position,Down);
-break;
-
-case VK_LEFT:
-
-temp = nextpoint(position,Left);
-break;
-
-case VK_RIGHT:
-
-temp = nextpoint(position,Right);
-break;
-case VK_ESC:
-
-return ;
-default:
-break;
-}
-switch(my_tower[floor][temp.x][temp.y])
-{
-case Backgroud:
-
-position = temp;
-break;
-case Wall:
-break;
-case Monster1:
-case Monster2:
-case Monster3:
-position = temp;
-if(!fight())
-{
-printf(1,"Dead");
-}
-break;
-case YellowDoor:
-if (my_key[0] > 0)
-{
-my_key[0]--;
-position = temp;
-my_tower[floor][temp.x][temp.y] = Background;
-}
-else
-{
-printf(1,"No Yellow Key");
-}
-break;
-case BlueDoor:
-if (my_key[1] > 0)
-{
-my_key[1]--;
-position = temp;
-my_tower[floor][temp.x][temp.y] = Background;
-}
-else
-{
-printf(1,"No Blue Key");
-}
-break;
-case redDoor:
-if (my_key[1] > 0)
-{
-my_key[1]--;
-position = temp;
-my_tower[floor][temp.x][temp.y] = Background;
-}
-else
-{
-printf(1,"No red Key");
-}
-break;
-case UpStair:
-floor++;
-position = temp;
-break;
-case DownStair:
-floor--;
-position = temp;
-break;
-case YellowKey:
-my_key[0]++;
-position = temp;
-break;
-case BlueKey:
-my_key[1]++;
-position = temp;
-break;
-case RedKey:
-my_key[2]++;
-position = temp;
-break;
-default:
-break;
-}
-
-}
 
 void draw(AHwnd hwnd)
 {
@@ -221,7 +276,7 @@ for (int i = 0;i < BLOCK_NUM_X;i++)
 	{
 		switch(my_tower[floor][position.x][position.y])
 		{
-		case Backgroud:
+		case Background:
 			temp = background;
 			break;
 		case Wall:
@@ -239,7 +294,7 @@ for (int i = 0;i < BLOCK_NUM_X;i++)
 		case Valiant:
 			temp = valiant;
 			break;
-		case YellowDoor;
+		case YellowDoor:
 			temp = yellowdoor;
 			break;
 		case BlueDoor:
@@ -263,11 +318,23 @@ for (int i = 0;i < BLOCK_NUM_X;i++)
 		case RedKey:
 			temp = redkey;
 			break;
+		case SBlood:
+			temp = sblood;
+			break;
+		case LBlood:
+			temp = lblood;
+			break;
+		case Attack:
+			temp = attack;
+			break;
+		case Defend:
+			temp = defend;
+			break;
 		default:
 			temp = background;
 		break;
 		}
-		APDcCopy(&hwnd->Dc,i * BLOCK_WIDTH ,j * BLOCK_WIDTH,temp,0,0,BLOCK_WIDTH,BLOCK_WIDTH,COLOR_NULL);
+		APDcCopy(&hwnd->Dc,i * BLOCK_WIDTH ,j * BLOCK_WIDTH,APCreateCompatibleDCFromBitmap(temp),0,0,BLOCK_WIDTH,BLOCK_WIDTH,COLOR_NULL);
 
 	}
 }//主体
@@ -279,26 +346,37 @@ for (int i = 0;i < BLOCK_NUM_X;i++)
 
 bool wndProc(AHwnd hwnd,AMessage msg)
 {
-switch(msg.type)
-{
-    case MSG_INIT:
-    init(hwnd);
-    AMessage ms;
-    ms.type = MSG_PAINT;
-    APSendMessage(hwnd,ms);  
-    return False;
-	case MSG_KEY_DOWN:
-	keyDown(hwnd,msg);
-	AMessage msg1;
-    msg1.type = MSG_PAINT;
-    APSendMessage(hwnd,msg1);  
-	break;
-	case MSG_PAINT:
-	draw(hwnd);
-	break;
-	default:
-	break;
-}
-return APWndProc(hwnd,msg);
+	switch(msg.type)
+	{
+		    case MSG_INIT:
+		    init(hwnd);
+		    AMessage ms;
+		    ms.type = MSG_PAINT;
+		    APSendMessage(hwnd,ms);  
+		    return False;
+		case MSG_KEY_DOWN:
+		keyDown(hwnd,msg);
+		AMessage msg1;
+		   msg1.type = MSG_PAINT;
+		    APSendMessage(hwnd,msg1);  
+		break;
+		case MSG_PAINT:
+		draw(hwnd);
+		break;
+		default:
+		break;
+	}
+	return APWndProc(hwnd,msg);
 
 }
+
+
+int main(void)
+{
+	
+	AHwnd hwnd = APCreateWindow("magictower",False,0);
+	printf(1,"magic tower created.\n");
+	APWndExec(hwnd,wndProc);
+	exit();
+}
+
