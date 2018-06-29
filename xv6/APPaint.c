@@ -262,29 +262,28 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
 
 //----------------------------Draw Text------------------------------
 //Only support English letter
-void APDrawLetter(AHdc hdc,char *letter,int x,int y)
-{
-    uint index = (uint)letter[0] - 32;
-    if (index < 0 || index > Alphabet_NUMBER - 1)
-        return;
-    
-    AColor c = hdc->font.color;
-    int off = y * hdc->size.cx + x;
-    for (int i = 0; i < Alphabet_HEIGHT; i++)
-    {
-        for (int j = 0; j < Alphabet_WIDTH; j++)
-        {
-            if (Alphabet[index][i][j])
-                hdc->content[off + j] = c;
-        }
-        off += hdc->size.cx;
-    }
-}
-
-
-
 void APDrawText(AHdc hdc, char * str, int x, int y)
 {
+    uint lenth - strlen(str);
+    AColor c = hdc->font.color;
+    uint index = 0;
+    for (int z = 0; z < lenth; z++)
+    {
+        index = (uint)str[z] - 32;
+        if (index >= 0 && index < Alphabet_NUMBER)
+        {
+            int off = y * hdc->size.cx + x + z * Alphabet_WIDTH;
+            for (int i = 0; i < Alphabet_HEIGHT; i++)
+            {
+                for (int j = 0; j < Alphabet_WIDTH; j++)
+                {
+                    if (Alphabet[index][i][j])
+                        hdc->content[off + j] = c;
+                }
+                off += hdc->size.cx;
+            }
+        }
+    }
 }
 
 
@@ -314,7 +313,7 @@ void APDcCopy(AHdc dst,int wx, int wy, AHdc src,int x,int y,int w,int h,AColor t
     }
 }
 
-//------------
+//---------------------Letter--in ASCII order-----------------------
 unsigned char Alphabet[Alphabet_NUMBER - 1][Alphabet_HEIGHT][Alphabet_WIDTH] = {
     {//
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1215,7 +1214,7 @@ unsigned char Alphabet[Alphabet_NUMBER - 1][Alphabet_HEIGHT][Alphabet_WIDTH] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0}
     },
-    {//ML
+    {//M
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0},

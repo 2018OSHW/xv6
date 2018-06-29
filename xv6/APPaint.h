@@ -35,15 +35,12 @@ void APDrawLine(AHdc hdc, int x1, int y1, int x2, int y2);
 void APDrawRect(AHdc hdc, int x, int y, int w, int h);
 
 //draw text
-void APDrawLetter(AHdc hdc,char* letter,int x,int y);
 void APDrawText(AHdc hdc, char * str, int x, int y);
 
 #define Alphabet_WIDTH 9
 #define Alphabet_HEIGHT 18
 #define Alphabet_NUMBER 96
-
-//In ASCII Order
-
+extern unsigned char Alphabet[Alphabet_NUMBER - 1][Alphabet_HEIGHT][Alphabet_WIDTH];
 
 
 #endif /* APPaint_h */
