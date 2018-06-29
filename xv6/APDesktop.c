@@ -92,9 +92,9 @@ bool wndProc(AHwnd hwnd, AMessage msg)
         }
             break;
         case MSG_TIME_SECOND:
-            uint t = getTime();
-            printf(1,"time is %d\n",t);
-            
+           // uint t = getTime();
+           // printf(1,"time is %d\n",t);
+            break;
         default: break;
     }
     return APWndProc(hwnd, msg);
