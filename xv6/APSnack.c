@@ -1,6 +1,6 @@
 #include "APSnack.h"
 
-int init = 1;
+int FirstTime = 1;
 
 APoint nextpoint(APoint p,int direction)
 {
@@ -192,9 +192,9 @@ void draw(AHwnd hwnd)
 		}
 	}
     
-    if (init == 1)
+    if (FirstTime == 1)
     {
-        init = 0;
+        FirstTime = 0;
         APen pen;
         ABrush brush;
         pen.color = RGB(0x18,0x74,0xcd);
