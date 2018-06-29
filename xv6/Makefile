@@ -186,6 +186,7 @@ APFILES=\
     grid_mountain.bmp\
     background.bmp\
     wall.bmp\
+    monster1.bmp\
     monster2.bmp\
     monster3.bmp\
     valiant.bmp\
