@@ -22,7 +22,7 @@ int desktop_layout[GRID_H_NUMBER][GRID_W_NUMBER]=
     GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_FOREST},
     {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
-    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_LAKE,GRID_ROAD,
+    {GRID_ROAD,GRID_PROGRAM_SNAKE,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_LAKE,GRID_ROAD,
         GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
     {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
@@ -88,9 +88,10 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                     hwnd->pos_y++;
                 changePosition(hwnd->pos_x,hwnd->pos_y,2);
                 break;
-           // case VK_ENTER:
-            //    if (hwnd->grid[pos_x][pos_y] == GRID_PROGRAM_SNAKE)
-            //    break;
+            case VK_ENTER:
+                if (hwnd->grid[pos_x][pos_y] == GRID_PROGRAM_SNAKE)
+                    runApp("Snack");
+                break;
             default:break;
         }
             break;
