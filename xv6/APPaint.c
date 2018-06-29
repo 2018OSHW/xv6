@@ -264,7 +264,7 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
 //Only support English letter
 void APDrawText(AHdc hdc, char * str, int x, int y)
 {
-    uint lenth - strlen(str);
+    uint lenth = strlen(str);
     AColor c = hdc->font.color;
     uint index = 0;
     for (int z = 0; z < lenth; z++)
