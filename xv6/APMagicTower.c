@@ -56,7 +56,7 @@ switch(msg.param)
 		temp = nextpoint(position,Right);
 		break;
 	case VK_ESC:
-        msg.type = MAG_ESC;
+        msg.type = MSG_ESC;
         APSendMessage(hwnd,msg);
 		return ;
 	default:
