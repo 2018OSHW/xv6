@@ -101,7 +101,11 @@ void timerUpdate(AHwnd hwnd)
 	if (Is_Dead())
 	{
 		status = Dead;
-		printf(1,"Dead!");
+		//printf(1,"Dead!");
+        AMessage msg_word;
+        msg_word.type = MSG_WORD;
+        msg_word.word = "You are dead!";
+        APSendMessage(hwnd,msg_word);
 		deleteTimer(hwnd,1);
 	}
 	else
@@ -137,25 +141,32 @@ if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Right;
 break;
 case VK_ENTER:
-switch(status)
-{
-case Run:
-status = Pause;
-break;
-case Pause:
-status = Run;
-break;
-case Dead:
-init(hwnd);
-break;
-default:
-break;
-}
-break;
+        switch(status)
+    {
+        case Run:
+            status = Pause;
+            AMessage msg_word;
+            msg_word.type = MSG_WORD;
+            msg_word.word = "Pause! Press ENTER to continue";
+            APSendMessage(hwnd,msg_word);
+            deleteTimer(hwnd,1);
+            break;
+        case Pause:
+            status = Run;
+            AMessage msg_word;
+            msg_word.type = MSG_WORD;
+            msg_word.word = "Running! Press ENTER to pause";
+            APSendMessage(hwnd,msg_word);
+            break;
+        case Dead:
+            init(hwnd);
+            break;
+        default:break;
+    }
+        break;
 case VK_ESC:
         removeWindow(hwnd->id);
-default:
-break;
+default:break;
 
 }
 
@@ -284,7 +295,11 @@ if (status != Run)
 	keyDown(hwnd,msg);
 	break;
 	case MSG_PAINT:
-	draw(hwnd);
+        draw(hwnd);
+        AMessage msg_word;
+        msg_word.type = MSG_WORD;
+        msg_word.word = "Running! Press ENTER to pause";
+        APSendMessage(hwnd,msg_word);
 	break;
 	default:
 	break;
