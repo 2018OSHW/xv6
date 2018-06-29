@@ -426,13 +426,16 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 		keyDown(hwnd,msg);
 		break;
 		case MSG_PAINT:
-	    	//msg.type = MSG_WORD;
-            	//sprintf(msg.word,"Floor:%d,Hp:%d,ATK:%d,DEF:%d,Yellow:%d,Blue:%d,Red:%d",floor+1,hp,atk,def,my_key[0],my_key[1],my_key[2]);
-           	 //APSendMessage(hwnd,msg);
+	    	
 if (msg.param == 0)
 		draw(hwnd);
 else
 {
+    AMessage msg1;
+    msg1.type = MSG_WORD;
+    msg1.word = (char*)malloc(sizeof(char) * 50);
+    sprintf(msg1.word,"Floor:%d,Hp:%d,ATK:%d,DEF:%d,Yellow:%d,Blue:%d,Red:%d",floor+1,hp,atk,def,my_key[0],my_key[1],my_key[2]);
+    APSendMessage(hwnd,msg1);
 drawone(hwnd,position.x,position.y);
 drawone(hwnd,position_old.x,position_old.y);
 }
