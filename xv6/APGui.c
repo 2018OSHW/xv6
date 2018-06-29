@@ -809,8 +809,8 @@ void sys_deleteTimer(void)
         return ;
     APTimerListRemoveID(&timerList,hwnd->id,id);
 }
-/*
-int sys_getTime(void)
+
+int sys_getCurrentTime()
 {
     uint t = 0;
     outb(0x70, 0x00);
@@ -829,9 +829,6 @@ int sys_getTime(void)
     return t;
 }
 
-
-
-*/
 
 
 

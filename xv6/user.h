@@ -33,7 +33,7 @@ void registWindow(void *);
 void changePosition(int, int, int);
 void setupTimer(struct AWindow*,int,int);
 void deleteTimer(struct AWindow*,int);
-//int getTime();
+int getCurrentTime();
 
 // ulib.c
 int stat(char*, struct stat*);
