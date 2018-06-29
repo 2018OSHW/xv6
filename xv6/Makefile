@@ -203,7 +203,7 @@ APFILES=\
     defend.bmp\
     grid_snake.bmp\
     grid_tower.bmp\
-    monster1.bmp\
+    #monster1.bmp\
 
 
 
