@@ -61,6 +61,9 @@ switch(msg.param)
 		break;
 }
 my_tower[floor][position.x][position.y] = Background;
+AMessage ms;
+ms.type = MSG_PAINT;
+ms.param = 1;
 position_old = position;
 switch(my_tower[floor][temp.x][temp.y])
 {
@@ -162,6 +165,7 @@ switch(my_tower[floor][temp.x][temp.y])
 		break;
 }
 my_tower[floor][position.x][position.y] = Valiant;
+APSendMessage(hwnd,ms);
 }
 
 void TowerInit()
@@ -173,7 +177,7 @@ for (int j = 0;j < BLOCK_NUM_Y;j++)
 my_tower[0][i][j] =my_tower[1][i][j] =my_tower[2][i][j] = Background;
 }
 }
-
+my_tower[0][0][1] = Wall; 
 my_tower[0][1][1] = Monster1; 
 my_tower[0][2][2] = UpStair;
 my_tower[1][2][2] = DownStair;
@@ -196,7 +200,7 @@ void init(AHwnd hwnd)
 	my_tower[floor][position.x][position.y] = Valiant;
 	my_key[0] = 3;
 	my_key[1] = my_key[2] = 0;
-/*
+
  background = APLoadBitmap ("background.bmp");
  wall = APLoadBitmap ("wall.bmp");
  monster1 = APLoadBitmap ("monster1.bmp");
@@ -213,8 +217,8 @@ void init(AHwnd hwnd)
  redkey = APLoadBitmap ("redkey.bmp");
  sblood = APLoadBitmap ("sblood.bmp");
  lblood = APLoadBitmap ("lblood.bmp");
- attack = APLoadBitmap ("attack1.bmp");
- defend = APLoadBitmap ("defend.bmp");*/
+ attack = APLoadBitmap ("attack.bmp");
+ defend = APLoadBitmap ("defend.bmp");
 	//bitmap init	
 	AMessage msg;
 	msg.type = MSG_PAINT;
@@ -292,82 +296,84 @@ ABitmap temp;
 switch(my_tower[floor][i][j])
 {
 case Background:
-	//temp = background;
-	temp = APLoadBitmap ("background.bmp");
+	temp = background;
+	//temp = APLoadBitmap ("background.bmp");
 	break;
 case Wall:
-	//temp = wall;
-	temp = APLoadBitmap ("wall.bmp");
+	temp = wall;
+	//temp = APLoadBitmap ("wall.bmp");
 	break;
 case Monster1:
-	//temp = monster1;
-	temp = APLoadBitmap ("monster1.bmp");
+	temp = monster1;
+	//temp = APLoadBitmap ("monster1.bmp");
 	break;
 case Monster2:
-	//temp = monster2;	
-	temp = APLoadBitmap ("monster2.bmp");
+	temp = monster2;	
+	//temp = APLoadBitmap ("monster2.bmp");
 	break;
 case Monster3:
-	//temp = monster3;
-	temp = APLoadBitmap ("monster3.bmp");
+	temp = monster3;
+	//temp = APLoadBitmap ("monster3.bmp");
 	break;
 case Valiant:
-	//temp = valiant;
-	temp = APLoadBitmap ("background.bmp");
+	
+	//temp = APLoadBitmap ("background.bmp");
+temp = background;
 	APDcCopy(&hwnd->Dc,i * BLOCK_WIDTH ,j * BLOCK_WIDTH,APCreateCompatibleDCFromBitmap(temp),0,0,BLOCK_WIDTH,BLOCK_WIDTH,COLOR_NULL);
-	temp = APLoadBitmap ("valiant.bmp");
+	//temp = APLoadBitmap ("valiant.bmp");
+temp = valiant;
 	break;
 case YellowDoor:
-	//temp = yellowdoor;
-	temp = APLoadBitmap ("yellowdoor.bmp");
+	temp = yellowdoor;
+	//temp = APLoadBitmap ("yellowdoor.bmp");
 	break;
 case BlueDoor:
-	//temp = bluedoor;
-	temp = APLoadBitmap ("bluedoor.bmp");
+	temp = bluedoor;
+	//temp = APLoadBitmap ("bluedoor.bmp");
 	break;
 case RedDoor:
-	//temp = reddoor;
-	temp = APLoadBitmap ("reddoor.bmp");
+	temp = reddoor;
+	//temp = APLoadBitmap ("reddoor.bmp");
 	break;
 case UpStair:
-	//temp = upstair;
-	temp = APLoadBitmap ("upstair.bmp");
+	temp = upstair;
+	//temp = APLoadBitmap ("upstair.bmp");
 	break;
 case DownStair:
-	//temp = downstair;
-	temp = APLoadBitmap ("downstair.bmp");
+	temp = downstair;
+	//temp = APLoadBitmap ("downstair.bmp");
 	break;
 case YellowKey:
-	//temp = yellowkey;
-	temp = APLoadBitmap ("yellowkey.bmp");
+	temp = yellowkey;
+	//temp = APLoadBitmap ("yellowkey.bmp");
 	break;
 case BlueKey:
-	//temp = bluekey;
-	temp = APLoadBitmap ("bluekey.bmp");
+	temp = bluekey;
+	//temp = APLoadBitmap ("bluekey.bmp");
 	break;
 case RedKey:
-	//temp = redkey;
-	temp = APLoadBitmap ("redkey.bmp");
+	temp = redkey;
+	//temp = APLoadBitmap ("redkey.bmp");
 	break;
 case SBlood:
-	//temp = sblood;
-	temp = APLoadBitmap ("sblood.bmp");
+	temp = sblood;
+	//temp = APLoadBitmap ("sblood.bmp");
 	break;
 case LBlood:
-	//temp = lblood;
-	temp = APLoadBitmap ("lblood.bmp");
+	temp = lblood;
+	//temp = APLoadBitmap ("lblood.bmp");
 	break;
 case Attack:
-	//temp = attack;
-	temp = APLoadBitmap ("attack1.bmp");
+	temp = attack;
+	//temp = APLoadBitmap ("attack1.bmp");
 	break;
 case Defend:
-	//temp = defend;
-	temp = APLoadBitmap ("defend.bmp");
+	temp = defend;
+	//temp = APLoadBitmap ("defend.bmp");
 	break;
 default:
-	//temp = background;
-	temp = APLoadBitmap ("background.bmp");
+	temp = background;
+	//temp = APLoadBitmap ("background.bmp");
 break;
 }
 		if(my_tower[floor][i][j] == Valiant)
@@ -396,17 +402,17 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 		    return False;
 		case MSG_KEY_DOWN:
 		keyDown(hwnd,msg);
-		AMessage msg1;
-		   msg1.type = MSG_PAINT;
-			msg1.param = 1;
-		    APSendMessage(hwnd,msg1);  
 		break;
 		case MSG_PAINT:
+	    	//msg.type = MSG_WORD;
+            	//sprintf(msg.word,"Floor:%d,Hp:%d,ATK:%d,DEF:%d,Yellow:%d,Blue:%d,Red:%d",floor+1,hp,atk,def,my_key[0],my_key[1],my_key[2]);
+           	 //APSendMessage(hwnd,msg);
 if (msg.param == 0)
 		draw(hwnd);
 else
 {
 drawone(hwnd,position.x,position.y);
+drawone(hwnd,position_old.x,position_old.y);
 }
 		break;
 		default:

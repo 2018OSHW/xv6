@@ -42,7 +42,7 @@ enum Bmp
 	Attack,
 	Defend
 };
-/*
+
 ABitmap background;
 ABitmap wall ;
 ABitmap monster1;
@@ -61,7 +61,7 @@ ABitmap sblood;
 ABitmap lblood ;
 ABitmap attack;
 ABitmap defend ;
-*/
+
 int con = 0;
 enum Direction
 {
