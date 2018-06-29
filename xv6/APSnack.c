@@ -108,7 +108,7 @@ void timerUpdate(AHwnd hwnd)
 		//printf(1,"Dead!");
         AMessage msg_word;
         msg_word.type = MSG_WORD;
-        msg_word.word = "You are dead!";
+        msg_word.word = "You are dead! Press ENTER to restart!";
         APSendMessage(hwnd,msg_word);
 		deleteTimer(hwnd,1);
 	}
