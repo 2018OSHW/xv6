@@ -62,8 +62,7 @@ ABitmap lblood ;
 ABitmap attack;
 ABitmap defend ;
 */
-
-
+int con = 0;
 enum Direction
 {
 	Up,
@@ -83,10 +82,10 @@ enum Status
 int status;
 
 int floor;
-APoint position;
+APoint position,position_old;
 int hp,atk,def;
 int my_key[3];
-int monster_info[MONSTER_NUM][3];//hp.atk,def
+int monster_info[MONSTER_NUM][3] = {{10,15,6},{1,1,1},{1,1,1}};//hp.atk,def
 int my_tower[FLOOR_NUM][BLOCK_NUM_X][BLOCK_NUM_Y];
 
 
@@ -102,7 +101,7 @@ bool fight();
 
 
 void draw(AHwnd hwnd);
-
+void drawone(AHwnd hwnd,int i ,int j );
 
 bool wndProc(AHwnd hwnd,AMessage msg);
 #endif
