@@ -135,7 +135,7 @@ int judgeGridWalkable(int x,int y, AHwnd hwnd)
             case GRID_RIVER : return 0;
             case GRID_FOREST: return 0;
             case GRID_STONE: return 1;
-            //case GRID_MOUNTAIN: return 0;
+            case GRID_MOUNTAIN: return 0;
             case GRID_LAKE: return 0;
             default: return 1;
         }
