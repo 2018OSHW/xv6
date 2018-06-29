@@ -794,7 +794,7 @@ void sys_setuptimer(void)
     AHwnd hwnd;
     int id,interval;
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &id) < 0 || argint(2, &interval) < 0)
-        return -1;
+        return ;
     APTimerListAddToHead(&timerList,hwnd->id,id,interval/10);
 }
 void sys_deletetimer(void)
@@ -802,7 +802,7 @@ void sys_deletetimer(void)
     AHwnd hwnd;
     int id;
     if (argstr(0, (char **)&hwnd) < 0 || argint(1, &id) < 0)
-        return -1;
+        return ;
     APTimerListRemoveID(&timerList,hwnd->id,id);
 }
 
