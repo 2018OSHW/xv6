@@ -177,7 +177,7 @@ for (int j = 0;j < BLOCK_NUM_Y;j++)
 my_tower[0][i][j] =my_tower[1][i][j] =my_tower[2][i][j] = Background;
 }
 }
-my_tower[0][0][1] = Wall; 
+my_tower[0][0][1] = BlueKey; 
 my_tower[0][1][1] = Monster1; 
 my_tower[0][2][2] = UpStair;
 my_tower[1][2][2] = DownStair;
@@ -188,6 +188,7 @@ my_tower[1][2][2] = DownStair;
 
 void init(AHwnd hwnd)
 {
+
 	TowerInit();
 
 	hp = START_HP;
@@ -200,7 +201,6 @@ void init(AHwnd hwnd)
 	my_tower[floor][position.x][position.y] = Valiant;
 	my_key[0] = 3;
 	my_key[1] = my_key[2] = 0;
-
  background = APLoadBitmap ("background.bmp");
  wall = APLoadBitmap ("wall.bmp");
  monster1 = APLoadBitmap ("monster1.bmp");
@@ -315,13 +315,12 @@ case Monster3:
 	temp = monster3;
 	//temp = APLoadBitmap ("monster3.bmp");
 	break;
-case Valiant:
-	
+case Valiant:	
 	//temp = APLoadBitmap ("background.bmp");
-temp = background;
+	temp = background;
 	APDcCopy(&hwnd->Dc,i * BLOCK_WIDTH ,j * BLOCK_WIDTH,APCreateCompatibleDCFromBitmap(temp),0,0,BLOCK_WIDTH,BLOCK_WIDTH,COLOR_NULL);
 	//temp = APLoadBitmap ("valiant.bmp");
-temp = valiant;
+	temp = valiant;
 	break;
 case YellowDoor:
 	temp = yellowdoor;
@@ -365,7 +364,7 @@ case LBlood:
 	break;
 case Attack:
 	temp = attack;
-	//temp = APLoadBitmap ("attack1.bmp");
+	//temp = APLoadBitmap ("attack.bmp");
 	break;
 case Defend:
 	temp = defend;
@@ -395,7 +394,7 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 	switch(msg.type)
 	{
 		    case MSG_INIT:
-			
+			printf(1,"test\n");
 		    init(hwnd);
 			printf(1,"init finished");
 		
@@ -412,10 +411,12 @@ else
 drawone(hwnd,position.x,position.y);
 drawone(hwnd,position_old.x,position_old.y);
 }
-		//AMessage msg1;
-	    	//msg1.type = MSG_WORD;
-            	//sprintf(msg1.word,"Floor:%d,Hp:%d,ATK:%d,DEF:%d,Yellow:%d,Blue:%d,Red:%d",floor+1,hp,atk,def,my_key[0],my_key[1],my_key[2]);
-           	// APSendMessage(hwnd,msg1);
+		char info[50];
+		AMessage msg1;
+	    	msg1.type = MSG_WORD;
+            	sprintf(info,"Floor:%d,Hp:%d,ATK:%d,DEF:%d,Yellow:%d,Blue:%d,Red:%d",floor+1,hp,atk,def,my_key[0],my_key[1],my_key[2]);
+		msg1.word = info;           	 
+		APSendMessage(hwnd,msg1);
 		break;
 		default:
 		break;
