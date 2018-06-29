@@ -460,7 +460,7 @@ int sys_removeWindow(void)
     if (argint(0, &id) < 0)
         return -1;
     
-    APTimerListRemoveWnd(timerList, id);
+    APTimerListRemoveWnd(&timerList, id);
     APWndListRemove(&wndList,id);
     APWndListMoveToHead(&wndList, 0);
     AMessage msg;
@@ -571,7 +571,7 @@ void APWndListMoveToHead(AWndList * list, int wndId)
 {
     AMessage msg;
     msg.type = MSG_PAINT;
-    sendMessage(wndId,*msg);
+    sendMessage(wndId,&msg);
     if (wndId < 0)
         return;
     acquire(&list->lock);
