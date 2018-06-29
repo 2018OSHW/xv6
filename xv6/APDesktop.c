@@ -55,6 +55,20 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                 for (int i = 0; i< GRID_W_NUMBER; i++)
                     hwnd->Grid[off + i] = desktop_layout[j][i];
             }
+            //init Title Part
+            APen pen;
+            ABrush brush;
+            pen.color = RGB(0x18,0x74,0xcd);
+            pen.size = 1;
+            brush.color = RGB(0x18,0x74,0xcd);
+            APSetPen(&wnd->TitleDc,pen);
+            APSetBrush(&wnd->TitleDc,brush);
+            APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+            AFont font;
+            font.color = RGB(0x08,0x08,0x08);
+            APSetFont(&wnd->TitleDc,font);
+            APDrawText(&wnd->TitleDc,wnd->title,20,20);
+            
             hwnd->pos_x = 3;
             hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
