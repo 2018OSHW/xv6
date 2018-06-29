@@ -1,5 +1,7 @@
 #include "APSnack.h"
 
+int init = 1;
+
 APoint nextpoint(APoint p,int direction)
 {
 APoint output;
@@ -56,7 +58,7 @@ void Move()
 
 int main(void)
 {
-	AHwnd hwnd = APCreateWindow("snack",False,0);
+	AHwnd hwnd = APCreateWindow("snake",False,0);
 	printf(1,"snack created.\n");
 	APWndExec(hwnd,wndProc);
 	exit();
@@ -189,6 +191,23 @@ void draw(AHwnd hwnd)
 			APDrawRect(hdc,i * BLOCK_WIDTH,j*BLOCK_WIDTH,BLOCK_WIDTH,BLOCK_WIDTH);
 		}
 	}
+    
+    if (init == 1)
+    {
+        init = 0;
+        APen pen;
+        ABrush brush;
+        pen.color = RGB(0x18,0x74,0xcd);
+        pen.size = 1;
+        brush.color = RGB(0x18,0x74,0xcd);
+        APSetPen(hwnd->TitleDc,pen);
+        APSetBrush(hwnd->TitleDc,brush);
+        APDrawRect(hwnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+        AFont font;
+        font.color = RGB(0x08,0x08,0x08);
+        APSetFont(hwnd->TitleDc,font);
+        APDrawText(hwnd->TitleDc,hwnd->title,20,20);
+    }
 }
 
 bool Is_Dead()

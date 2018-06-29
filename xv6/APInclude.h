@@ -71,6 +71,7 @@ enum MSG {
 	MSG_HANDLE_UP,
     
     MSG_ESC,
+    MSG_WORD,
     
 };
 

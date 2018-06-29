@@ -122,6 +122,7 @@ int judgeGridWalkable(int x,int y, AHwnd hwnd)
     return 0;
 }
 
+
 int main(void)
 {
     //runApp("MagicTower");

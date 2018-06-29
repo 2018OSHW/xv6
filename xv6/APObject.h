@@ -73,6 +73,7 @@ typedef struct AMessage
     uint type;
     uint param;
     uint wndID;
+    char *word;
 }AMessage;
 
 typedef struct AMsgQueue
