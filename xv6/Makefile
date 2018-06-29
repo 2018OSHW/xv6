@@ -183,6 +183,7 @@ APFILES=\
     grid_stone.bmp\
     grid_lake.bmp\
     grid_mountain.bmp\
+    grid_snake.bmp\
 
 fs.img: mkfs README $(APFILES) $(UPROGS)
 	./mkfs fs.img README $(APFILES) $(UPROGS)
