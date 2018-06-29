@@ -37,6 +37,7 @@ enum GRID {
     
    //program icon
    GRID_PROGRAM_SNAKE,
+   GRID_PROGRAM_TOWER,
 };
 
 #define COLOR_TRANSPARENT 0x0c
@@ -48,11 +49,6 @@ typedef char bool;
 #define false (char)0
 #define True true
 #define False false
-
-
-#define MAX_X 6
-#define MAX_Y 4
-//界面中横向个数和纵向个数
 
 
 
@@ -74,15 +70,6 @@ enum MSG {
     MSG_WORD,
     
 };
-
-enum WndFocusState
-{
-    WFS_HAS_FOCUS,
-    WFS_LOSE_FOCUS,
-    WFS_NO_FOCUS,
-    WFS_CHILD_FOCUS
-};
-
 
 
 #define VK_NULL 0

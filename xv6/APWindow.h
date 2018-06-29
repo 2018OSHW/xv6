@@ -28,6 +28,8 @@ ABitmap grid_mountain;
 AHdc g_mountain;
 ABitmap grid_snake;
 AHdc g_snake;
+ABitmap grid_tower;
+AHdc g_tower;
 
 //start a program
 AHwnd APCreateWindow(char * title,int is_map,int page);
