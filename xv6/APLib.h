@@ -20,7 +20,6 @@
 #define Pi 3.14159265
 
 void sprintf(char * dst, char * fmt, ...);
-uint getTime();
 int random(int);
 
 #endif /* APLib_h */

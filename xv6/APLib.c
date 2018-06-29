@@ -120,22 +120,3 @@ void sprintf(char * dst, char * fmt, ...)
     dst[j++] = '\0';
 }
 
-uint getTime()
-{
-    uint t = 0;
-    outb(0x70, 0x00);
-    uchar d = inb(0x71);
-    uchar n = (d >> 4) * 10 + (d & 0xf);
-    t |= (n & 0xff);
-    outb(0x70, 0x02);
-    d = inb(0x71);
-    n = (d >> 4) * 10 + (d & 0xf);
-    t |= ((n & 0xff) << 8);
-    outb(0x70, 0x04);
-    d = inb(0x71);
-    n = (d >> 4) * 10 + (d & 0xf);
-    n = (n + 8) % 24;
-    t |= (n << 16);
-    return t;
-}
-
