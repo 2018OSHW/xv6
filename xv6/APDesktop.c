@@ -124,9 +124,9 @@ int judgeGridWalkable(int x,int y, AHwnd hwnd)
 
 int main(void)
 {
-   // runApp("Snack");
-    AHwnd hwnd = APCreateWindow("desktop",True,3);
+    runApp("Snack");
+    //AHwnd hwnd = APCreateWindow("desktop",True,3);
   //  printf(1,"desktop initialized!\n");
-    APWndExec(hwnd, wndProc);
-    exit();
+   // APWndExec(hwnd, wndProc);
+   // exit();
 }
