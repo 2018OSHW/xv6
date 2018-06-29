@@ -154,6 +154,10 @@ case VK_ENTER:
             APSendMessage(hwnd,msg);
             break;
         case Pause:
+            status = Pause;
+            msg.type = MSG_WORD;
+            msg.word = "Running! Press ENTER to pause";
+            APSendMessage(hwnd,msg);
             status = Run;
             break;
         case Dead:
