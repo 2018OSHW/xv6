@@ -29,7 +29,7 @@ int status;
 
 #define BLOCK_WIDTH 10
 #define BLOCK_NUM_X 80
-#define BLOCK_NUM_Y 55
+#define BLOCK_NUM_Y 50
 
 #define COLOR_BACK RGB(0,255,0)
 #define COLOR_HEAD RGB(0,128,0)
