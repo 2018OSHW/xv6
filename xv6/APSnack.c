@@ -93,7 +93,11 @@ void init(AHwnd hwnd)
 	msg.param = 0;
 	setupTimer(hwnd,1,800);
 	APSendMessage(hwnd,msg);
-
+    
+    AMessage msg1;
+    msg1.type = MSG_WORD;
+    msg1.word = "Running! Press ENTER to pause";
+    APSendMessage(hwnd,msg1);
 }
 
 void timerUpdate(AHwnd hwnd)
@@ -151,9 +155,6 @@ case VK_ENTER:
             break;
         case Pause:
             status = Run;
-            msg.type = MSG_WORD;
-            msg.word = "Running! Press ENTER to pause";
-            APSendMessage(hwnd,msg);
             break;
         case Dead:
             init(hwnd);
@@ -282,7 +283,7 @@ switch(msg.type)
     return False;
 	case MSG_TIMEOUT:
 if (status != Run)
-	break;
+	return False;
 	timerUpdate(hwnd);
 	AMessage msg1;
 	msg1.type = MSG_PAINT;
@@ -291,7 +292,7 @@ if (status != Run)
 	break;
 	case MSG_KEY_DOWN:
 	keyDown(hwnd,msg);
-	break;
+	return False;
 	case MSG_PAINT:
         draw(hwnd);
 	break;
