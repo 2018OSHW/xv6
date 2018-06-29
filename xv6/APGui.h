@@ -10,6 +10,7 @@ void sendMessage(int wndId, struct AMessage *msg);
 void APDrawCharacter(int is_grid);
 
 //Window
+void APWndListInit(AWndList * list);
 void APWndListAddToHead(AWndList * list, AHwnd hwnd);
 void APWndListAddToHead(AWndList * list, AHwnd hwnd);
 void APWndListMoveToHead(AWndList * list, int wndId);
