@@ -25,16 +25,6 @@ int character_x = 1,character_y = 1;
 int direction = 1;
 
 
-void APCharacterMove(int direction)
-{
-switch(direction)
-{
-
-}
-
-
-}
-
 //character_move
 void APDrawCharacter(int is_grid)
 {
@@ -464,6 +454,21 @@ int sys_registWindow(void)
     return 0;
 }
 
+int sys_removeWindow(void)
+{
+    int id = 0;
+    if (argint(0, &id) < 0)
+        return -1;
+    
+    APTimerListRemoveWnd(timerList, id);
+    APWndListRemove(&wndList,id);
+    APWndListMoveToHead(&wndList, 0);
+    AMessage msg;
+    msg.type = MSG_ESC;
+    sendMessage(id,&msg);
+    return 0;
+}
+
 int sys_getMessage(void)
 {
 
@@ -564,6 +569,9 @@ void APWndListAddToHead(AWndList * list, AHwnd hwnd)
 
 void APWndListMoveToHead(AWndList * list, int wndId)
 {
+    AMessage msg;
+    msg.type = MSG_PAINT;
+    sendMessage(wndId,*msg);
     if (wndId < 0)
         return;
     acquire(&list->lock);
@@ -807,7 +815,7 @@ void sys_deleteTimer(void)
     APTimerListRemoveID(&timerList,hwnd->id,id);
 }
 
-/*int sys_getCurrentTime()
+int sys_getCurrentTime()
 {
     uint t = 0;
     outb(0x70, 0x00);
@@ -824,10 +832,7 @@ void sys_deleteTimer(void)
     n = (n + 8) % 24;
     t |= (n << 16);
     return t;
-    return 1;
 }
-*/
-
 
 
 

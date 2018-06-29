@@ -70,6 +70,8 @@ enum MSG {
 	MSG_HANDLE_DOWN,
 	MSG_HANDLE_UP,
     
+    MSG_ESC,
+    
 };
 
 enum WndFocusState

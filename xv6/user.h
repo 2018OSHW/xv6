@@ -30,10 +30,11 @@ void paintWindow(void *, int, int, void *, int, int, int, int ,int,int,int);
 void sendMessage(int, struct AMessage*);
 void getMessage(void *);
 void registWindow(void *);
+void removeWindow(int);
 void changePosition(int, int, int);
 void setupTimer(struct AWindow*,int,int);
 void deleteTimer(struct AWindow*,int);
-//int getCurrentTime();
+int getCurrentTime();
 
 // ulib.c
 int stat(char*, struct stat*);

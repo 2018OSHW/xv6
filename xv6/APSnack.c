@@ -135,7 +135,7 @@ case VK_RIGHT:
 if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Right;
 break;
-case VK_ESC:
+case VK_ENTER:
 switch(status)
 {
 case Run:
@@ -149,8 +149,11 @@ init(hwnd);
 break;
 default:
 break;
-
 }
+break;
+case VK_ESC:
+        
+        
 break;
 default:
 break;
@@ -243,6 +246,8 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 {
 switch(msg.type)
 {
+    case MSG_ESC:
+        return True;
     case MSG_INIT:
     init(hwnd);
     AMessage ms;
