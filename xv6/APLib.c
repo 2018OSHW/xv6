@@ -6,6 +6,7 @@
 //
 
 #include "APLib.h"
+#include "x86.h"
 
 int random(int seed)
 {
@@ -118,3 +119,4 @@ void sprintf(char * dst, char * fmt, ...)
     }
     dst[j++] = '\0';
 }
+

@@ -26,6 +26,7 @@ AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
 //set function
 APen APSetPen(AHdc hdc, APen pen);
 ABrush APSetBrush(AHdc hdc, ABrush brush);
+AFont APSetFont(AHdc hdc,AFont font);
 
 //drawing function
 void APDrawPixel(AHdc hdc, int x, int y, AColor color);
@@ -35,5 +36,11 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h);
 
 //draw text
 void APDrawText(AHdc hdc, char * str, int x, int y);
+
+#define Alphabet_WIDTH 9
+#define Alphabet_HEIGHT 18
+#define Alphabet_NUMBER 96
+extern unsigned char Alphabet[Alphabet_NUMBER - 1][Alphabet_HEIGHT][Alphabet_WIDTH];
+
 
 #endif /* APPaint_h */

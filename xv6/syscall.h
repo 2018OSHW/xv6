@@ -28,3 +28,4 @@
 #define SYS_changePosition 26
 #define SYS_setupTimer 27
 #define SYS_deleteTimer 28
+//#define SYS_getCurrentTime 29

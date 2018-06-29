@@ -31,9 +31,9 @@ void sendMessage(int, struct AMessage*);
 void getMessage(void *);
 void registWindow(void *);
 void changePosition(int, int, int);
-uint getTime();
 void setupTimer(struct AWindow*,int,int);
 void deleteTimer(struct AWindow*,int);
+//int getCurrentTime();
 
 // ulib.c
 int stat(char*, struct stat*);
