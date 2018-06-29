@@ -200,7 +200,7 @@ APFILES=\
     redkey.bmp\
     sblood.bmp\
     lblood.bmp\
-    attack1.bmp\
+    attack.bmp\
     defend.bmp\
     grid_snake.bmp\
 

@@ -10,8 +10,8 @@
 #include "APWindow.h"
 
 #define BLOCK_WIDTH 32
-#define BLOCK_NUM_X 20
-#define BLOCK_NUM_Y 12
+#define BLOCK_NUM_X 10
+#define BLOCK_NUM_Y 10
 
 #define START_HP 500
 #define START_ATK 10
@@ -42,7 +42,7 @@ enum Bmp
 	Attack,
 	Defend
 };
-
+/*
 ABitmap background;
 ABitmap wall ;
 ABitmap monster1;
@@ -61,7 +61,7 @@ ABitmap sblood;
 ABitmap lblood ;
 ABitmap attack;
 ABitmap defend ;
-
+*/
 
 
 enum Direction
