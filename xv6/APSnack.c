@@ -65,7 +65,7 @@ int main(void)
 
 void init(AHwnd hwnd)
 {
-	random(10);
+	random(getCurrentTime());
 	for (int i = 0;i < BLOCK_NUM_X;i++)
 	{
 		for (int j = 0;j <BLOCK_NUM_Y;j++)
