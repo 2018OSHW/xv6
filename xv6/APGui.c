@@ -301,6 +301,7 @@ void APGuiInit(void)
     
     initlock(&screenLock,"sreenLock");
     APCharacterInit();
+    APTimerListInit(&timerList);
 }
 
 //将左上角坐标为(x1,y1),右下角坐标为(x2,y2)的矩形区域从Buf绘制到屏幕上

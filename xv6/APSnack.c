@@ -81,7 +81,7 @@ void init(AHwnd hwnd)
 	head.y = 0;
 	tail.x = tail.y = 0;
 	current_direction = current_direction_copy = Right;
-status = Run;
+    status = Run;
 	updateFood();
 	AMessage msg;
 	msg.type = MSG_PAINT;
@@ -173,18 +173,12 @@ void draw(AHwnd hwnd)
 			else
 			{
 				if (head.x == i && head.y == j)
-				{
 					brush.color = COLOR_HEAD;
-				}
 				else
-				{
 					brush.color = COLOR_BODY;
-				}
-		
 			}
 			APSetBrush(hdc,brush);
 			APDrawRect(hdc,i * BLOCK_WIDTH,j*BLOCK_WIDTH,BLOCK_WIDTH,BLOCK_WIDTH);
-	
 		}
 	}
 }
@@ -192,19 +186,12 @@ void draw(AHwnd hwnd)
 bool Is_Dead()
 {
 	APoint p = nextpoint(head,current_direction);
-if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
-{
-return True;
-}
+    if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
+        return True;
 	if (my_block[p.x][p.y] != 0)
-{
-return True;
-}
-else
-{
-return False;
-}
-
+        return True;
+    else
+        return False;
 }
 
 bool updateFood()
