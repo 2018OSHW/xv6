@@ -55,6 +55,20 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                 for (int i = 0; i< GRID_W_NUMBER; i++)
                     hwnd->Grid[off + i] = desktop_layout[j][i];
             }
+            //init Title Part
+            APen pen;
+            ABrush brush;
+            pen.color = RGB(0x18,0x74,0xcd);
+            pen.size = 1;
+            brush.color = RGB(0x18,0x74,0xcd);
+            APSetPen(&hwnd->TitleDc,pen);
+            APSetBrush(&hwnd->TitleDc,brush);
+            APDrawRect(&hwnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+            AFont font;
+            font.color = RGB(0x08,0x08,0x08);
+            APSetFont(&hwnd->TitleDc,font);
+            APDrawText(&hwnd->TitleDc,hwnd->title,20,20);
+            
             hwnd->pos_x = 3;
             hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
@@ -63,6 +77,11 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             return False;
         case MSG_PAINT:
             APGridPaint(hwnd);
+            AMessage ms;
+            ms.type = MSG_WORD;
+            ms.param = -1;
+            ms.word = "Welcome!";
+            APSendMessage(hwnd,ms);
             break;
         case MSG_KEY_DOWN:
             //printf(1,"kbd message received!\n");
@@ -121,6 +140,7 @@ int judgeGridWalkable(int x,int y, AHwnd hwnd)
     }
     return 0;
 }
+
 
 int main(void)
 {

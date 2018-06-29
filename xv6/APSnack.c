@@ -1,5 +1,7 @@
 #include "APSnack.h"
 
+int FirstTime = 1;
+
 APoint nextpoint(APoint p,int direction)
 {
 APoint output;
@@ -56,7 +58,7 @@ void Move()
 
 int main(void)
 {
-	AHwnd hwnd = APCreateWindow("snack",False,0);
+	AHwnd hwnd = APCreateWindow("snake",False,0);
 	printf(1,"snack created.\n");
 	APWndExec(hwnd,wndProc);
 	exit();
@@ -99,7 +101,11 @@ void timerUpdate(AHwnd hwnd)
 	if (Is_Dead())
 	{
 		status = Dead;
-		printf(1,"Dead!");
+		//printf(1,"Dead!");
+        AMessage msg_word;
+        msg_word.type = MSG_WORD;
+        msg_word.word = "You are dead!";
+        APSendMessage(hwnd,msg_word);
 		deleteTimer(hwnd,1);
 	}
 	else
@@ -135,25 +141,30 @@ if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Right;
 break;
 case VK_ENTER:
-switch(status)
-{
-case Run:
-status = Pause;
-break;
-case Pause:
-status = Run;
-break;
-case Dead:
-init(hwnd);
-break;
-default:
-break;
-}
-break;
+        switch(status)
+    {
+        case Run:
+            status = Pause;
+            msg.type = MSG_WORD;
+            msg.word = "Pause! Press ENTER to continue";
+            APSendMessage(hwnd,msg);
+            break;
+        case Pause:
+            status = Run;
+            msg.type = MSG_WORD;
+            msg.word = "Running! Press ENTER to pause";
+            APSendMessage(hwnd,msg);
+            break;
+        case Dead:
+            init(hwnd);
+            break;
+        default:break;
+    }
+        break;
 case VK_ESC:
         removeWindow(hwnd->id);
-default:
-break;
+        break;
+default:break;
 
 }
 
@@ -189,6 +200,23 @@ void draw(AHwnd hwnd)
 			APDrawRect(hdc,i * BLOCK_WIDTH,j*BLOCK_WIDTH,BLOCK_WIDTH,BLOCK_WIDTH);
 		}
 	}
+    
+    if (FirstTime == 1)
+    {
+        FirstTime = 0;
+        APen pen;
+        ABrush brush;
+        pen.color = RGB(0x18,0x74,0xcd);
+        pen.size = 1;
+        brush.color = RGB(0x18,0x74,0xcd);
+        APSetPen(&hwnd->TitleDc,pen);
+        APSetBrush(&hwnd->TitleDc,brush);
+        APDrawRect(&hwnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+        AFont font;
+        font.color = RGB(0x08,0x08,0x08);
+        APSetFont(&hwnd->TitleDc,font);
+        APDrawText(&hwnd->TitleDc,hwnd->title,20,20);
+    }
 }
 
 bool Is_Dead()
@@ -265,7 +293,11 @@ if (status != Run)
 	keyDown(hwnd,msg);
 	break;
 	case MSG_PAINT:
-	draw(hwnd);
+        draw(hwnd);
+        AMessage msg_word;
+        msg_word.type = MSG_WORD;
+        msg_word.word = "Running! Press ENTER to pause";
+        APSendMessage(hwnd,msg_word);
 	break;
 	default:
 	break;

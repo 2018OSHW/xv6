@@ -38,7 +38,7 @@ bool APPreJudge(AHwnd hwnd, AMessage * msg);
 bool APWndProc(AHwnd hwnd, AMessage msg);
 void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage));
 void APSendMessage(AHwnd hwnd, AMessage msg);
-
+void updateword(AHwnd hwnd,char* str);
 
 
 #endif /* APWindow_h */

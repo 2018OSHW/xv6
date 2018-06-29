@@ -79,6 +79,11 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
             paintWindow(hwnd, 0, WND_TITLE_HEIGHT, &hwnd->Dc, 0, 0, hwnd->Dc.size.cx, hwnd->Dc.size.cy,hwnd->is_grid,hwnd->pos_x,hwnd->pos_y);
             //printf(1,"paint finished!\n");
             break;
+        case MSG_WORD:
+            //printf(1,"in MSG_WORD, word is %s",msg.word);
+            updateword(hwnd,msg.word);
+            paintWindow(hwnd, 0, 0, &hwnd->TitleDc, 0, 0, hwnd->TitleDc.size.cx, hwnd->TitleDc.size.cy,False,hwnd->pos_x,hwnd->pos_y);
+            break;
         default: break;
             
             
@@ -202,21 +207,24 @@ void APGridPaint(AHwnd wnd)
             }
         }
     }
-    //Title Part
+    
+}
+
+
+void updateword(AHwnd hwnd,char* str)
+{
     APen pen;
     ABrush brush;
     pen.color = RGB(0x18,0x74,0xcd);
     pen.size = 1;
     brush.color = RGB(0x18,0x74,0xcd);
-    APSetPen(&wnd->TitleDc,pen);
-    APSetBrush(&wnd->TitleDc,brush);
-    APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
-
-
+    APSetPen(&hwnd->TitleDc,pen);
+    APSetBrush(&hwnd->TitleDc,brush);
+    APDrawRect(&hwnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+    
     AFont font;
     font.color = RGB(0x08,0x08,0x08);
-    APSetFont(&wnd->TitleDc,font);
-    APDrawText(&wnd->TitleDc,wnd->title,20,20);
-    
+    APSetFont(&hwnd->TitleDc,font);
+    APDrawText(&hwnd->TitleDc,str,10,20);
 }
 
