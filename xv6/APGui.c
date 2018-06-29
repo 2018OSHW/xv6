@@ -809,7 +809,7 @@ void sys_deleteTimer(void)
         return ;
     APTimerListRemoveID(&timerList,hwnd->id,id);
 }
-
+/*
 int sys_getTime(void)
 {
     uint t = 0;
@@ -831,7 +831,7 @@ int sys_getTime(void)
 
 
 
-
+*/
 
 
 
