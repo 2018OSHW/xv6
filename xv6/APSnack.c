@@ -167,6 +167,7 @@ case VK_ENTER:
     }
         break;
 case VK_ESC:
+        deleteTimer(hwnd,1);
         removeWindow(hwnd->id);
         break;
 default:break;
