@@ -789,7 +789,7 @@ void APTimerListRemoveID(ATimerList * list, int wndId, int id)
     release(&list->lock);
 }
 
-void sys_setuptimer(void)
+void sys_setupTimer(void)
 {
     AHwnd hwnd;
     int id,interval;
@@ -797,7 +797,7 @@ void sys_setuptimer(void)
         return ;
     APTimerListAddToHead(&timerList,hwnd->id,id,interval/10);
 }
-void sys_deletetimer(void)
+void sys_deleteTimer(void)
 {
     AHwnd hwnd;
     int id;
