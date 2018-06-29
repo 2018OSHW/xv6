@@ -110,6 +110,14 @@ ABrush APSetBrush(AHdc hdc, ABrush brush)
     return r;
 }
 
+AFont APSetFont(AHdc hdc,AFont font)
+{
+    AFont r = hdc->font;
+    hdc->font = font;
+    return r;
+}
+
+
 
 //--------------------------------drawing----------------------------
 
@@ -251,6 +259,29 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
         }
     }
 }
+
+//----------------------------Draw Text------------------------------
+//Only support English letter
+void APDrawLetter(AHdc hdc,char letter,int x,int y)
+{
+    uint index = letter - " ";
+    if (index < 0 || index > Alphabet_NUMBER - 1)
+        return;
+    
+    AColor c = hdc->font.color;
+    int off = y * hdc->size.cx + x;
+    for (int i = 0; i < Alphabet_HEIGHT; i++)
+    {
+        for (int j = 0; j < Alphabet_WIDTH; j++)
+        {
+            if (Alphabet[index][i][j])
+                hdc->content[off + j] = c;
+        }
+        off + = hdc->size.cx;
+    }
+}
+
+
 
 void APDrawText(AHdc hdc, char * str, int x, int y)
 {

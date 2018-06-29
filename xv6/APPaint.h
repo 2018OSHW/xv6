@@ -10,6 +10,7 @@
 
 #include "APObject.h"
 #include "APInclude.h"
+#include "APAlphabet.h"
 
 #define X_BIGGER -1
 #define X_SMALLER -2
@@ -26,6 +27,7 @@ AHdc APCreateCompatibleDCFromBitmap(ABitmap bmp);
 //set function
 APen APSetPen(AHdc hdc, APen pen);
 ABrush APSetBrush(AHdc hdc, ABrush brush);
+AFont APSetFont(AHdc hdc,AFont font);
 
 //drawing function
 void APDrawPixel(AHdc hdc, int x, int y, AColor color);
@@ -34,6 +36,7 @@ void APDrawLine(AHdc hdc, int x1, int y1, int x2, int y2);
 void APDrawRect(AHdc hdc, int x, int y, int w, int h);
 
 //draw text
+void APDrawLetter(AHdc hdc,char letter,int x,int y);
 void APDrawText(AHdc hdc, char * str, int x, int y);
 
 #endif /* APPaint_h */
