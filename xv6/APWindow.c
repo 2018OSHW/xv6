@@ -134,6 +134,8 @@ void APGridPaint(AHwnd wnd)
         g_river = APCreateCompatibleDCFromBitmap(grid_river);
         grid_stone = APLoadBitmap ("grid_stone.bmp");
         g_stone = APCreateCompatibleDCFromBitmap(grid_stone);
+        grid_mountain = APLoadBitmap ("grid_mountain.bmp");
+        g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
         grid_lake = APLoadBitmap ("grid_lake.bmp");
         g_lake = APCreateCompatibleDCFromBitmap(grid_lake);
         grid_forest = APLoadBitmap ("grid_forest.bmp");
@@ -144,8 +146,7 @@ void APGridPaint(AHwnd wnd)
         g_snake = APCreateCompatibleDCFromBitmap(grid_snake);
         grid_tower = APLoadBitmap ("grid_tower.bmp");
         g_tower = APCreateCompatibleDCFromBitmap(grid_tower);
-        grid_mountain = APLoadBitmap ("grid_mountain.bmp");
-        g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
+   
         //printf(1,"bitmap DC created!\n");
     }
     
