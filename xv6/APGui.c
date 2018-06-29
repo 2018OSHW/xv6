@@ -497,7 +497,7 @@ int sys_getMessage(void)
 
 void sendMessage(int wndId, AMessage *msg)
 {
-    cprintf("sendMessage,Messgaetype:%d\n",msg->type);
+    //cprintf("sendMessage,Messgaetype:%d\n",msg->type);
     if (wndId == -1 || wndList.data[wndId].hwnd == 0)
         return;
     //cprintf("in send Message\n");

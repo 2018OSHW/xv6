@@ -32,7 +32,7 @@ return output;
 
 void Move()
 {
-printf(1,"current_direction:%d\n",current_direction);
+//printf(1,"current_direction:%d\n",current_direction);
 	my_block[head.x][head.y] = current_direction;//head
 	head  = nextpoint(head,current_direction);
 	my_block[head.x][head.y] = current_direction;//head
@@ -112,26 +112,26 @@ void timerUpdate(AHwnd hwnd)
 
 void keyDown(AHwnd hwnd,AMessage msg)
 {
-printf(1,"msg.param received:%d\n",msg.param);
+//printf(1,"msg.param received:%d\n",msg.param);
 switch (msg.param)
 {
 case VK_UP:
-printf(1,"Up Key pressed");
+//printf(1,"Up Key pressed");
 if (current_direction_copy == Left || current_direction_copy == Right)
 	current_direction = Up;
 break;
 case VK_DOWN:
-printf(1,"Down Key pressed");
+//printf(1,"Down Key pressed");
 if (current_direction_copy == Left || current_direction_copy == Right)
 	current_direction = Down;
 break;
 case VK_LEFT:
-printf(1,"Left Key pressed");
+//printf(1,"Left Key pressed");
 if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Left;
 break;
 case VK_RIGHT:
-printf(1,"Right Key pressed");
+//printf(1,"Right Key pressed");
 if (current_direction_copy == Up || current_direction_copy == Down)
 	current_direction = Right;
 break;
