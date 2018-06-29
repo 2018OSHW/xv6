@@ -262,9 +262,9 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
 
 //----------------------------Draw Text------------------------------
 //Only support English letter
-void APDrawLetter(AHdc hdc,char letter,int x,int y)
+void APDrawLetter(AHdc hdc,char *letter,int x,int y)
 {
-    uint index = (uint)letter - 32;
+    uint index = (uint)letter[0] - 32;
     if (index < 0 || index > Alphabet_NUMBER - 1)
         return;
     
