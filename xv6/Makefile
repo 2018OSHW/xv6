@@ -183,7 +183,6 @@ APFILES=\
     grid_river.bmp\
     grid_stone.bmp\
     grid_lake.bmp\
-    grid_mountain.bmp\
     background.bmp\
     wall.bmp\
     monster1.bmp\
