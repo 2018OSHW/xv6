@@ -56,7 +56,8 @@ switch(msg.param)
 		temp = nextpoint(position,Right);
 		break;
 	case VK_ESC:
-        removeWindow(hwnd->id);
+        msg.type = MAG_ESC;
+        APSendMessage(hwnd,msg);
 		return ;
 	default:
 		break;
@@ -415,6 +416,7 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 	switch(msg.type)
 	{
         case MSG_ESC:
+            removeWindow(hwnd->id);
             return True;
         case MSG_INIT:
 			
