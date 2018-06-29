@@ -102,6 +102,10 @@ void timerUpdate(AHwnd hwnd)
 	{
 		status = Dead;
 		//printf(1,"Dead!");
+        AMessage msg_word;
+        msg_word.type = MSG_WORD;
+        msg_word.word = "You are dead!";
+        APSendMessage(hwnd,msg_word);
 		deleteTimer(hwnd,1);
 	}
 	else
@@ -221,13 +225,7 @@ bool Is_Dead()
     if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
         return True;
 	if (my_block[p.x][p.y] != NoDir)
-    {
-        AMessage msg_word;
-        msg_word.type = MSG_WORD;
-        msg_word.word = "You are dead!";
-        APSendMessage(hwnd,msg_word);
         return True;
-    }
     else
         return False;
 }
@@ -296,10 +294,6 @@ if (status != Run)
 	break;
 	case MSG_PAINT:
         draw(hwnd);
-        AMessage msg_word;
-        msg_word.type = MSG_WORD;
-        msg_word.word = "Running! Press ENTER to pause";
-        APSendMessage(hwnd,msg_word);
 	break;
 	default:
 	break;
