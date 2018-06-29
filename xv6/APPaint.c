@@ -264,7 +264,7 @@ void APDrawRect(AHdc hdc, int x, int y, int w, int h)
 //Only support English letter
 void APDrawLetter(AHdc hdc,char letter,int x,int y)
 {
-    uint index = letter - " ";
+    uint index = (uint)letter - 32;
     if (index < 0 || index > Alphabet_NUMBER - 1)
         return;
     
@@ -277,7 +277,7 @@ void APDrawLetter(AHdc hdc,char letter,int x,int y)
             if (Alphabet[index][i][j])
                 hdc->content[off + j] = c;
         }
-        off + = hdc->size.cx;
+        off += hdc->size.cx;
     }
 }
 
