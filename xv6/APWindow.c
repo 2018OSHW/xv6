@@ -218,11 +218,5 @@ void APGridPaint(AHwnd wnd)
     APSetFont(&wnd->TitleDc,font);
     APDrawText(&wnd->TitleDc,wnd->title,20,20);
     
-    AFont font;
-    font.color = RGB(0x08,0x08,0x08);
-    APSetFont(&wnd->TitleDc,font);
-    APDrawText(&wnd->TitleDc,wnd->title,20,20);
-    
-    
 }
 
