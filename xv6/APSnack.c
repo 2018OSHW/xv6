@@ -93,7 +93,11 @@ void init(AHwnd hwnd)
 	msg.param = 0;
 	setupTimer(hwnd,1,800);
 	APSendMessage(hwnd,msg);
-
+    
+    AMessage msg1;
+    msg1.type = MSG_WORD;
+    msg1.word = "Running! Press ENTER to pause";
+    APSendMessage(hwnd,msg1);
 }
 
 void timerUpdate(AHwnd hwnd)
@@ -102,6 +106,10 @@ void timerUpdate(AHwnd hwnd)
 	{
 		status = Dead;
 		//printf(1,"Dead!");
+        AMessage msg_word;
+        msg_word.type = MSG_WORD;
+        msg_word.word = "You are dead! Press ENTER to restart!";
+        APSendMessage(hwnd,msg_word);
 		deleteTimer(hwnd,1);
 	}
 	else
@@ -146,10 +154,11 @@ case VK_ENTER:
             APSendMessage(hwnd,msg);
             break;
         case Pause:
-            status = Run;
+            status = Pause;
             msg.type = MSG_WORD;
             msg.word = "Running! Press ENTER to pause";
             APSendMessage(hwnd,msg);
+            status = Run;
             break;
         case Dead:
             init(hwnd);
@@ -158,7 +167,8 @@ case VK_ENTER:
     }
         break;
 case VK_ESC:
-        removeWindow(hwnd->id);
+        msg.type = MSG_ESC;
+        APSendMessage(hwnd,msg);
         break;
 default:break;
 
@@ -221,13 +231,7 @@ bool Is_Dead(AHwnd hwnd)
     if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)
         return True;
 	if (my_block[p.x][p.y] != NoDir)
-    {
-        AMessage msg_word;
-        msg_word.type = MSG_WORD;
-        msg_word.word = "You are dead!";
-        APSendMessage(hwnd,msg_word);
         return True;
-    }
     else
         return False;
 }
@@ -274,6 +278,7 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 switch(msg.type)
 {
     case MSG_ESC:
+        removeWindow(hwnd->id);
         return True;
     case MSG_INIT:
     init(hwnd);
@@ -284,7 +289,7 @@ switch(msg.type)
     return False;
 	case MSG_TIMEOUT:
 if (status != Run)
-	break;
+	return False;
 	timerUpdate(hwnd);
 	AMessage msg1;
 	msg1.type = MSG_PAINT;
@@ -293,13 +298,9 @@ if (status != Run)
 	break;
 	case MSG_KEY_DOWN:
 	keyDown(hwnd,msg);
-	break;
+	return False;
 	case MSG_PAINT:
         draw(hwnd);
-        AMessage msg_word;
-        msg_word.type = MSG_WORD;
-        msg_word.word = "Running! Press ENTER to pause";
-        APSendMessage(hwnd,msg_word);
 	break;
 	default:
 	break;

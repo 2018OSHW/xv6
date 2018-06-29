@@ -35,14 +35,6 @@ return output;
 
 void keyDown(AHwnd hwnd,AMessage msg)
 {
-if (msg.param ==  VK_ESC)
-{
-AMessage s;
-s.type = MSG_INIT;
-APSendMessage(hwnd,s);
-        removeWindow(hwnd->id);
-
-}
 if (status == Dead)
 {
 if (msg.param == VK_ENTER)
@@ -72,7 +64,10 @@ switch(msg.param)
 
 		temp = nextpoint(position,Right);
 		break;
-	
+	case VK_ESC:
+        msg.type = MSG_ESC;
+        APSendMessage(hwnd,msg);
+		return ;
 	default:
 		break;
 }
@@ -509,6 +504,7 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 	switch(msg.type)
 	{
         case MSG_ESC:
+            removeWindow(hwnd->id);
             return True;
         case MSG_INIT:
 			

@@ -464,9 +464,6 @@ int sys_removeWindow(void)
     APTimerListRemoveWnd(&timerList, id);
     APWndListRemove(&wndList,id);
     APWndListMoveToHead(&wndList, 0);
-    AMessage msg;
-    msg.type = MSG_ESC;
-    sendMessage(id,&msg);
     return 0;
 }
 

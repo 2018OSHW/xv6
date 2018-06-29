@@ -134,8 +134,8 @@ void APGridPaint(AHwnd wnd)
         g_river = APCreateCompatibleDCFromBitmap(grid_river);
         grid_stone = APLoadBitmap ("grid_stone.bmp");
         g_stone = APCreateCompatibleDCFromBitmap(grid_stone);
-        grid_mountain = APLoadBitmap ("grid_mountain.bmp");
-        g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
+        //grid_mountain = APLoadBitmap ("grid_mountain.bmp");
+        //g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
         grid_lake = APLoadBitmap ("grid_lake.bmp");
         g_lake = APCreateCompatibleDCFromBitmap(grid_lake);
         grid_forest = APLoadBitmap ("grid_forest.bmp");
@@ -200,9 +200,9 @@ void APGridPaint(AHwnd wnd)
                 case GRID_STONE:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_stone,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
-                case GRID_MOUNTAIN:
-                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_mountain,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
-                    break;
+                //case GRID_MOUNTAIN:
+                 //   APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_mountain,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                 //   break;
                 case GRID_PROGRAM_SNAKE:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_snake,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
