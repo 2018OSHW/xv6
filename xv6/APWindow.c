@@ -120,11 +120,6 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 void APGridPaint(AHwnd wnd)
 {
     
-    AFont font;
-    font.color = RGB(0x08,0x08,0x08);
-    APSetFont(&wnd->TitleDc,font);
-    APDrawText(&wnd->TitleDc,wnd->title,20,20);
-    
     if (!iconReady)
     {
         iconReady = 1;
@@ -217,6 +212,11 @@ void APGridPaint(AHwnd wnd)
     APSetPen(&wnd->TitleDc,pen);
     APSetBrush(&wnd->TitleDc,brush);
     APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
+    
+    AFont font;
+    font.color = RGB(0x08,0x08,0x08);
+    APSetFont(&wnd->TitleDc,font);
+    APDrawText(&wnd->TitleDc,wnd->title,20,20);
     
     
 }
