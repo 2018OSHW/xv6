@@ -65,6 +65,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             APGridPaint(hwnd);
             AMessage msg;
             msg.type = MSG_WORD;
+            msg.param = -1;
             msg.word = "Welcome!";
             APSendMessage(hwnd,msg);
             break;
