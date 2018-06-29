@@ -148,7 +148,6 @@ case VK_ENTER:
             msg.type = MSG_WORD;
             msg.word = "Pause! Press ENTER to continue";
             APSendMessage(hwnd,msg);
-            deleteTimer(hwnd,1);
             break;
         case Pause:
             status = Run;
@@ -164,6 +163,7 @@ case VK_ENTER:
         break;
 case VK_ESC:
         removeWindow(hwnd->id);
+        break;
 default:break;
 
 }
