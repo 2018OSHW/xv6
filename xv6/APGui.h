@@ -23,8 +23,8 @@ void APMsgQueueEnQueue(AMsgQueue * queue, AMessage msg);
 AMessage APMsgQueueDeQueue(AMsgQueue * queue);
 
 //Timer
-void setuptimer(AHwnd hwnd,int id, int interval);
-void deletetimer(AHwnd hwnd, int id);
+//void setuptimer(AHwnd hwnd,int id, int interval);
+//void deletetimer(AHwnd hwnd, int id);
 void TimerCount();
 void APTimerListInit(ATimerList * list);
 //interval是所等的毫秒数
