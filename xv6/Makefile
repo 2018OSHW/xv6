@@ -182,7 +182,6 @@ APFILES=\
     grid_grass.bmp\
     grid_river.bmp\
     grid_stone.bmp\
-    grid_mountain.bmp\
     grid_lake.bmp\
     background.bmp\
     wall.bmp\
@@ -204,6 +203,8 @@ APFILES=\
     defend.bmp\
     grid_snake.bmp\
     grid_tower.bmp\
+    grid_mountain.bmp\
+
 
 fs.img: mkfs README $(APFILES) $(UPROGS)
 	./mkfs fs.img README $(APFILES) $(UPROGS)
