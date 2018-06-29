@@ -63,6 +63,10 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             return False;
         case MSG_PAINT:
             APGridPaint(hwnd);
+            AMessage msg;
+            msg.type = MSG_WORD;
+            msg.word = "Welcome!";
+            APSendMessage(hwnd,msg);
             break;
         case MSG_KEY_DOWN:
             //printf(1,"kbd message received!\n");
