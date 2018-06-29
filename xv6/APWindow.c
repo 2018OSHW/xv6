@@ -208,7 +208,7 @@ void APGridPaint(AHwnd wnd)
     APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
     AFont font;
     font.color = RGB(0x08,0x08,0x08);
-    APSetFont(&wnd->TitleDc,font)
+    APSetFont(&wnd->TitleDc,font);
     APDrawLetter(&wnd->TitleDc,"D",20,20);
 }
 
