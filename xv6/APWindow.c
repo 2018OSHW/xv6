@@ -80,6 +80,7 @@ bool APWndProc(AHwnd hwnd, AMessage msg)
             //printf(1,"paint finished!\n");
             break;
         case MSG_WORD:
+            cprintf("in MSG_WORD, word is %s",msg.word);
             updateword(hwnd,msg.word);
             break;
         default: break;
