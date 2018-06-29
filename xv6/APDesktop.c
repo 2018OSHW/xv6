@@ -59,7 +59,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);
-            setupTimer(hwnd,0,1000);
+            //setupTimer(hwnd,0,1000);
             return False;
         case MSG_PAINT:
             APGridPaint(hwnd);
@@ -88,12 +88,11 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                     hwnd->pos_y++;
                 changePosition(hwnd->pos_x,hwnd->pos_y,2);
                 break;
+           // case VK_ENTER:
+            //    if (hwnd->grid[pos_x][pos_y] == GRID_PROGRAM_SNAKE)
+            //    break;
             default:break;
         }
-            break;
-        case MSG_TIME_SECOND:
-           // uint t = getTime();
-           // printf(1,"time is %d\n",t);
             break;
         default: break;
     }
