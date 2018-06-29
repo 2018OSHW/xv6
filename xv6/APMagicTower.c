@@ -35,6 +35,23 @@ return output;
 
 void keyDown(AHwnd hwnd,AMessage msg)
 {
+if (msg.param ==  VK_ESC)
+{
+AMessage s;
+s.type = MSG_INIT;
+APSendMessage(hwnd,s);
+        removeWindow(hwnd->id);
+
+}
+if (status == Dead)
+{
+if (msg.param == VK_ENTER)
+{
+	AMessage to_init;
+	to_init.type = MSG_INIT;
+	APSendMessage(hwnd,to_init);}
+return ;
+}
 APoint temp;
 switch(msg.param)
 {
@@ -55,9 +72,7 @@ switch(msg.param)
 
 		temp = nextpoint(position,Right);
 		break;
-	case VK_ESC:
-        removeWindow(hwnd->id);
-		return ;
+	
 	default:
 		break;
 }
@@ -80,6 +95,7 @@ switch(my_tower[floor][temp.x][temp.y])
 		position = temp;
 		if(!fight())
 		{
+		status = Dead;
 		printf(1,"Dead");
 		}
 		break;
@@ -143,12 +159,12 @@ switch(my_tower[floor][temp.x][temp.y])
 		position = temp;
 		break;
 	case SBlood:
-		hp += 100;
+		hp += 50;
 		my_tower[floor][temp.x][temp.y] = Background;
 		position = temp;
 		break;
 	case LBlood:
-		hp += 500;
+		hp += 200;
 		my_tower[floor][temp.x][temp.y] = Background;
 		position = temp;
 		break;
@@ -175,13 +191,91 @@ for (int i = 0;i < BLOCK_NUM_X;i++)
 {
 for (int j = 0;j < BLOCK_NUM_Y;j++)
 {
-my_tower[0][i][j] =my_tower[1][i][j] =my_tower[2][i][j] = Background;
+my_tower[0][i][j] =my_tower[1][i][j] = Background;
+if (i == 0 || j == 0 || i == BLOCK_NUM_X - 1 || j == BLOCK_NUM_Y - 1)
+{
+	my_tower[0][i][j] =my_tower[1][i][j] = Wall;
 }
 }
-my_tower[0][0][1] = BlueKey; 
-my_tower[0][1][1] = Monster1; 
-my_tower[0][2][2] = UpStair;
-my_tower[1][2][2] = DownStair;
+}
+my_tower[0][3][3] = UpStair;
+for (int i = 2;i < 6;i++)
+{
+my_tower[0][i][2] = my_tower[0][2][i] = Wall;
+my_tower[1][i][2] = my_tower[1][2][i] = Wall;
+}
+for (int i = 1;i <= 8;i++)
+{
+my_tower[0][i][7] = my_tower[0][7][i] = Wall;
+}
+
+my_tower[0][3][6] = my_tower[0][3][5] = my_tower[0][5][3] = YellowDoor;
+my_tower[0][3][4] = my_tower[0][4][3] = YellowKey;
+my_tower[0][6][6] = Monster3;
+my_tower[0][4][4] = my_tower[0][4][5] = my_tower[0][5][4] = my_tower[0][5][5] = Wall;
+my_tower[0][6][7] = Background;
+my_tower[0][1][3] = Monster1;
+my_tower[0][1][4] = Attack;
+my_tower[0][3][1] = Monster2;
+my_tower[0][4][1] = Defend;
+my_tower[0][5][1] = BlueDoor;
+my_tower[0][1][5] = YellowDoor;
+my_tower[0][4][6] = Attack;
+my_tower[0][5][6] = Defend;
+my_tower[0][6][7] = LBlood;
+my_tower[0][6][8] = RedKey;
+for (int i = 2;i < 8;i++)
+{
+my_tower[0][i][9] = Wall;
+}
+my_tower[0][4][8] = Monster3;
+
+my_tower[0][8][7] = Background;
+
+my_tower[0][9][2] = my_tower[0][9][3] = my_tower[0][9][4] = my_tower[0][10][2] = my_tower[0][10][4] = my_tower[0][11][2] = my_tower[0][11][3] = my_tower[0][11][4] = Wall;
+//o
+my_tower[0][9][6] = my_tower[0][9][7] = my_tower[0][9][8] = my_tower[0][10][6] = my_tower[0][11][6]  = my_tower[0][10][8] = my_tower[0][11][8] = my_tower[0][10][10] = my_tower[0][11][10] = my_tower[0][11][9] = my_tower[0][9][10] = Wall;
+
+//s 
+//1 floor
+my_tower[1][3][3] = DownStair;
+
+my_tower[1][1][5] = RedDoor;
+my_tower[1][1][6] = Monster3;
+my_tower[1][5][1] = Wall;
+my_tower[1][1][4] = my_tower[1][1][3] = my_tower[1][1][2] = Attack;
+my_tower[1][1][1] = my_tower[1][2][1] = my_tower[1][3][1] = Defend;
+my_tower[1][4][1] = SBlood;
+my_tower[1][5][3] = my_tower[1][4][5] = my_tower[1][5][4] = my_tower[1][5][5] = Wall;
+my_tower[1][4][6] = Wall;
+for (int i = 7;i < 11;i++)
+{
+my_tower[1][2][i] = my_tower[1][4][i] = Wall;
+my_tower[1][1][i] = Defend;
+}
+my_tower[1][1][10] = my_tower[1][4][10] = YellowKey;
+
+my_tower[1][3][9] = SBlood;
+my_tower[1][3][10] = Attack;
+my_tower[1][3][6] = my_tower[1][3][7] = my_tower[1][3][8] = Monster1; 
+my_tower[1][5][10] = Monster2;
+
+my_tower[1][7][2] = my_tower[1][7][3] = my_tower[1][8][2] = my_tower[1][8][3] = Wall;
+my_tower[1][10][2] = my_tower[1][10][3] = my_tower[1][11][2] = my_tower[1][11][3] = Wall;
+for (int i = 6;i < 12;i++)
+{
+my_tower[1][i][9] = my_tower[1][i][7] = my_tower[1][i][5] = Wall;
+}
+my_tower[1][7][6] = BlueKey;
+my_tower[1][6][5] =my_tower[1][12][5] =Monster3;
+my_tower[1][9][1]  = my_tower[1][9][4] = BlueDoor;
+my_tower[1][6][8] = my_tower[1][11][8] = Wall;
+my_tower[1][8][8] = my_tower[1][9][8] =Wall;
+my_tower[1][6][2] = my_tower[1][6][3] = Attack;
+my_tower[1][12][2] = my_tower[1][12][3] = Defend;
+my_tower[1][7][8] = my_tower[1][10][8] = Monster3;
+my_tower[1][2][6] = LBlood;
+//2 floor
 //init my_tower
 
 
@@ -189,6 +283,7 @@ my_tower[1][2][2] = DownStair;
 
 void init(AHwnd hwnd)
 {
+status = Play;
 
 	TowerInit();
 
@@ -198,7 +293,7 @@ void init(AHwnd hwnd)
 	//init the Viliant
 
 	floor = 0;
-	position.x = position.y = 0;
+	position.x = position.y = 1;
 	my_tower[floor][position.x][position.y] = Valiant;
 	my_key[0] = 3;
 	my_key[1] = my_key[2] = 0;

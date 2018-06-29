@@ -10,8 +10,8 @@
 #include "APWindow.h"
 
 #define BLOCK_WIDTH 32
-#define BLOCK_NUM_X 10
-#define BLOCK_NUM_Y 10
+#define BLOCK_NUM_X 14
+#define BLOCK_NUM_Y 12
 
 #define START_HP 500
 #define START_ATK 10
@@ -20,7 +20,7 @@
 
 #define MONSTER_NUM 3
 
-#define FLOOR_NUM 3
+#define FLOOR_NUM 2
 enum Bmp
 {
 	Background,
@@ -85,7 +85,7 @@ int floor;
 APoint position,position_old;
 int hp,atk,def;
 int my_key[3];
-int monster_info[MONSTER_NUM][3] = {{10,15,6},{1,1,1},{1,1,1}};//hp.atk,def
+int monster_info[MONSTER_NUM][3] = {{10,20,6},{20,15,8},{40,40,10}};//hp.atk,def
 int my_tower[FLOOR_NUM][BLOCK_NUM_X][BLOCK_NUM_Y];
 
 

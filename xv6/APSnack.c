@@ -98,7 +98,7 @@ void init(AHwnd hwnd)
 
 void timerUpdate(AHwnd hwnd)
 {
-	if (Is_Dead())
+	if (Is_Dead(hwnd))
 	{
 		status = Dead;
 		//printf(1,"Dead!");
@@ -215,7 +215,7 @@ void draw(AHwnd hwnd)
     }
 }
 
-bool Is_Dead()
+bool Is_Dead(AHwnd hwnd)
 {
 	APoint p = nextpoint(head,current_direction);
     if (p.x >= BLOCK_NUM_X || p.y > BLOCK_NUM_Y || p.x < 0 || p.y < 0)

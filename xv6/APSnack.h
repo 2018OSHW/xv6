@@ -59,7 +59,7 @@ bool wndProc(AHwnd hwnd,AMessage msg);
 
 
 
-bool Is_Dead();
+bool Is_Dead(AHwnd hwnd);
 
 bool updateFood();
 
