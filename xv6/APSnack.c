@@ -96,8 +96,7 @@ void timerUpdate(AHwnd hwnd)
 	{
 status = Dead;
 		printf(1,"Dead!");
-		killTimer(hwnd,2);
-
+		deleteTimer(hwnd,2);
 	}
 	else
 	{
@@ -249,13 +248,12 @@ bool wndProc(AHwnd hwnd,AMessage msg)
 {
 switch(msg.type)
 {
-case MSG_INIT:
-init(hwnd);
-AMessage ms;
-ms.type = MSG_PAINT;
-            APSendMessage(hwnd,ms);
-
-return False;
+    case MSG_INIT:
+    init(hwnd);
+    AMessage ms;
+    ms.type = MSG_PAINT;
+    APSendMessage(hwnd,ms);
+    return False;
 	case MSG_TIMEOUT:
 	timerUpdate(hwnd);
 	break;
