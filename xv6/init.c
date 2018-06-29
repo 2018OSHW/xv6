@@ -29,7 +29,8 @@ main(void)
     }
     if(pid == 0){
      // exec("sh", argv);
-      exec("APDesktop", argv);
+      //exec("APDesktop", argv);
+      exec("APSnack",argv);
       printf(1, "init: exec desktop failed\n");
       exit();
     }
