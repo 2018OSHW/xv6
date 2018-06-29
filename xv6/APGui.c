@@ -681,10 +681,7 @@ void TimerCount()
         {
             timerList.data[p].count = 0;
             AMessage msg;
-            if (timerList.data[p].id == 0)
-                msg.type = MSG_TIME_SECOND;
-            else
-                msg.type = MSG_TIMEOUT;
+            msg.type = MSG_TIMEOUT;
             sendMessage(timerList.data[p].wndId,&msg);
         }
         p = timerList.data[p].next;
