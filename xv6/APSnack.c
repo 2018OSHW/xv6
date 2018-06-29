@@ -96,7 +96,7 @@ void timerUpdate(AHwnd hwnd)
 	{
 status = Dead;
 		printf(1,"Dead!");
-		deleteTimer(hwnd,2);
+		deleteTimer(hwnd,1);
 	}
 	else
 	{
@@ -253,6 +253,7 @@ switch(msg.type)
     AMessage ms;
     ms.type = MSG_PAINT;
     APSendMessage(hwnd,ms);
+    setupTimer(hwnd,1,100);
     return False;
 	case MSG_TIMEOUT:
 	timerUpdate(hwnd);

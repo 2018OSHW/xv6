@@ -26,3 +26,5 @@
 #define SYS_registWindow 24
 #define SYS_getMessage 25
 #define SYS_changePosition 26
+#define SYS_setupTimer 27
+#define SYS_deleteTimer 28
