@@ -810,9 +810,9 @@ void sys_deleteTimer(void)
     APTimerListRemoveID(&timerList,hwnd->id,id);
 }
 
-int sys_getCurrentTime()
+/*int sys_getCurrentTime()
 {
-    /*uint t = 0;
+    uint t = 0;
     outb(0x70, 0x00);
     uchar d = inb(0x71);
     uchar n = (d >> 4) * 10 + (d & 0xf);
@@ -826,10 +826,10 @@ int sys_getCurrentTime()
     n = (d >> 4) * 10 + (d & 0xf);
     n = (n + 8) % 24;
     t |= (n << 16);
-    return t;*/
+    return t;
     return 1;
 }
-
+*/
 
 
 

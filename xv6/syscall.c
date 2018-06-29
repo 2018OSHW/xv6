@@ -140,7 +140,7 @@ static int (*syscalls[])(void) = {
 [SYS_changePosition] sys_changePosition,
 [SYS_setupTimer] sys_setupTimer,
 [SYS_deleteTimer] sys_deleteTimer,
-[SYS_getCurrentTime] sys_getCurrentTime,
+//[SYS_getCurrentTime] sys_getCurrentTime,
     
 };
 
