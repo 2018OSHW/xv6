@@ -202,7 +202,7 @@ APFILES=\
     lblood.bmp\
     attack1.bmp\
     defend.bmp\	
-
+    grid_snake.bmp\
 
 fs.img: mkfs README $(APFILES) $(UPROGS)
 	./mkfs fs.img README $(APFILES) $(UPROGS)

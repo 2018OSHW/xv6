@@ -26,6 +26,8 @@ ABitmap grid_stone;
 AHdc g_stone;
 ABitmap grid_mountain;
 AHdc g_mountain;
+ABitmap grid_snake;
+AHdc g_snake;
 
 //start a program
 AHwnd APCreateWindow(char * title,int is_map,int page);

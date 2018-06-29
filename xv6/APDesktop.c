@@ -22,7 +22,7 @@ int desktop_layout[GRID_H_NUMBER][GRID_W_NUMBER]=
     GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_FOREST},
     {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
-    {GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_LAKE,GRID_ROAD,
+    {GRID_ROAD,GRID_PROGRAM_SNAKE,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_LAKE,GRID_ROAD,
         GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD,GRID_ROAD},
     {GRID_WALL,GRID_ROAD,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,
         GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL,GRID_WALL},
@@ -59,7 +59,7 @@ bool wndProc(AHwnd hwnd, AMessage msg)
             hwnd->pos_y = 3;
             msg.type = MSG_PAINT;
             APSendMessage(hwnd,msg);
-            setupTimer(hwnd,0,1000);
+            //setupTimer(hwnd,0,1000);
             return False;
         case MSG_PAINT:
             APGridPaint(hwnd);
@@ -88,12 +88,12 @@ bool wndProc(AHwnd hwnd, AMessage msg)
                     hwnd->pos_y++;
                 changePosition(hwnd->pos_x,hwnd->pos_y,2);
                 break;
+            case VK_ENTER:
+                if (hwnd->Grid[hwnd->pos_y * GRID_W_NUMBER + hwnd->pos_x] == GRID_PROGRAM_SNAKE)
+                    runApp("Snack");
+                break;
             default:break;
         }
-            break;
-        case MSG_TIME_SECOND:
-           // uint t = getTime();
-           // printf(1,"time is %d\n",t);
             break;
         default: break;
     }

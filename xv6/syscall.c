@@ -104,6 +104,7 @@ extern int sys_paintWindow(void);
 extern int sys_sendMessage(void);
 extern int sys_getMessage(void);
 extern int sys_registWindow(void);
+extern int sys_removeWindow(void);
 extern int sys_changePosition(void);
 extern int sys_setupTimer(void);
 extern int sys_deleteTimer(void);
@@ -136,11 +137,12 @@ static int (*syscalls[])(void) = {
 [SYS_paintWindow]   sys_paintWindow,
 [SYS_sendMessage]  sys_sendMessage,
 [SYS_registWindow] sys_registWindow,
+[SYS_removeWindow] sys_removeWindow,
 [SYS_getMessage] sys_getMessage,
 [SYS_changePosition] sys_changePosition,
 [SYS_setupTimer] sys_setupTimer,
 [SYS_deleteTimer] sys_deleteTimer,
-//[SYS_getCurrentTime] sys_getCurrentTime,
+[SYS_getCurrentTime] sys_getCurrentTime,
     
 };
 

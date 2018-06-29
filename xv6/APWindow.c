@@ -119,6 +119,12 @@ void APWndExec(AHwnd hwnd, bool (*wndProc)(AHwnd, AMessage))
 //Grid_mode paint
 void APGridPaint(AHwnd wnd)
 {
+    
+    AFont font;
+    font.color = RGB(0x08,0x08,0x08);
+    APSetFont(&wnd->TitleDc,font);
+    APDrawText(&wnd->TitleDc,wnd->title,20,20);
+    
     if (!iconReady)
     {
         iconReady = 1;
@@ -137,6 +143,8 @@ void APGridPaint(AHwnd wnd)
         g_mountain = APCreateCompatibleDCFromBitmap(grid_mountain);
         grid_grass = APLoadBitmap ("grid_grass.bmp");
         g_grass = APCreateCompatibleDCFromBitmap(grid_grass);
+        grid_snake = APLoadBitmap ("grid_snake.bmp");
+        g_snake = APCreateCompatibleDCFromBitmap(grid_snake);
         //printf(1,"bitmap DC created!\n");
     }
     
@@ -193,6 +201,9 @@ void APGridPaint(AHwnd wnd)
                 case GRID_MOUNTAIN:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_mountain,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
+                case GRID_PROGRAM_SNAKE:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_snake,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                    break;
                 default: break;
             }
         }
@@ -206,9 +217,7 @@ void APGridPaint(AHwnd wnd)
     APSetPen(&wnd->TitleDc,pen);
     APSetBrush(&wnd->TitleDc,brush);
     APDrawRect(&wnd->TitleDc,0,0,SCREEN_WIDTH,WND_TITLE_HEIGHT);
-    AFont font;
-    font.color = RGB(0x08,0x08,0x08);
-    APSetFont(&wnd->TitleDc,font);
-    APDrawText(&wnd->TitleDc,wnd->title,20,20);
+    
+    
 }
 
