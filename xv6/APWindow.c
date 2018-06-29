@@ -144,6 +144,8 @@ void APGridPaint(AHwnd wnd)
         g_grass = APCreateCompatibleDCFromBitmap(grid_grass);
         grid_snake = APLoadBitmap ("grid_snake.bmp");
         g_snake = APCreateCompatibleDCFromBitmap(grid_snake);
+        grid_tower = APLoadBitmap ("grid_tower.bmp");
+        g_tower = APCreateCompatibleDCFromBitmap(grid_tower);
         //printf(1,"bitmap DC created!\n");
     }
     
@@ -203,11 +205,13 @@ void APGridPaint(AHwnd wnd)
                 case GRID_PROGRAM_SNAKE:
                     APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_snake,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
                     break;
+                case GRID_PROGRAM_TOWER:
+                    APDcCopy(&wnd->Dc,i * GRID_WIDTH ,j * GRID_WIDTH,g_tower,0,0,GRID_WIDTH,GRID_WIDTH,COLOR_NULL);
+                    break;
                 default: break;
             }
         }
     }
-    
 }
 
 
